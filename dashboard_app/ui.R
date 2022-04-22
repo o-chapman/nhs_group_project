@@ -1,34 +1,41 @@
 ui <- dashboardPage(skin = "purple", 
                     dashboardHeader(title = "Epic dashboard"),
+                    
+                    # Sidebar content
                     dashboardSidebar(
                       
                       sidebarMenu(
-                        menuItem("Winter Crisis!", tabName = "tab one", icon = icon("stats", lib = "glyphicon"), 
+                        
+                        menuItem("Winter Crisis!", tabName = "crisis", icon = icon("chart-line"), 
                                  badgeLabel = "cool!", badgeColor = "green"),
-                        menuItem("Covid Map!", icon = icon("globe", lib = "glyphicon"), tabName = "tab two",
+                        menuItem("Covid Map!", tabName = "map", icon = icon("globe"), 
                                  badgeLabel = "also cool!", badgeColor = "green")
                       )
-                      
                     ),
+                    
+                    # Body content
                     dashboardBody(
                       
                       tabItems(
-                        tabItem(tabName = "tab one",
-                                h2("Crisis tab content")
+                        
+                        # Crisis tab content
+                        tabItem(tabName = "crisis",
+                                h2("Crisis tab content"),
+                                # Boxes need to be put in a row (or column)
+                                fluidRow(
+                                  box(plotOutput("plot1", height = 250)),
+                                  
+                                  box(
+                                    title = "Controls",
+                                    sliderInput("slider", "Number of observations:", 1, 100, 50)
+                                  )
+                                )
                         ),
                         
-                        tabItem(tabName = "tab two",
+                        # Map tab content
+                        tabItem(tabName = "map",
                                 h2("Map tab content")
                         )
                       ),
-                      # Boxes need to be put in a row (or column)
-                      fluidRow(
-                        box(plotOutput("plot1", height = 250)),
-                        
-                        box(
-                          title = "Controls",
-                          sliderInput("slider", "Number of observations:", 1, 100, 50)
-                        )
-                      )
                     )
 )
