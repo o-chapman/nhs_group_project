@@ -6,6 +6,7 @@ ui <- dashboardPage(skin = "purple",
                       
                       sidebarMenu(
                         
+                        # lots of icons we can use here: https://fontawesome.com/icons/categories/medical-health
                         menuItem("Winter Crisis!", tabName = "crisis", icon = icon("chart-line"), 
                                  badgeLabel = "cool!", badgeColor = "green"),
                         menuItem("Covid Map!", tabName = "map", icon = icon("globe"), 
