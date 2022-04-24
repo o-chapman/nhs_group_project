@@ -1,0 +1,98 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+# Avg number of beds each season
+
+```{r}
+library(tidyverse)
+library(lubridate)
+
+beds <- read_csv(here::here("dashboard_app/raw_data/beds_by_nhs_board_of_treatment_and_specialty.csv")) %>% 
+        janitor::clean_names()
+
+head(beds)
+
+# interested in percentage of available beds
+# data is structured to show avg daily percentage of available beds per hospital (id = "hb")
+# comparing against the time of year "quarter"
+```
+## Cleaning
+
+```{r}
+# checking column is clean
+beds %>% 
+  count(quarter)
+
+beds_season <- beds %>% 
+  mutate(
+    season = str_extract(quarter, "\\d{1}$"),
+    season = recode(season, 
+      "1" = "Winter",
+      "2" = "Spring",
+      "3" = "Summer",
+      "4" = "Autumn"
+    ),
+    year = as.numeric(str_extract(quarter, "^\\d{4}"))
+  )
+```
+## Making Graph
+
+```{r}
+beds_season %>% 
+  group_by(season) %>% 
+  summarise(avg_daily_beds_perc = mean(percentage_occupancy, na.rm = TRUE)) %>% 
+  ggplot() +
+  aes(x = season, y = avg_daily_beds_perc, label = str_c(round(avg_daily_beds_perc), "%")) +
+  geom_text(nudge_y = 1, alpha = 0.8) +
+  geom_col(fill = "turquoise", alpha = 0.8) +
+  coord_cartesian(ylim=c(60, 80)) +
+  theme_minimal()
+
+beds_season %>% 
+  group_by(season, year) %>% 
+  summarise(avg_daily_beds_perc = mean(percentage_occupancy, na.rm = TRUE)) %>% 
+  ggplot() +
+  aes(x = season, y = avg_daily_beds_perc, label = str_c(round(avg_daily_beds_perc), "%")) +
+  geom_text(nudge_y = 1, alpha = 0.8) +
+  geom_col(fill = "turquoise", alpha = 0.8) +
+  coord_cartesian(ylim = c(60, 80)) +
+  facet_wrap(~year) +
+  theme_minimal()
+```
+
+# Avg number of admissions each season
+
+```{r}
+admissions <- read_csv(here::here("dashboard_app/raw_data/hospital_admissions_hb_simd_20220302.csv")) %>% 
+        janitor::clean_names()
+
+head(admissions)
+```
+
+## Cleaning
+
+```{r}
+admissions_dt <- admissions %>% 
+  mutate(
+    year = str_extract(week_ending, "^\\d{4}"),
+    monthday = str_extract(week_ending, "\\d{4}$"),
+    month = str_extract(monthday, "^\\d{2}"),
+    day = str_extract(monthday, "\\d{2}$"),
+    date = ymd(str_c(year, month, day)),
+    .before = 1
+  ) %>% 
+  select(-monthday)
+
+head(admissions_dt)
+```
+
+```{r}
+library(tsibble)
+
+duplicates(admissions_dt)
+
+admissions_time <- as_tsibble(admissions_dt, date, key = NULL)
+```
+
