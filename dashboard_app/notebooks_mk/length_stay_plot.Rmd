@@ -23,5 +23,9 @@ correct_subset %>%
   group_by(quarter, admission_type) %>% 
   mutate(avg_stay = mean(average_length_of_stay)) %>% 
   ggplot(aes(x = quarter, y = avg_stay, fill = admission_type)) +
-  geom_col(position = "dodge")
+  geom_col(position = "dodge") +
+  labs(title = "Mean Length of Stay by Admission Type",
+       x = "Year|Quarter",
+       y = "Mean Length of Stay (mins)") +
+  theme_bw()
 ```
