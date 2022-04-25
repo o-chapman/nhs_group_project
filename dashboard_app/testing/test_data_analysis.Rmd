@@ -92,7 +92,7 @@ head(admissions_date)
 ```{r}
 library(tsibble)
 
-duplicates(admissions_dt)
+duplicates(admissions_date)
 
 # making datetime tsibble
 
@@ -103,13 +103,15 @@ admissions_dt <- admissions_date %>%
 
 class(admissions_dt$date)
 
-admissions_dt %>%
+admissions_plotly <- admissions_dt %>%
   ggplot() +
   aes(x = date, y = avg_admissions_by_week) +
   geom_line(color = "steelblue") +
   scale_x_date(name = "", limits = c(as.Date("2020-01-01", "%Y-%m-%d"), as.Date("2022-02-20", "%Y-%m-%d")), date_breaks = "3 months", 
                date_minor_breaks = "1 month") +
   theme_minimal()
+
+ggplotly(admissions_plotly)
 ```
 
 ```{r}
