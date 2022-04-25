@@ -39,7 +39,7 @@ hospitals <- sf_to_df(hospitals, fill = TRUE)
 hospitals %>%
   leaflet() %>%
   addProviderTiles(providers$CartoDB.Positron) %>%
-  addProviderTiles(providers$CartoDB.Voyager) %>%
+  # addProviderTiles(providers$CartoDB.Voyager) %>%
   addCircleMarkers(lng = ~x,
                    lat = ~y,
                    color = "purple",

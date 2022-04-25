@@ -8,7 +8,7 @@ ui <- dashboardPage(skin = "purple",
                         
                         # lots of icons we can use here: https://fontawesome.com/icons/categories/medical-health
                         menuItem("Overview", tabName = "overview", icon = icon("book-medical"), 
-                                 badgeLabel = "temp", badgeColor = "green"),
+                                 badgeLabel = " ", badgeColor = "green"),
                         menuItem("Temporal", tabName = "temporal", icon = icon("chart-line"), 
                                  badgeLabel = "temp", badgeColor = "yellow"),
                         menuItem("Geographic", tabName = "geographic", icon = icon("globe"), 
@@ -23,7 +23,7 @@ ui <- dashboardPage(skin = "purple",
                       
                       tabItems(
                         
-                        # Geographic tab content
+                        # Overview tab content
                         tabItem(tabName = "overview",
                                 h2("Overview tab content")
                         ),
@@ -44,7 +44,22 @@ ui <- dashboardPage(skin = "purple",
                         
                         # Geographic tab content
                         tabItem(tabName = "geographic",
-                                h2("Geographic tab content")
+                                h2("Geographic tab content"), 
+                                
+                                fluidRow(
+                                  tabBox(
+                                  title = "Select map type",
+                                  # The id lets us use input$tabset1 on the server to find the current tab
+                                  id = "tabset1", height = "250px",
+                                  tabPanel("Tab1", "First tab content"),
+                                  tabPanel("Tab2", "Tab content 2")
+                                )
+                                ),
+                                
+                                fluidRow(
+                                  box(status = "info", 
+                                      leafletOutput("hospital_plot", height = 500, width = "100%"), width = 12)
+                                )
                         ),
                         
                         # Demographic tab content
