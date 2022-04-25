@@ -7,10 +7,14 @@ ui <- dashboardPage(skin = "purple",
                       sidebarMenu(
                         
                         # lots of icons we can use here: https://fontawesome.com/icons/categories/medical-health
-                        menuItem("Winter Crisis!", tabName = "crisis", icon = icon("chart-line"), 
-                                 badgeLabel = "cool!", badgeColor = "green"),
-                        menuItem("Covid Map!", tabName = "map", icon = icon("globe"), 
-                                 badgeLabel = "also cool!", badgeColor = "green")
+                        menuItem("Overview", tabName = "overview", icon = icon("book-medical"), 
+                                 badgeLabel = "temp", badgeColor = "green"),
+                        menuItem("Temporal", tabName = "temporal", icon = icon("chart-line"), 
+                                 badgeLabel = "temp", badgeColor = "yellow"),
+                        menuItem("Geographic", tabName = "geographic", icon = icon("globe"), 
+                                 badgeLabel = "temp", badgeColor = "orange"),
+                        menuItem("Demographic", tabName = "demographic", icon = icon("hospital-user"), 
+                                 badgeLabel = "temp", badgeColor = "red")
                       )
                     ),
                     
@@ -19,12 +23,17 @@ ui <- dashboardPage(skin = "purple",
                       
                       tabItems(
                         
-                        # Crisis tab content
-                        tabItem(tabName = "crisis",
-                                h2("Crisis tab content"),
+                        # Geographic tab content
+                        tabItem(tabName = "overview",
+                                h2("Overview tab content")
+                        ),
+                        
+                        # Temporal tab content
+                        tabItem(tabName = "temporal",
+                                h2("Temporal tab content"),
                                 # Boxes need to be put in a row (or column)
                                 fluidRow(
-                                  box(plotOutput("plot1", height = 250)),
+                                  box(plotOutput("plot1", height = 250)), # Placeholder stuff
                                   
                                   box(
                                     title = "Controls",
@@ -33,9 +42,14 @@ ui <- dashboardPage(skin = "purple",
                                 )
                         ),
                         
-                        # Map tab content
-                        tabItem(tabName = "map",
-                                h2("Map tab content")
+                        # Geographic tab content
+                        tabItem(tabName = "geographic",
+                                h2("Geographic tab content")
+                        ),
+                        
+                        # Demographic tab content
+                        tabItem(tabName = "demographic",
+                                h2("Demographic tab content")
                         )
                       ),
                     )
