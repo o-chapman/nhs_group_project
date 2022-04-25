@@ -30,7 +30,7 @@ server <- function(input, output) {
 
   pal <- reactive(
     colorNumeric(
-      palette = colorRampPalette(c('red', 'green'))(nrow(beds_geom_filtered())),
+      palette = colorRampPalette(c('red', 'blue'))(nrow(beds_geom_filtered())),
       domain = beds_geom_filtered()$percentage_occupancy)
   )
 
@@ -41,10 +41,10 @@ server <- function(input, output) {
       addProviderTiles("CartoDB.Positron",
                        options= providerTileOptions(opacity = 0.99)) %>%
       addPolygons(fillColor = ~ pal()(beds_geom_filtered()$percentage_occupancy),
-                  weight = 2,
+                  weight = 1,
                   opacity = 1,
                   color =  ~ pal()(beds_geom_filtered()$percentage_occupancy),
-                  fillOpacity = 0.7,
+                  fillOpacity = 0.8,
                   label=~paste(name))
 
   })
@@ -58,9 +58,10 @@ server <- function(input, output) {
                        lat = ~y,
                        color = "purple",
                        fillOpacity = 0.5,
+                       radius = 2,
                        popup = ~paste0(location_name, "<br>", address_line, "<br>",
-                                       postcode),
-                       clusterOptions = markerClusterOptions())
+                                       postcode))
+                       
   })
 
 
