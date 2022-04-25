@@ -47,9 +47,12 @@ ui <- dashboardPage(skin = "purple",
                                          tabPanel("Region Data", leafletOutput("heatmap")),
                                          tabPanel("Hospital Data", leafletOutput("hospital_plot")))),
                                 fluidRow(
-                                  box(radioButtons("map_type",
-                                                   "Map Type",
-                                                   choices = c("Health Board Area" = "hb", "Individual Hospital" = "hospital")))
+                                  box(radioButtons("map_data",
+                                                   "Investigate Winter Increase",
+                                                   choices = c(
+                                                     "Mortality" = "winter_mortality_increase",
+                                                     "Wait Time Tariff Overflow" = "winter_target_wait_time_overshoot_increase",
+                                                     "Beds Filled" = "winter_beds_increase")))
 
                                 )
                         ),

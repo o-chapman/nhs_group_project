@@ -23,16 +23,18 @@ server <- function(input, output) {
   beds_geom_filtered <-reactive(
     beds_geom %>%
       distinct(hb, geometry) %>%
-      right_join(diff_data_areas, by = "hb")
+      right_join(diff_data_areas, by = "hb") %>% 
+      select(hb, geometry, input$map_data)
   )
 
   # Generate colour palate based on filter domain.
 
-  pal <- reactive(
+  pal <- reactive( 
     colorNumeric(
       palette = colorRampPalette(c('green', 'red'))(nrow(beds_geom_filtered())),
-      domain = beds_geom_filtered()$winter_mortality_increase)
+      domain = beds_geom_filtered()[input$map_data])
   )
+  
 
   output$heatmap <- renderLeaflet({
     beds_geom_filtered() %>%
@@ -40,12 +42,13 @@ server <- function(input, output) {
       leaflet() %>% 
       addProviderTiles("CartoDB.Positron",
                        options= providerTileOptions(opacity = 0.99)) %>%
-      addPolygons(fillColor = ~ pal()(beds_geom_filtered()$winter_mortality_increase),
+      addPolygons(fillColor = ~ pal()(beds_geom_filtered()[input$map_data]),
                   weight = 1,
                   opacity = 1,
-                  color =  ~ pal()(beds_geom_filtered()$winter_mortality_increase),
+                  color =  ~ pal()(beds_geom_filtered()[input$map_data]),
                   fillOpacity = 0.8,
-                  label=~paste(beds_geom_filtered()$winter_mortality_increase))
+                  label= ~ paste(beds_geom_filtered()[input$map_data]),
+                  )
 
   })
 

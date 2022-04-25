@@ -71,3 +71,4 @@ hospitals <- st_as_sf(hospitals,
 # Reproject to WGS84
 hospitals <- st_transform(hospitals , 4326)
 hospitals <- sf_to_df(hospitals, fill = TRUE)
+
