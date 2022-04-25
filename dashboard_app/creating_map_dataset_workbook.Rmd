@@ -68,6 +68,7 @@ winter_mortality_increase <- mortality %>%
   clean_names() %>% 
   rename(hb = hbt, quarter = time_period) %>% 
   filter(!str_detect(quarter,"201")) %>% 
+  filter(str_detect(hb, "^S0")) %>% 
   select(quarter, hb, number_of_deaths) %>% 
   drop_na(number_of_deaths) %>% 
   mutate(
@@ -91,6 +92,6 @@ diff_data <- winter_mortality_increase %>%
   full_join(winter_target_wait_time_overshoot_increase, by = "hb") %>% 
   full_join(beds_diff, by = "hb")
 
-write_csv(diff_data, "clean_data/diff_data")
+write_csv(diff_data, "clean_data/diff_data.csv")
 ```
 
