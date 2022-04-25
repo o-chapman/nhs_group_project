@@ -1,0 +1,31 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+
+```{r}
+beds_clean %>% 
+  filter(!str_detect(quarter,"201")) %>% 
+  filter(specialty_name == "All Acute") %>% 
+  select(quarter, hb, average_occupied_beds) %>% 
+  mutate(
+    winter = str_detect(quarter, "1$")
+  ) %>% 
+  group_by(hb, winter) %>% 
+  summarise(av_occ = mean(average_occupied_beds)) %>%
+  mutate(
+    av_occ = case_when(
+      winter == TRUE ~ av_occ ,
+      winter == FALSE ~ av_occ * -1
+    ) 
+    
+  ) %>% 
+  summarise(winter_beds_increase = sum(av_occ))
+  
+
+  
+  
+
+```
+
