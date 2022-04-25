@@ -1762,8 +1762,8 @@ pre code {
 <!-- rnb-text-begin -->
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuYmVkc19jbGVhbiAlPiUgXG4gIGZpbHRlcighc3RyX2RldGVjdChxdWFydGVyLFwiMjAxXCIpKSAlPiUgXG4gIGZpbHRlcihzcGVjaWFsdHlfbmFtZSA9PSBcIkFsbCBBY3V0ZVwiKSAlPiUgXG4gIHNlbGVjdChxdWFydGVyLCBoYiwgYXZlcmFnZV9vY2N1cGllZF9iZWRzKSAlPiUgXG4gIG11dGF0ZShcbiAgICB3aW50ZXIgPSBzdHJfZGV0ZWN0KHF1YXJ0ZXIsIFwiMSRcIilcbiAgKSAlPiUgXG4gIGdyb3VwX2J5KGhiLCB3aW50ZXIpICU+JSBcbiAgc3VtbWFyaXNlKGF2X29jYyA9IG1lYW4oYXZlcmFnZV9vY2N1cGllZF9iZWRzKSkgJT4lXG4gIG11dGF0ZShcbiAgICBhdl9vY2MgPSBjYXNlX3doZW4oXG4gICAgICB3aW50ZXIgPT0gVFJVRSB+IGF2X29jYyAsXG4gICAgICB3aW50ZXIgPT0gRkFMU0UgfiBhdl9vY2MgKiAtMVxuICAgICkgXG4gICAgXG4gICkgJT4lIFxuICBzdW1tYXJpc2Uod2ludGVyX2JlZHNfaW5jcmVhc2UgPSBzdW0oYXZfb2NjKSlcblxuYGBgIn0= -->
-<pre class="r"><code>beds_clean %&gt;% 
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuYmVkc19kaWZmIDwtIGJlZHNfY2xlYW4gJT4lIFxuICBmaWx0ZXIoIXN0cl9kZXRlY3QocXVhcnRlcixcIjIwMVwiKSkgJT4lIFxuICBmaWx0ZXIoc3BlY2lhbHR5X25hbWUgPT0gXCJBbGwgQWN1dGVcIikgJT4lIFxuICBzZWxlY3QocXVhcnRlciwgaGIsIGF2ZXJhZ2Vfb2NjdXBpZWRfYmVkcykgJT4lIFxuICBtdXRhdGUoXG4gICAgd2ludGVyID0gc3RyX2RldGVjdChxdWFydGVyLCBcIjEkXCIpXG4gICkgJT4lIFxuICBncm91cF9ieShoYiwgd2ludGVyKSAlPiUgXG4gIHN1bW1hcmlzZShhdl9vY2MgPSBtZWFuKGF2ZXJhZ2Vfb2NjdXBpZWRfYmVkcykpICU+JVxuICBtdXRhdGUoXG4gICAgYXZfb2NjID0gY2FzZV93aGVuKFxuICAgICAgd2ludGVyID09IFRSVUUgfiBhdl9vY2MgLFxuICAgICAgd2ludGVyID09IEZBTFNFIH4gYXZfb2NjICogLTFcbiAgICApIFxuICAgIFxuICApICU+JSBcbiAgc3VtbWFyaXNlKHdpbnRlcl9iZWRzX2luY3JlYXNlID0gc3VtKGF2X29jYykpXG5cbmBgYCJ9 -->
+<pre class="r"><code>beds_diff &lt;- beds_clean %&gt;% 
   filter(!str_detect(quarter,&quot;201&quot;)) %&gt;% 
   filter(specialty_name == &quot;All Acute&quot;) %&gt;% 
   select(quarter, hb, average_occupied_beds) %&gt;% 
@@ -1785,10 +1785,72 @@ pre code {
 <!-- rnb-output-begin eyJkYXRhIjoiYHN1bW1hcmlzZSgpYCBoYXMgZ3JvdXBlZCBvdXRwdXQgYnkgJ2hiJy4gWW91IGNhbiBvdmVycmlkZSB1c2luZyB0aGUgYC5ncm91cHNgIGFyZ3VtZW50LlxuIn0= -->
 <pre><code>`summarise()` has grouped output by &#39;hb&#39;. You can override using the `.groups` argument.</code></pre>
 <!-- rnb-output-end -->
-<!-- rnb-frame-begin eyJtZXRhZGF0YSI6eyJjbGFzc2VzIjpbInRibF9kZiIsInRibCIsImRhdGEuZnJhbWUiXSwibnJvdyI6MTQsIm5jb2wiOjIsInN1bW1hcnkiOnsiQSB0aWJibGUiOlsiMTQgw5cgMiJdfX0sInJkZiI6Ikg0c0lBQUFBQUFBQUF3dHlpVERtaXVCaVlHQmdabUJoWkdKZ1pnVXlHVmhEUTl4MExSZ1lXSmlBSEVZR0ZnWk9FRjBCVkNRTVpJQUVCWUNZRHlyQkdXeGdZUUFFaHFib0FtYm9BdWJvQXBab0FrWUc2QUpHNkFJbTZBTG8xaHFoVzJ0a2dTNkFicTB4dXJYR2h1Z0NSbUFmQTdHRFQvclp3cTNiSFJ4TUN3TmIwZ3dVSEt3ZlNiYytlZnpCd2Z0eFRyTDMwUXlIR09GVDc0N3FLemk0WEh1eTlHUHdENGZremhEVkw2VWREaUxyanUxL2xydkRnYjByNWxMUTFnY09LditmKzhRMUt6ajRNOXc3d09UMHdDR2c0THhscFlhSFEwSGF5bk1uaXpRY0lnNm91UEtzdklFV0RheDVpYm1weGRBb1lJSUtNbVVrUVZraTVabDVKYWxGOFVtcEtjWHhtWG5KUmFtSnhhbG9SbkFXNVpmcndZemhCV2x2QUJMLy8vLy9oRzVYY2s1aU1jd3VtQ0JYU21KSm9sNWFFVkEva1BjUFRRdDdma0ZKWm40ZVVCTVRLSzJ3b21sbUxFSVRFQ2pOQTdra1JUYzVvelF2VzlmWURHUURXQjRDZUtGc1BpUTJFOFJPcHY5UXMxaWhackdsNXFWbjVxWENISitUbUpTYUErWHdBYjBNOXJGZVFSRXdnR0JlQVlvVzY1WGtseVRDMUhFbDUrZkFSTUNlWS9nSEFIdlVWYU1qQXdBQSJ9 -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-frame-begin eyJtZXRhZGF0YSI6eyJjbGFzc2VzIjpbInRibF9kZiIsInRibCIsImRhdGEuZnJhbWUiXSwibnJvdyI6MTQsIm5jb2wiOjIsInN1bW1hcnkiOnsiQSB0aWJibGUiOlsiMTQgw5cgMiJdfX0sInJkZiI6Ikg0c0lBQUFBQUFBQUExMlN2MHZEUUJUSHI3RlJXclFJem9yZzRBOXNpV25WNnVLaG9vSUk0aTljSkZ6cjJVYlRwRnl1MWswbmgySm53VHFwbTV1em15Nmlpejl3VXlkbndUL0ErbElUa1BmZ2tuZWZ1L2UrNytWbGFYbzlHVjJQRWtLYVNEaWtrQ1lWWEtLdXJzekUwNFNFRmRpRVNKaEV2UGNlWE9vQXg0UHRzR0wrUVdSWlMydGdROE1ZakdBd2lzRVlBcnFHZ1k1QkNnTXNxMk5aUFkwQmxrMWkyZVFRQm5xalkxaDAvN0NhZjYxdTA5M0xON0IzS3RJbjF4K2hIbHE1cVBTZFZmcHA4YXZMV3V1WXB3dmpnNDlIbFVWNjNDMm56ejh6ZExLYWVsNUl2ZENKSSsybVZidWxuYjJ6ZDQvZmtwYm1ydTRIcng3b3hrUVpiSTlXbjA1NnVwdFBhYTIyTVpXckxhRXhxRFlyY05jZmdlSkRKWi94dllHeWFVc3VETWxFamt1anpFeHBTTFBBRFdlWEN6ZnZPTkl3N2F6Z3pPVW9jVVE0NVVTUXZNMUxlZ0NQZXIzK2pTdklXc3dOS2doZ2RKTkpsdGdTRUErN0h4VFM0aFNsNmRnUXBIaC9rSXFDUXdLQjlwTHRWYklaeitaTDlrNGNCZ2dLamZNL2EvUDkyRDlmK2ROVTZuNHUxYy9Wek8yY2FmT2dlSXRsdU9Wdll0QnlvK05FVWNCbkMxb0I2aWFrSTFsd0w1cDFySUEwbWlNL3Ywdms1YVE1QXdBQSJ9 -->
 <div data-pagedtable="false">
 <script data-pagedtable-source type="application/json">
-{"columns":[{"label":["hb"],"name":[1],"type":["chr"],"align":["left"]},{"label":["winter_beds_increase"],"name":[2],"type":["dbl"],"align":["right"]}],"data":[{"1":"S08000015","2":"56.81096"},{"1":"S08000016","2":"21.44265"},{"1":"S08000017","2":"27.88323"},{"1":"S08000019","2":"55.77675"},{"1":"S08000020","2":"112.30926"},{"1":"S08000022","2":"41.67885"},{"1":"S08000024","2":"156.29152"},{"1":"S08000025","2":"5.17068"},{"1":"S08000026","2":"2.94256"},{"1":"S08000028","2":"10.49981"},{"1":"S08000029","2":"62.00680"},{"1":"S08000030","2":"65.76265"},{"1":"S08000031","2":"262.41646"},{"1":"S08000032","2":"99.00221"}],"options":{"columns":{"min":{},"max":[10],"total":[2]},"rows":{"min":[10],"max":[10],"total":[14]},"pages":{}}}
+{"columns":[{"label":["hb"],"name":[1],"type":["chr"],"align":["left"]},{"label":["winter_target_wait_time_overshoot_increase"],"name":[2],"type":["dbl"],"align":["right"]}],"data":[{"1":"S08000015","2":"504.40952"},{"1":"S08000016","2":"362.74167"},{"1":"S08000017","2":"291.53778"},{"1":"S08000019","2":"852.56746"},{"1":"S08000020","2":"270.94493"},{"1":"S08000022","2":"58.45449"},{"1":"S08000024","2":"1480.11354"},{"1":"S08000025","2":"37.10317"},{"1":"S08000026","2":"31.54762"},{"1":"S08000028","2":"7.28836"},{"1":"S08000029","2":"340.54365"},{"1":"S08000030","2":"116.99167"},{"1":"S08000031","2":"954.32526"},{"1":"S08000032","2":"1766.84108"}],"options":{"columns":{"min":{},"max":[10],"total":[2]},"rows":{"min":[10],"max":[10],"total":[14]},"pages":{}}}
+  </script>
+</div>
+<!-- rnb-frame-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubW9ydGFsaXR5IDwtIHJlYWRfY3N2KFwicmF3X2RhdGEvbW9ydGFsaXR5X2RhdGEuY3N2XCIpXG5cbmBgYCJ9 -->
+<pre class="r"><code>mortality &lt;- read_csv(&quot;raw_data/mortality_data.csv&quot;)
+</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiUm93czogMzM2IENvbHVtbnM6IDlcbuKUgOKUgCBDb2x1bW4gc3BlY2lmaWNhdGlvbiDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIBcbkRlbGltaXRlcjogXCIsXCJcbmNociAoNSk6IFRpbWVQZXJpb2QsIEhCVCwgU3ViR3JvdXAsIE51bWJlck9mRGVhdGhzUUYsIE51bWJlck9mUGF0aWVudHNRRlxuZGJsICg0KTogX2lkLCBOdW1iZXJPZkRlYXRocywgTnVtYmVyT2ZQYXRpZW50cywgQ3J1ZGVSYXRlXG5cbuKEuSBVc2UgYHNwZWMoKWAgdG8gcmV0cmlldmUgdGhlIGZ1bGwgY29sdW1uIHNwZWNpZmljYXRpb24gZm9yIHRoaXMgZGF0YS5cbuKEuSBTcGVjaWZ5IHRoZSBjb2x1bW4gdHlwZXMgb3Igc2V0IGBzaG93X2NvbF90eXBlcyA9IEZBTFNFYCB0byBxdWlldCB0aGlzIG1lc3NhZ2UuXG4ifQ== -->
+<pre><code>Rows: 336 Columns: 9
+── Column specification ────────────────────────────────────────────────────────────────────────────────────────────────────
+Delimiter: &quot;,&quot;
+chr (5): TimePeriod, HBT, SubGroup, NumberOfDeathsQF, NumberOfPatientsQF
+dbl (4): _id, NumberOfDeaths, NumberOfPatients, CrudeRate
+
+ℹ Use `spec()` to retrieve the full column specification for this data.
+ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxud2ludGVyX21vcnRhbGl0eV9pbmNyZWFzZSA8LSBtb3J0YWxpdHkgJT4lIFxuICBjbGVhbl9uYW1lcygpICU+JSBcbiAgcmVuYW1lKGhiID0gaGJ0LCBxdWFydGVyID0gdGltZV9wZXJpb2QpICU+JSBcbiAgZmlsdGVyKCFzdHJfZGV0ZWN0KHF1YXJ0ZXIsXCIyMDFcIikpICU+JSBcbiAgc2VsZWN0KHF1YXJ0ZXIsIGhiLCBudW1iZXJfb2ZfZGVhdGhzKSAlPiUgXG4gIGRyb3BfbmEobnVtYmVyX29mX2RlYXRocykgJT4lIFxuICBtdXRhdGUoXG4gICAgd2ludGVyID0gc3RyX2RldGVjdChxdWFydGVyLCBcIjEkXCIpXG4gICkgJT4lIFxuICBncm91cF9ieShoYiwgd2ludGVyKSAlPiUgXG4gIHN1bW1hcmlzZShhdl9tb3J0ID0gbWVhbihudW1iZXJfb2ZfZGVhdGhzKSkgJT4lXG4gIG11dGF0ZShcbiAgICBhdl9tb3J0ID0gY2FzZV93aGVuKFxuICAgICAgd2ludGVyID09IFRSVUUgfiBhdl9tb3J0ICxcbiAgICAgIHdpbnRlciA9PSBGQUxTRSB+IGF2X21vcnQgKiAtMVxuICAgICkgXG4gICAgXG4gICkgJT4lIFxuICBzdW1tYXJpc2Uod2ludGVyX21vcnRhbGl0eV9pbmNyZWFzZSA9IHN1bShhdl9tb3J0KSlcblxuYGBgIn0= -->
+<pre class="r"><code>winter_mortality_increase &lt;- mortality %&gt;% 
+  clean_names() %&gt;% 
+  rename(hb = hbt, quarter = time_period) %&gt;% 
+  filter(!str_detect(quarter,&quot;201&quot;)) %&gt;% 
+  select(quarter, hb, number_of_deaths) %&gt;% 
+  drop_na(number_of_deaths) %&gt;% 
+  mutate(
+    winter = str_detect(quarter, &quot;1$&quot;)
+  ) %&gt;% 
+  group_by(hb, winter) %&gt;% 
+  summarise(av_mort = mean(number_of_deaths)) %&gt;%
+  mutate(
+    av_mort = case_when(
+      winter == TRUE ~ av_mort ,
+      winter == FALSE ~ av_mort * -1
+    ) 
+    
+  ) %&gt;% 
+  summarise(winter_mortality_increase = sum(av_mort))
+</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiYHN1bW1hcmlzZSgpYCBoYXMgZ3JvdXBlZCBvdXRwdXQgYnkgJ2hiJy4gWW91IGNhbiBvdmVycmlkZSB1c2luZyB0aGUgYC5ncm91cHNgIGFyZ3VtZW50LlxuIn0= -->
+<pre><code>`summarise()` has grouped output by &#39;hb&#39;. You can override using the `.groups` argument.</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-frame-begin eyJtZXRhZGF0YSI6eyJjbGFzc2VzIjpbInRibF9kZiIsInRibCIsImRhdGEuZnJhbWUiXSwibnJvdyI6MTYsIm5jb2wiOjQsInN1bW1hcnkiOnsiQSB0aWJibGUiOlsiMTYgw5cgNCJdfX0sInJkZiI6Ikg0c0lBQUFBQUFBQUF3dHlpVERtaXVCaVlHQmdabUJoWkdKZ1pnVXlHVmhEUTl4MExSZ1lXSmlBSEVZR0ZnWk9FRjBCVkNRTVpMQUFzUUFZUXlRNGd3MHNESURBMEJSZHdBeGR3Qnhkd0JKTndNZ0FYY0FJWGNBRVhRRGRXaU4wYTQwczBBWFFyVFZHdDliWUVGMEE0UTVMSXdPd0NGU0FMZGdKcU1RUXlPSURCWXFEZGhvSU5EaVliRFlHQWdNSCt6TWdjTUVoeUhJbUVNeHdDUDhKb2UxQTFNd0ZEa0ZxSVBVWkRueHBFRnAySmtTZUNjeFBjSkFGR1dQczRPRGxBekVuQVNydklBblIzMlFGMFNjSlZtY0NkMGQ5VzIvR3RkNHNoN0xWZDRIZ25rT1J4YXc5OXhtVkhicVdkR2tzNnRKMEtIZ3ZseE1tN08zZ2E2VnpzYWNyd0dHNlFvbkw0cWRKRGs2OUpwZDlUYTQ0MlBjWUhPWXhPT0lncSs1Kzh1S25Fb2RTajAybmRUYWRjWWkxTHdlQ0NvZmVTN09VRmRqbU9NeWVIZXVjUGp1by9nTW81YkF2Z3RGd2QvaWtueTNjdXQzQndiUXdzQ1hOUU1IQitwRjA2NVBISHh5OEgrY2tleC9OY0lnUlB2WHVxTDZDZzh1MUowcy9Cdjl3U080TVVmMVMydUVnc3U3WS9tZTVPeHpZdTJJdUJXMTk0S0R5LzdsUFhMT0Nnei9EdlFOTVRnOGNBZ3JPVzFacWVEZ1VwSzA4ZDdKSXd5SGlnSW9yejhvYm1PNUFTY1dzZVltNXFjWFFGTXdDRldUS1NJS3lKTXN6ODBwU2krSno4NHRLRW5NeVN5cmpNL09TaTFJVGkxT2hDclNnQ2tvU2k5SlRTK0xMRXpOTDRrc3ljMVBqODh0U2k0b3o4dk5MMEhXSVFIVWtwYVlVSStSUVhjVlpsRit1QjNNWkw4aEZEVURpLy8vL0g5Q2RuNXlUV0F4elBreVFLeVd4SkZFdnJRaW9IOGo3aDZhRlBiK2dKRE0vRDZpSkNaUjdXZEUwTXhhaENRaVU1b0Zja3FLYm5GR2FsNjFyWWdxeUFTd1BBYnhRdGdBU213VmlKOU4vcURnckxHK2s1cVZuNXNGQ2dqVW5NU2sxQjhyaEEzb1o3R085Z2lKZ0FNRzhBaFF0MWl2SkJ3WStUQ1E1UHdjbUF2WWN3ejhBK0J3ck5MVUVBQUE9In0= -->
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":["hb"],"name":[1],"type":["chr"],"align":["left"]},{"label":["winter_mortality_increase"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["winter_target_wait_time_overshoot_increase"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["winter_beds_increase"],"name":[4],"type":["dbl"],"align":["right"]}],"data":[{"1":"S08000015","2":"13.7","3":"504.40952","4":"56.81096"},{"1":"S08000016","2":"20.7","3":"362.74167","4":"21.44265"},{"1":"S08000017","2":"31.8","3":"291.53778","4":"27.88323"},{"1":"S08000019","2":"72.9","3":"852.56746","4":"55.77675"},{"1":"S08000020","2":"95.9","3":"270.94493","4":"112.30926"},{"1":"S08000022","2":"30.6","3":"58.45449","4":"41.67885"},{"1":"S08000024","2":"72.6","3":"1480.11354","4":"156.29152"},{"1":"S08000025","2":"3.8","3":"37.10317","4":"5.17068"},{"1":"S08000026","2":"7.4","3":"31.54762","4":"2.94256"},{"1":"S08000028","2":"2.3","3":"7.28836","4":"10.49981"},{"1":"S08000029","2":"7.3","3":"340.54365","4":"62.00680"},{"1":"S08000030","2":"52.6","3":"116.99167","4":"65.76265"},{"1":"S08000031","2":"132.8","3":"954.32526","4":"262.41646"},{"1":"S08000032","2":"32.2","3":"1766.84108","4":"99.00221"},{"1":"S92000003","2":"583.3","3":"NA","4":"NA"},{"1":"SB0801","2":"6.3","3":"NA","4":"NA"}],"options":{"columns":{"min":{},"max":[10],"total":[4]},"rows":{"min":[10],"max":[10],"total":[16]},"pages":{}}}
   </script>
 </div>
 <!-- rnb-frame-end -->
@@ -1796,7 +1858,7 @@ pre code {
 <!-- rnb-text-begin -->
 <!-- rnb-text-end -->
 
-<div id="rmd-source-code">LS0tCnRpdGxlOiAiUiBOb3RlYm9vayIKb3V0cHV0OiBodG1sX25vdGVib29rCi0tLQoKCmBgYHtyfQpiZWRzX2NsZWFuICU+JSAKICBmaWx0ZXIoIXN0cl9kZXRlY3QocXVhcnRlciwiMjAxIikpICU+JSAKICBmaWx0ZXIoc3BlY2lhbHR5X25hbWUgPT0gIkFsbCBBY3V0ZSIpICU+JSAKICBzZWxlY3QocXVhcnRlciwgaGIsIGF2ZXJhZ2Vfb2NjdXBpZWRfYmVkcykgJT4lIAogIG11dGF0ZSgKICAgIHdpbnRlciA9IHN0cl9kZXRlY3QocXVhcnRlciwgIjEkIikKICApICU+JSAKICBncm91cF9ieShoYiwgd2ludGVyKSAlPiUgCiAgc3VtbWFyaXNlKGF2X29jYyA9IG1lYW4oYXZlcmFnZV9vY2N1cGllZF9iZWRzKSkgJT4lCiAgbXV0YXRlKAogICAgYXZfb2NjID0gY2FzZV93aGVuKAogICAgICB3aW50ZXIgPT0gVFJVRSB+IGF2X29jYyAsCiAgICAgIHdpbnRlciA9PSBGQUxTRSB+IGF2X29jYyAqIC0xCiAgICApIAogICAgCiAgKSAlPiUgCiAgc3VtbWFyaXNlKHdpbnRlcl9iZWRzX2luY3JlYXNlID0gc3VtKGF2X29jYykpCiAgCgogIAogIAoKYGBgCgo=</div>
+<div id="rmd-source-code">LS0tCnRpdGxlOiAiUiBOb3RlYm9vayIKb3V0cHV0OiBodG1sX25vdGVib29rCi0tLQoKCmBgYHtyfQpiZWRzX2RpZmYgPC0gYmVkc19jbGVhbiAlPiUgCiAgZmlsdGVyKCFzdHJfZGV0ZWN0KHF1YXJ0ZXIsIjIwMSIpKSAlPiUgCiAgZmlsdGVyKHNwZWNpYWx0eV9uYW1lID09ICJBbGwgQWN1dGUiKSAlPiUgCiAgc2VsZWN0KHF1YXJ0ZXIsIGhiLCBhdmVyYWdlX29jY3VwaWVkX2JlZHMpICU+JSAKICBtdXRhdGUoCiAgICB3aW50ZXIgPSBzdHJfZGV0ZWN0KHF1YXJ0ZXIsICIxJCIpCiAgKSAlPiUgCiAgZ3JvdXBfYnkoaGIsIHdpbnRlcikgJT4lIAogIHN1bW1hcmlzZShhdl9vY2MgPSBtZWFuKGF2ZXJhZ2Vfb2NjdXBpZWRfYmVkcykpICU+JQogIG11dGF0ZSgKICAgIGF2X29jYyA9IGNhc2Vfd2hlbigKICAgICAgd2ludGVyID09IFRSVUUgfiBhdl9vY2MgLAogICAgICB3aW50ZXIgPT0gRkFMU0UgfiBhdl9vY2MgKiAtMQogICAgKSAKICAgIAogICkgJT4lIAogIHN1bW1hcmlzZSh3aW50ZXJfYmVkc19pbmNyZWFzZSA9IHN1bShhdl9vY2MpKQogIAoKCgogIAogIAoKYGBgCgpgYGB7cn0KbGlicmFyeShsdWJyaWRhdGUpCndhaXRfdGltZXMgPC0gcmVhZF9jc3YoInJhd19kYXRhL3dhaXRfdGltZXMuY3N2IikgJT4lIAogIGNsZWFuX25hbWVzKCkKCndpbnRlcl90YXJnZXRfd2FpdF90aW1lX292ZXJzaG9vdF9pbmNyZWFzZSA8LSB3YWl0X3RpbWVzICU+JSAKICBtdXRhdGUobW9udGggPSB5bShtb250aCkpICU+JSAKICBtdXRhdGUocXVhcnRlciA9IHF1YXJ0ZXIobW9udGgpLCAuYWZ0ZXIgPSBtb250aCkgJT4lIAogIG11dGF0ZSh0YXJnZXRfZGlmZiA9IG51bWJlcl9vZl9hdHRlbmRhbmNlc19hZ2dyZWdhdGUgLSBudW1iZXJfbWVldGluZ190YXJnZXRfYWdncmVnYXRlLCAuYWZ0ZXIgPSBxdWFydGVyKSAlPiUgCiAgcmVuYW1lKGhiID0gaGJ0KSAlPiUgCiAgZmlsdGVyKG1vbnRoID4gIjIwMTktMTItMjkiKSAlPiUgCiAgc2VsZWN0KHF1YXJ0ZXIsIGhiLCB0YXJnZXRfZGlmZikgJT4lIAogIG11dGF0ZSgKICAgIHdpbnRlciA9IHN0cl9kZXRlY3QocXVhcnRlciwgIjEkIikKICApICU+JSAKICBncm91cF9ieShoYiwgd2ludGVyKSAlPiUgCiAgc3VtbWFyaXNlKGF2X2RpZmYgPSBtZWFuKHRhcmdldF9kaWZmKSkgJT4lCiAgbXV0YXRlKAogICAgYXZfb2NjID0gY2FzZV93aGVuKAogICAgICB3aW50ZXIgPT0gVFJVRSB+IGF2X2RpZmYgLAogICAgICB3aW50ZXIgPT0gRkFMU0UgfiBhdl9kaWZmICogLTEKICAgICkgCiAgICAKICApICU+JSAKICBzdW1tYXJpc2Uod2ludGVyX3RhcmdldF93YWl0X3RpbWVfb3ZlcnNob290X2luY3JlYXNlID0gc3VtKGF2X2RpZmYpKQogIApgYGAKCmBgYHtyfQptb3J0YWxpdHkgPC0gcmVhZF9jc3YoInJhd19kYXRhL21vcnRhbGl0eV9kYXRhLmNzdiIpCmBgYAoKYGBge3J9CndpbnRlcl9tb3J0YWxpdHlfaW5jcmVhc2UgPC0gbW9ydGFsaXR5ICU+JSAKICBjbGVhbl9uYW1lcygpICU+JSAKICByZW5hbWUoaGIgPSBoYnQsIHF1YXJ0ZXIgPSB0aW1lX3BlcmlvZCkgJT4lIAogIGZpbHRlcighc3RyX2RldGVjdChxdWFydGVyLCIyMDEiKSkgJT4lIAogIHNlbGVjdChxdWFydGVyLCBoYiwgbnVtYmVyX29mX2RlYXRocykgJT4lIAogIGRyb3BfbmEobnVtYmVyX29mX2RlYXRocykgJT4lIAogIG11dGF0ZSgKICAgIHdpbnRlciA9IHN0cl9kZXRlY3QocXVhcnRlciwgIjEkIikKICApICU+JSAKICBncm91cF9ieShoYiwgd2ludGVyKSAlPiUgCiAgc3VtbWFyaXNlKGF2X21vcnQgPSBtZWFuKG51bWJlcl9vZl9kZWF0aHMpKSAlPiUKICBtdXRhdGUoCiAgICBhdl9tb3J0ID0gY2FzZV93aGVuKAogICAgICB3aW50ZXIgPT0gVFJVRSB+IGF2X21vcnQgLAogICAgICB3aW50ZXIgPT0gRkFMU0UgfiBhdl9tb3J0ICogLTEKICAgICkgCiAgICAKICApICU+JSAKICBzdW1tYXJpc2Uod2ludGVyX21vcnRhbGl0eV9pbmNyZWFzZSA9IHN1bShhdl9tb3J0KSkKCmBgYAoKYGBge3J9CmRpZmZfZGF0YSA8LSB3aW50ZXJfbW9ydGFsaXR5X2luY3JlYXNlICU+JSAKICBmdWxsX2pvaW4od2ludGVyX3RhcmdldF93YWl0X3RpbWVfb3ZlcnNob290X2luY3JlYXNlLCBieSA9ICJoYiIpICU+JSAKICBmdWxsX2pvaW4oYmVkc19kaWZmLCBieSA9ICJoYiIpCgp3cml0ZV9jc3YoZGlmZl9kYXRhLCAiY2xlYW5fZGF0YS9kaWZmX2RhdGEiKQpgYGAKCg==</div>
 
 
 

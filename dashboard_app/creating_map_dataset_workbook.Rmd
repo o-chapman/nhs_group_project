@@ -5,7 +5,7 @@ output: html_notebook
 
 
 ```{r}
-beds_clean %>% 
+beds_diff <- beds_clean %>% 
   filter(!str_detect(quarter,"201")) %>% 
   filter(specialty_name == "All Acute") %>% 
   select(quarter, hb, average_occupied_beds) %>% 
@@ -24,8 +24,73 @@ beds_clean %>%
   summarise(winter_beds_increase = sum(av_occ))
   
 
+
+
   
   
 
+```
+
+```{r}
+library(lubridate)
+wait_times <- read_csv("raw_data/wait_times.csv") %>% 
+  clean_names()
+
+winter_target_wait_time_overshoot_increase <- wait_times %>% 
+  mutate(month = ym(month)) %>% 
+  mutate(quarter = quarter(month), .after = month) %>% 
+  mutate(target_diff = number_of_attendances_aggregate - number_meeting_target_aggregate, .after = quarter) %>% 
+  rename(hb = hbt) %>% 
+  filter(month > "2019-12-29") %>% 
+  select(quarter, hb, target_diff) %>% 
+  mutate(
+    winter = str_detect(quarter, "1$")
+  ) %>% 
+  group_by(hb, winter) %>% 
+  summarise(av_diff = mean(target_diff)) %>%
+  mutate(
+    av_occ = case_when(
+      winter == TRUE ~ av_diff ,
+      winter == FALSE ~ av_diff * -1
+    ) 
+    
+  ) %>% 
+  summarise(winter_target_wait_time_overshoot_increase = sum(av_diff))
+  
+```
+
+```{r}
+mortality <- read_csv("raw_data/mortality_data.csv")
+```
+
+```{r}
+winter_mortality_increase <- mortality %>% 
+  clean_names() %>% 
+  rename(hb = hbt, quarter = time_period) %>% 
+  filter(!str_detect(quarter,"201")) %>% 
+  select(quarter, hb, number_of_deaths) %>% 
+  drop_na(number_of_deaths) %>% 
+  mutate(
+    winter = str_detect(quarter, "1$")
+  ) %>% 
+  group_by(hb, winter) %>% 
+  summarise(av_mort = mean(number_of_deaths)) %>%
+  mutate(
+    av_mort = case_when(
+      winter == TRUE ~ av_mort ,
+      winter == FALSE ~ av_mort * -1
+    ) 
+    
+  ) %>% 
+  summarise(winter_mortality_increase = sum(av_mort))
+
+```
+
+```{r}
+diff_data <- winter_mortality_increase %>% 
+  full_join(winter_target_wait_time_overshoot_increase, by = "hb") %>% 
+  full_join(beds_diff, by = "hb")
+
+write_csv(diff_data, "clean_data/diff_data")
 ```
 
