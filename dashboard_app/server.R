@@ -1,8 +1,6 @@
 server <- function(input, output) {
   
-  library(tidyverse)
-  library(sf)
-  library(shiny)
+
   
   set.seed(122)
   histdata <- rnorm(500)
@@ -21,26 +19,38 @@ server <- function(input, output) {
   source("helpers.R")
   
   
-  output$heatmap <- renderLeaflet({
-    
-    
-  })
-  
-  
   # Make filters from input
-  beds_geom_filtered <-ractive(
+  beds_geom_filtered <-reactive(
     beds_geom %>% 
-    filter(specialty_name == "General Medicine") %>% 
-    filter(quarter == "2021Q2")
+      filter(specialty_name == "General Medicine") %>% 
+      filter(quarter == "2021Q2")
   )
   
   # Generate colour palate based on filter domain.
   
   pal <- reactive(
     colorNumeric(
-    palette = colorRampPalette(c('red', 'green'))(nrow(beds_geom_filtered())), 
-    domain = beds_geom_filtered()$percentage_occupancy)
-    )
+      palette = colorRampPalette(c('red', 'green'))(nrow(beds_geom_filtered())), 
+      domain = beds_geom_filtered()$percentage_occupancy)
+  )
+  
+  output$heatmap <- renderLeaflet({
+    beds_geom_filtered() %>% 
+      st_as_sf() %>% 
+      leaflet() %>% 
+      addProviderTiles("CartoDB.Positron", 
+                       options= providerTileOptions(opacity = 0.99)) %>% 
+      addPolygons(fillColor = ~ pal()(beds_geom_filtered()$percentage_occupancy),
+                  weight = 2,
+                  opacity = 1,
+                  color =  ~ pal()(beds_geom_filtered()$percentage_occupancy),
+                  fillOpacity = 0.7,
+                  label=~paste(name))
+    
+  })
+  
+  
+ 
   
   
   

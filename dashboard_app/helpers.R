@@ -37,7 +37,8 @@ boundary_esri <- st_read(
   "raw_data/spatial_data/SG_NHS_HealthBoards_2019.shp") %>% 
   st_simplify(dTolerance = 3000) %>% 
   janitor::clean_names() %>% 
-  rename(hb = hb_code)
+  rename(hb = hb_code) %>% 
+  st_transform("+proj=longlat +datum=WGS84")
 
 # Join beds data with geometry data by the health board code.
 
