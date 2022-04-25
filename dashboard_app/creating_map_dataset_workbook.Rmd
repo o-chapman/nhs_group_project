@@ -95,3 +95,10 @@ diff_data <- winter_mortality_increase %>%
 write_csv(diff_data, "clean_data/diff_data.csv")
 ```
 
+```{r}
+beds_geom %>%
+      distinct(hb, geometry) %>%
+  right_join(diff_data, by = "hb")
+  
+```
+
