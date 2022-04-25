@@ -8,7 +8,7 @@ ui <- dashboardPage(skin = "purple",
 
                         # lots of icons we can use here: https://fontawesome.com/icons/categories/medical-health
                         menuItem("Overview", tabName = "overview", icon = icon("book-medical"),
-                                 badgeLabel = "temp", badgeColor = "green"),
+                                 badgeLabel = " ", badgeColor = "green"),
                         menuItem("Temporal", tabName = "temporal", icon = icon("chart-line"),
                                  badgeLabel = "temp", badgeColor = "yellow"),
                         menuItem("Geographic", tabName = "geographic", icon = icon("globe"),
@@ -23,10 +23,10 @@ ui <- dashboardPage(skin = "purple",
 
                       tabItems(
 
-                        # Geographic tab content
+                        # Overview tab content
                         tabItem(tabName = "overview",
                                 h2("Overview tab content"),
-                                
+
                         ),
 
                         # Temporal tab content
@@ -34,7 +34,7 @@ ui <- dashboardPage(skin = "purple",
                                 h2("Temporal tab content")
                                 # Boxes need to be put in a row (or column)
 
-                                
+
                         ),
 
                         # Geographic tab content
@@ -42,15 +42,15 @@ ui <- dashboardPage(skin = "purple",
                                 h2("Geographic tab content"),
                                 fluidRow(
                                   tabBox(title = "Geo Data",
-                                         id = "geotabs", 
+                                         id = "geotabs",
                                          width = 12,
                                          tabPanel("Region Data", leafletOutput("heatmap")),
-                                         tabPanel("Hospital Data"))),
+                                         tabPanel("Hospital Data", leafletOutput("hospital_plot")))),
                                 fluidRow(
                                   box(radioButtons("map_type",
                                                    "Map Type",
                                                    choices = c("Health Board Area" = "hb", "Individual Hospital" = "hospital")))
-                                  
+
                                 )
                         ),
                         # Demographic tab content
