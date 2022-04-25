@@ -1,15 +1,29 @@
-ui <- dashboardPage(skin = "purple", 
+ui <- dashboardPage(skin = "blue", 
                     dashboardHeader(title = "Basic dashboard"),
-                    dashboardSidebar(),
+                    dashboardSidebar(
+                      menuItem("testing for tab 1", tabName = "tab_1", icon = icon("dashboard")),
+                      menuItem("other tab", tabName = "tab_other", icon = icon("th"))
+                    ),
                     dashboardBody(
-                      # Boxes need to be put in a row (or column)
-                      fluidRow(
-                        box(plotOutput("plot1", height = 250)),
+                      
+                      tabItems(
                         
-                        box(
-                          title = "Controls",
-                          sliderInput("slider", "Number of observations:", 1, 100, 50)
+                        tabItem(tabName = "tab_1",
+                                fluidRow(width = 4,
+                                         "Box content here",
+                                         dateRangeInput("date_range_input",
+                                                        "Date Range:",
+                                                        start = as_date(""))
+                                ),
+                                
+                                fluidRow(width = 8,
+                                         plotOutput()
+                                )
+                        ),
+                        
+                        tabItem(tabName = "tab_other",
+                                h2("other")
                         )
-                      )
-                    )
+                      ))
 )
+

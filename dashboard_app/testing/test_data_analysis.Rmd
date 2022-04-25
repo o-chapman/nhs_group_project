@@ -8,8 +8,9 @@ output: html_notebook
 ```{r}
 library(tidyverse)
 library(lubridate)
+library(ggplot2)
 
-beds <- read_csv(here::here("dashboard_app/raw_data/beds_by_nhs_board_of_treatment_and_specialty.csv")) %>% 
+beds <- read_csv(here::here("raw_data/beds_by_nhs_board_of_treatment_and_specialty.csv")) %>% 
         janitor::clean_names()
 
 head(beds)
@@ -47,7 +48,7 @@ beds_season %>%
   aes(x = season, y = avg_daily_beds_perc, label = str_c(round(avg_daily_beds_perc), "%")) +
   geom_text(nudge_y = 1, alpha = 0.8) +
   geom_col(fill = "turquoise", alpha = 0.8) +
-  coord_cartesian(ylim=c(60, 80)) +
+  coord_cartesian(ylim = c(60, 80)) +
   theme_minimal()
 
 beds_season %>% 
@@ -55,17 +56,17 @@ beds_season %>%
   summarise(avg_daily_beds_perc = mean(percentage_occupancy, na.rm = TRUE)) %>% 
   ggplot() +
   aes(x = season, y = avg_daily_beds_perc, label = str_c(round(avg_daily_beds_perc), "%")) +
-  geom_text(nudge_y = 1, alpha = 0.8) +
+  geom_text(nudge_y = 1.2, alpha = 0.8) +
   geom_col(fill = "turquoise", alpha = 0.8) +
   coord_cartesian(ylim = c(60, 80)) +
   facet_wrap(~year) +
   theme_minimal()
 ```
 
-# Avg number of admissions each season
+# Avg number of admissions each season (can be split by simd rating)
 
 ```{r}
-admissions <- read_csv(here::here("dashboard_app/raw_data/hospital_admissions_hb_simd_20220302.csv")) %>% 
+admissions <- read_csv(here::here("raw_data/hospital_admissions_hb_simd_20220302.csv")) %>% 
         janitor::clean_names()
 
 head(admissions)
@@ -74,7 +75,7 @@ head(admissions)
 ## Cleaning
 
 ```{r}
-admissions_dt <- admissions %>% 
+admissions_date <- admissions %>% 
   mutate(
     year = str_extract(week_ending, "^\\d{4}"),
     monthday = str_extract(week_ending, "\\d{4}$"),
@@ -85,7 +86,7 @@ admissions_dt <- admissions %>%
   ) %>% 
   select(-monthday)
 
-head(admissions_dt)
+head(admissions_date)
 ```
 
 ```{r}
@@ -93,6 +94,25 @@ library(tsibble)
 
 duplicates(admissions_dt)
 
-admissions_time <- as_tsibble(admissions_dt, date, key = NULL)
+# making datetime tsibble
+
+admissions_dt <- admissions_date %>% 
+  group_by(date) %>% 
+  summarise(avg_admissions_by_week = mean(number_admissions)) %>% 
+  as_tsibble()
+
+class(admissions_dt$date)
+
+admissions_dt %>%
+  ggplot() +
+  aes(x = date, y = avg_admissions_by_week) +
+  geom_line(color = "steelblue") +
+  scale_x_date(name = "", limits = c(as.Date("2020-01-01", "%Y-%m-%d"), as.Date("2022-02-20", "%Y-%m-%d")), date_breaks = "3 months", 
+               date_minor_breaks = "1 month") +
+  theme_minimal()
+```
+
+```{r}
+
 ```
 
