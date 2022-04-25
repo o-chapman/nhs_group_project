@@ -24,7 +24,7 @@ ui <- dashboardPage(skin = "purple",
                                 h2("Crisis tab content"),
                                 # Boxes need to be put in a row (or column)
                                 fluidRow(
-                                  box(plotOutput("plot1", height = 250)),
+                                  box(leafletOutput("heatmap", height = 250)),
                                   
                                   box(
                                     title = "Controls",
@@ -36,6 +36,8 @@ ui <- dashboardPage(skin = "purple",
                         # Map tab content
                         tabItem(tabName = "map",
                                 h2("Map tab content")
+                                
+                                
                         )
                       ),
                     )
