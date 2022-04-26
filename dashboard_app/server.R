@@ -14,19 +14,25 @@ server <- function(input, output) {
       labs(x = "") +
       theme_minimal()
   })
-
+  
+  admissions_dt_react <- reactive({
+    
+    admissions_dt %>%
+      filter(year %in% input$year_input)
+    
+  })
+  
   output$overview_admissions_plot <- renderPlot({
 
-    admissions_dt %>%
-      filter(year %in% input$year_input) %>%
+    admissions_dt_react() %>%
       ggplot() +
       aes(x = date, y = avg_admissions_by_week) +
       geom_line(color = "steelblue") +
       winter_shading[1] +
       winter_shading[2] +
-      winter_shading[3] +
       scale_x_date(name = "",
-                   limits = c(as.Date("2020-01-01", "%Y-%m-%d"), as.Date("2022-02-20", "%Y-%m-%d")),
+                   #limits = c(as.Date("2020-01-01", "%Y-%m-%d"), as.Date("2022-02-20", "%Y-%m-%d")),
+                   limits = c(min(admissions_dt_react()$date), max(admissions_dt_react()$date)),
                    date_breaks = "3 months",
                    date_minor_breaks = "1 month",
                    date_labels = "%b %y") +
