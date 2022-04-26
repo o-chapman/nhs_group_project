@@ -22,9 +22,9 @@ server <- function(input, output) {
   # Make filters from input
   beds_geom_filtered <-reactive(
     beds_geom %>%
-      distinct(hb, geometry, name.x) %>%
+      distinct(hb, geometry, name) %>%
       right_join(diff_data_areas, by = "hb") %>% 
-      select(hb, geometry, input$map_data, name.x) %>% 
+      select(hb, geometry, input$map_data, name) %>% 
       rename("value" = input$map_data)
   )
 
@@ -50,7 +50,7 @@ server <- function(input, output) {
                   opacity = 1,
                   color =  ~ value,
                   fillOpacity = 0.8,
-                  label= ~ paste(name.x, ":", value)) %>% 
+                  label= ~ paste(name, ":", value)) %>% 
       addLegend(position = "bottomright", pal = pal(), values = beds_geom_filtered()$value,
                 opacity = 1)
 
@@ -79,17 +79,7 @@ server <- function(input, output) {
 
   
   #---------------------------MAP DETAIL PLOT COMPONENtS
-  
-  detailmap_pre <- reactive(
-    beds_geom_filtered %>% 
-      ggplot(aes(x = name.x, y = value)) +
-      geom_col()
-    
-  )
-  
-  output$detailmap <- renderPlotly({
-    ggplotly(detailmap_pre())
-    
-  })
-}
+ 
+  }
+
 

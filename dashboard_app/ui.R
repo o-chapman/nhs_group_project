@@ -53,8 +53,8 @@ ui <- dashboardPage(skin = "purple",
                                                      "Mortality" = "winter_mortality_increase",
                                                      "Wait Time Tariff Overflow" = "winter_target_wait_time_overshoot_increase",
                                                      "Beds Filled" = "winter_beds_increase"))
-                                      ),
-                                  box(plotlyOutput("detailplot"))
+                                      )
+                                  
 
                                 ))
                         ),
