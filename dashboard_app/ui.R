@@ -36,7 +36,7 @@ ui <- dashboardPage(skin = "purple",
                                   infoBoxOutput("info_box_min", width = 4)
 
                                 ),
-                                
+
                                 fluidRow(
                                   radioButtons(
                                     "year_input", "Select Year",
@@ -44,7 +44,7 @@ ui <- dashboardPage(skin = "purple",
                                     inline = T, selected = "All"
                                   )
                                 ),
-                        
+
 
                                 #Main visual (tabset with plots showing diff in
                                 #KPI's in Winter)
@@ -55,28 +55,28 @@ ui <- dashboardPage(skin = "purple",
                                     #Bed capacity
                                     tabPanel("Bed Capacity",
 
-                                      plotlyOutput("overview_beds_plotly")
+                                      plotOutput("overview_beds_plot")
 
                                     ),
 
                                     #Admissions
                                     tabPanel("Admissions",
 
-                                      plotlyOutput("overview_admissions_plotly")
+                                      plotOutput("overview_admissions_plot")
 
                                     ),
 
                                     #Length of stay
                                     tabPanel("Length of stay",
 
-                                      plotlyOutput("overview_los_plotly")
+                                      plotOutput("overview_los_plot")
 
                                     ),
 
                                     #
                                     tabPanel("Deaths (from?)",
 
-                                      plotlyOutput("overview_deaths_plotly")
+                                      plotOutput("overview_deaths_plot")
 
                                     )
 
