@@ -109,8 +109,18 @@ ui <- dashboardPage(skin = "purple",
 
                         # Demographic tab content
                         tabItem(tabName = "demographic",
-                                h2("Demographic tab content")
+                                h2("Demographic tab content"),
+                                fluidRow(
+                                  tabBox(
+                                    title = "Test Title",
+                                    id = "demotab_1",
+                                    width = 12,
+                                    tabPanel("SIMD Plot", output),
+                                    tabPanel("Age Plot", output),
+                                    tabPanel("Sex Plot", output)
+                                  ))
+                                )
                         )
                       ),
                     )
-)
+

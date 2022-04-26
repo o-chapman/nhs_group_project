@@ -1,6 +1,6 @@
 server <- function(input, output) {
 
- ## TAB 1
+ #--------- OVERVIEW TAB ------------
 
   output$overview_beds_plot <- renderPlot({
 
