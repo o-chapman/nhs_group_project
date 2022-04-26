@@ -1,3 +1,8 @@
 library(shinydashboard)
+library(tidyverse)
+library(lubridate)
+library(tsibble)
+library(ggplot2)
+library(plotly)
 
-test_data <- c(1, 2, 3, 4, 5)
+source("global_tab1.R")
