@@ -42,7 +42,7 @@ ui <- dashboardPage(skin = "purple",
                                   checkboxGroupInput(
                                     "year_input", "Select Year" , c("2020", "2021"),
                                     selected = c("2020", "2021"),
-                                    inline = T,
+                                    inline = T
                                   )
                                 ),
 
@@ -116,8 +116,8 @@ ui <- dashboardPage(skin = "purple",
                                       )
 
 
-                                ))
-                        ),
+                                )),
+    
 
                         # Demographic tab content
                         tabItem(tabName = "demographic",
@@ -141,4 +141,4 @@ ui <- dashboardPage(skin = "purple",
 
                         )
                       )
-                    
+)    
