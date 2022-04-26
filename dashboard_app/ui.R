@@ -38,10 +38,10 @@ ui <- dashboardPage(skin = "purple",
                                 ),
 
                                 fluidRow(
-                                  radioButtons(
-                                    "year_input", "Select Year",
-                                    choices = c("2020", "2021", "2022", "All"),
-                                    inline = T, selected = "All"
+                                  checkboxGroupInput(
+                                    "year_input", "Select Year" , c("2020", "2021"),
+                                    selected = c("2020", "2021"),
+                                    inline = T, 
                                   )
                                 ),
 
