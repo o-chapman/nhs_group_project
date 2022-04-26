@@ -35,7 +35,11 @@ ggplotly(dep_date %>%
   summarise(avg_admissions = mean(number_admissions)) %>% 
   ggplot() +
   aes(x = date, y = avg_admissions, colour = simd_quintile) +
-  geom_line())
+  geom_line() +
+    labs(title = "Average Admissions by SIMD",
+         x = "Date",
+         y = "Average Admissions",
+         colour = "SIMD Quintile"))
 ```
 
 ```{r}
