@@ -59,6 +59,7 @@ server <- function(input, output) {
 
   output$hospital_plot <- renderLeaflet({
     hospitals %>%
+      filter(location %in% diff_data_hospitals$hospital_code) %>% 
       leaflet() %>%
       addProviderTiles(providers$CartoDB.Positron) %>%
       # addProviderTiles(providers$CartoDB.Voyager) %>%
@@ -66,7 +67,7 @@ server <- function(input, output) {
                        lat = ~y,
                        color = "purple",
                        fillOpacity = 0.5,
-                       radius = 2,
+                       radius = 5,
                        popup = ~paste0(location_name, "<br>", address_line, "<br>",
                                        postcode))
                        
