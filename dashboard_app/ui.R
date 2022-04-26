@@ -127,12 +127,18 @@ ui <- dashboardPage(skin = "purple",
                                     title = "Test Title",
                                     id = "demotab_1",
                                     width = 12,
-                                    tabPanel("SIMD Plot", output),
-                                    tabPanel("Age Plot", output),
-                                    tabPanel("Sex Plot", output)
+                                    tabPanel(value = "simd",
+                                      "SIMD Plot", 
+                                             plotlyOutput("simd_plot")),
+                                    tabPanel(value = "age",
+                                      "Age Plot",
+                                             plotlyOutput("age_plot")),
+                                    tabPanel(value = "sex",
+                                      "Sex Plot",
+                                             plotlyOutput("sex_plot"))
                                   ))
                                 )
 
                         )
                       )
-                    )
+                    

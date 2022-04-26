@@ -42,11 +42,4 @@ ggplotly(dep_date %>%
          colour = "SIMD Quintile"))
 ```
 
-```{r}
-
-input = list(
-  
-  
-)
-```
 

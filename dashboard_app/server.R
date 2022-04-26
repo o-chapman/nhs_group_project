@@ -58,8 +58,11 @@ server <- function(input, output) {
                scale_x_date(name = "", limits = c(as.Date("2020-01-01", "%Y-%m-%d"), as.Date("2022-02-20", "%Y-%m-%d")), date_breaks = "3 months",
                             date_minor_breaks = "1 month", date_labels = "%b %y") +
                labs(y = "Average Admissions(weekly)") +
-               theme_minimal()
-    )
+               theme_minimal())
+             
+    })
+  
+ 
 
 
 
@@ -188,7 +191,7 @@ server <- function(input, output) {
 
 
 
-}
+
 
 
 
@@ -202,4 +205,51 @@ server <- function(input, output) {
 
 
   # --------------------------DEMOGRAPHIC TAB -----
-  }
+  
+output$simd_plot <- renderPlotly({
+  
+  ggplotly(dep_date %>%
+             group_by(date, simd_quintile) %>% 
+             summarise(avg_admissions = mean(number_admissions)) %>% 
+             ggplot() +
+             aes(x = date, y = avg_admissions, colour = simd_quintile) +
+             geom_line() +
+             labs(title = "Average Admissions by SIMD",
+                  x = "Date",
+                  y = "Average Admissions",
+                  colour = "SIMD Quintile"))
+  
+})
+
+output$age_plot <- renderPlotly({
+  
+  ggplotly(age_date_clean %>%
+             group_by(date, age_group) %>% 
+             summarise(avg_admissions = mean(number_admissions)) %>% 
+             ggplot() +
+             aes(x = date, y = avg_admissions, colour = age_group) +
+             geom_line() +
+             labs(title = "Mean Weekly Admissions by Age Group",
+                  x = "Date",
+                  y = "Mean Admissions",
+                  colour = "") +
+             theme_bw())
+  
+})
+
+output$sex_plot <- renderPlotly({
+  
+  ggplotly(sex_data_clean %>%
+             group_by(date, sex) %>% 
+             summarise(avg_admissions = mean(number_admissions)) %>% 
+             ggplot() +
+             aes(x = date, y = avg_admissions, colour = sex) +
+             geom_line() +
+             labs(title = "Mean Weekly Admissions by Gender",
+                  x = "Date",
+                  y = "Mean Admissions",
+                  colour = "") +
+             theme_bw())
+  
+})
+}

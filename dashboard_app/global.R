@@ -68,3 +68,44 @@ hospitals <- st_transform(hospitals , 4326)
 hospitals <- sf_to_df(hospitals, fill = TRUE)
 
 diff_data_hospitals <- read_csv("clean_data/diff_data_hospitals.csv")
+
+#-----------DEMOGRAPHIC----------
+
+# read in admissions & deprivation data, clean names
+deprivation <- read_csv(here::here("raw_data/admissions_by_hb_and_deprivation.csv")) %>% 
+  clean_names()
+
+# create date column from weekly data
+dep_date <- deprivation %>% 
+  mutate(
+    year = str_extract(week_ending, "^\\d{4}"),
+    monthday = str_extract(week_ending, "\\d{4}$"),
+    month = str_extract(monthday, "^\\d{2}"),
+    day = str_extract(monthday, "\\d{2}$"),
+    date = ymd(str_c(year, month, day)), .after = 1
+  )
+
+# change quintiles from continuous to discrete for binning
+dep_date$simd_quintile <- as_factor(dep_date$simd_quintile)
+
+# read in age & sex data, clean names
+age <- read_csv(here::here("raw_data/age_data.csv")) %>% 
+  clean_names()
+
+# create columns with day, month, year and date columns
+age_by_date <- age %>% 
+  mutate(
+    year = str_extract(week_ending, "^\\d{4}"),
+    monthday = str_extract(week_ending, "\\d{4}$"),
+    month = str_extract(monthday, "^\\d{2}"),
+    day = str_extract(monthday, "\\d{2}$"),
+    date = ymd(str_c(year, month, day)), .after = 1
+  )
+
+# remove all ages from age_group
+age_date_clean <- age_by_date %>% 
+  filter(!age_group == "All ages")
+
+# remove All from sex
+sex_data_clean <- age_by_date %>% 
+  filter(!sex == "All")
