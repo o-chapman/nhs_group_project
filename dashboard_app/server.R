@@ -79,6 +79,16 @@ server <- function(input, output) {
   
   #---------------------------MAP DETAIL PLOT COMPONENtS
   
+  detailmap_pre <- reactive(
+    beds_geom_filtered %>% 
+      ggplot(aes(x = name.x, y = value)) +
+      geom_col()
+    
+  )
   
+  output$detailmap <- renderPlotly({
+    ggplotly(detailmap_pre())
+    
+  })
 }
 

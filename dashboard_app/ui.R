@@ -54,9 +54,7 @@ ui <- dashboardPage(skin = "purple",
                                                      "Wait Time Tariff Overflow" = "winter_target_wait_time_overshoot_increase",
                                                      "Beds Filled" = "winter_beds_increase"))
                                       ),
-                                  box(selectInput("map_detail",
-                                                  "Pick an area to detail",
-                                                  choices = distinct(beds_geom, name.x))
+                                  box(plotlyOutput("detailplot"))
 
                                 ))
                         ),
@@ -66,4 +64,4 @@ ui <- dashboardPage(skin = "purple",
                         )
                       )
                     )
-)
+

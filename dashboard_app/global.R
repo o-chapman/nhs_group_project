@@ -4,6 +4,7 @@ library(janitor)
 library(leaflet)
 library(sf)
 library(sfheaders)
+library(plotly)
 
 
 

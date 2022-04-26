@@ -133,7 +133,16 @@ beds_geom %>%
       select(hb, geometry, name.x)
 
 
+
 beds_geom %>% distinct(hb)
 
+beds_geom_filtered %>% 
+      ggplot(aes(x = name.x, y = value)) +
+      geom_col()
+
+```
+
+```{r}
+beds_geom %>% 
 ```
 
