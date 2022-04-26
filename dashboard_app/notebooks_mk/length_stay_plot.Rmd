@@ -1,0 +1,31 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+```{r}
+length_stay_data <- read_csv("raw_data/inpatient_and_daycase_by_nhs_board_of_treatment_age_and_sex.csv") %>% 
+  clean_names()
+```
+
+```{r}
+subset_length_data <- length_stay_data %>% 
+  arrange(quarter)
+
+correct_subset %>% 
+  distinct(admission_type)
+
+correct_subset <- subset_length_data[-c(1:87236),]
+
+correct_subset %>%
+  filter(!is.na(average_length_of_stay)) %>% 
+  filter(admission_type %in% c("Elective Inpatients", "Emergency Inpatients")) %>% 
+  group_by(quarter, admission_type) %>% 
+  mutate(avg_stay = mean(average_length_of_stay)) %>% 
+  ggplot(aes(x = quarter, y = avg_stay, fill = admission_type)) +
+  geom_col(position = "dodge") +
+  labs(title = "Mean Length of Stay by Admission Type",
+       x = "Year|Quarter",
+       y = "Mean Length of Stay (mins)") +
+  theme_bw()
+```

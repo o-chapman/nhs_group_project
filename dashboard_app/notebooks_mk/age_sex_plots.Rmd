@@ -1,0 +1,68 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+```{r}
+# read in age data
+age <- read_csv(here::here("raw_data/age_data.csv")) %>% 
+  clean_names()
+```
+
+```{r}
+# create day, month, year and date columns
+age_by_date <- age %>% 
+  mutate(
+    year = str_extract(week_ending, "^\\d{4}"),
+    monthday = str_extract(week_ending, "\\d{4}$"),
+    month = str_extract(monthday, "^\\d{2}"),
+    day = str_extract(monthday, "\\d{2}$"),
+    date = ymd(str_c(year, month, day)), .after = 1
+  )
+```
+
+
+```{r}
+age_date_clean <- age_by_date %>% 
+  filter(!age_group == "All ages")
+  
+```
+
+```{r}
+# create plot of admissions by age
+ggplotly(age_date_clean %>%
+  group_by(date, age_group) %>% 
+  summarise(avg_admissions = mean(number_admissions)) %>% 
+  ggplot() +
+  aes(x = date, y = avg_admissions, colour = age_group) +
+  geom_line() +
+    labs(title = "Mean Weekly Admissions by Age Group",
+         x = "Date",
+         y = "Mean Admissions",
+         colour = "") +
+    theme_bw())
+```
+
+```{r}
+age_by_date %>% 
+  filter(sex == "All") %>% 
+  count()
+
+sex_data_clean <- age_by_date %>% 
+  filter(!sex == "All")
+```
+
+```{r}
+ggplotly(sex_data_clean %>%
+  group_by(date, sex) %>% 
+  summarise(avg_admissions = mean(number_admissions)) %>% 
+  ggplot() +
+  aes(x = date, y = avg_admissions, colour = sex) +
+  geom_line() +
+    labs(title = "Mean Weekly Admissions by Gender",
+         x = "Date",
+         y = "Mean Admissions",
+         colour = "") +
+    theme_bw())
+```
+

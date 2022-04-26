@@ -1,0 +1,52 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+```{r}
+library(tidyverse)
+library(janitor)
+library(lubridate)
+```
+
+```{r}
+deprivation <- read_csv(here::here("raw_data/admissions_by_hb_and_deprivation.csv")) %>% 
+  clean_names()
+```
+
+```{r}
+dep_date <- deprivation %>% 
+  mutate(
+    year = str_extract(week_ending, "^\\d{4}"),
+    monthday = str_extract(week_ending, "\\d{4}$"),
+    month = str_extract(monthday, "^\\d{2}"),
+    day = str_extract(monthday, "\\d{2}$"),
+    date = ymd(str_c(year, month, day)), .after = 1
+  )
+```
+
+```{r}
+dep_date$simd_quintile <- as_factor(dep_date$simd_quintile)
+
+library(plotly)
+
+ggplotly(dep_date %>%
+  group_by(date, simd_quintile) %>% 
+  summarise(avg_admissions = mean(number_admissions)) %>% 
+  ggplot() +
+  aes(x = date, y = avg_admissions, colour = simd_quintile) +
+  geom_line() +
+    labs(title = "Average Admissions by SIMD",
+         x = "Date",
+         y = "Average Admissions",
+         colour = "SIMD Quintile"))
+```
+
+```{r}
+
+input = list(
+  
+  
+)
+```
+
