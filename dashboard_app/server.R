@@ -69,4 +69,54 @@ server <- function(input, output) {
   })
 
 
+#----------Plots for Pre & Post Covid Tab----------
+
+  output$emergency_admissions_plot <- renderPlot({
+    
+    emergency_admissions %>% 
+      ggplot() +
+      geom_line(aes(x = week_ending, y = count, group = 1), colour = "#74add1") +
+      geom_line(aes(x = week_ending, y = average_2018_2019, group = 1), colour = "#f46d43") +
+      labs(y = "Number of patients\n",
+           title = "Weekly emergency admissions to hospital\n") +
+      theme_light() +
+      theme(title = element_text(size = 14),
+            axis.text = element_text(size = 12),
+            axis.title.x = element_blank(),
+            axis.title.y = element_text(size = 12))
+    
+  })
+  
+  output$a_e_attendance_plot <- renderPlot({
+    
+    a_e_attendance %>% 
+      ggplot() +
+      geom_line(aes(x = week_ending, y = count, group = 1), colour = "#74add1") +
+      geom_line(aes(x = week_ending, y = average_2018_2019, group = 1), colour = "#f46d43") +
+      labs(y = "Number of patients\n",
+           title = "Weekly A&E department attendance\n") +
+      theme_light() +
+      theme(title = element_text(size = 14),
+            axis.text = element_text(size = 12),
+            axis.title.x = element_blank(),
+            axis.title.y = element_text(size = 12))
+    
+  })
+
+  output$deaths_weekly_plot <- renderPlot({
+    
+    deaths_weekly %>% 
+      ggplot() +
+      geom_line(aes(x = week_ending, y = count, group = 1), colour = "#74add1") +
+      geom_line(aes(x = week_ending, y = average_2015_2019, group = 1), colour = "#f46d43") +
+      labs(y = "Number of deaths\n",
+           title = "Weekly number of deaths\n") +
+      theme_light() +
+      theme(title = element_text(size = 14),
+            axis.text = element_text(size = 12),
+            axis.title.x = element_blank(),
+            axis.title.y = element_text(size = 12))
+    
+  })
+
 }

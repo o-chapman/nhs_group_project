@@ -92,14 +92,22 @@ ui <- dashboardPage(skin = "purple",
                         tabItem(tabName = "temporal",
                                 h2("Temporal tab content"),
                                 # Boxes need to be put in a row (or column)
+                                
                                 fluidRow(
-                                  box(plotOutput("plot1", height = 250)), # Placeholder stuff
-
-                                  box(
-                                    title = "Controls",
-                                    sliderInput("slider", "Number of observations:", 1, 100, 50)
-                                  )
-                                )
+                                  valueBox("-11%", "Emergency admissions", icon = icon("hospital"), color = "purple"),
+                                  
+                                  valueBox("-17%", "A&E attendance", icon = icon("user-injured"), color = "purple"),
+                                  
+                                  valueBox("+9%", "Deaths", icon = icon("skull"), color = "purple")
+                                ),
+                                
+                                fluidRow(
+                                  tabBox(title = "Pre and Post Covid Plots",
+                                         id = "preposttabs",
+                                         width = 12,
+                                         tabPanel("Emergency admissions", plotOutput("emergency_admissions_plot")),
+                                         tabPanel("A&E attendance", plotOutput("a_e_attendance_plot")), 
+                                         tabPanel("Weekly deaths", plotOutput("deaths_weekly_plot"))))
                         ),
 
                         # Geographic tab content

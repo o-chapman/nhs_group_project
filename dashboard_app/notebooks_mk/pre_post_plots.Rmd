@@ -1,0 +1,80 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+
+```{r}
+emergency_admissions <- read_csv(here::here("raw_data/emergency_admissions.csv"))
+a_e_attendance <- read_csv(here::here("raw_data/a_e_attendance.csv"))
+deaths_weekly <- read_csv(here::here("raw_data/deaths_weekly.csv"))
+
+library(lubridate)
+```
+
+```{r}
+emergency_admissions <- emergency_admissions %>% 
+  mutate(week_ending = dmy(week_ending))
+
+a_e_attendance <- a_e_attendance %>% 
+  mutate(week_ending = dmy(week_ending))
+
+deaths_weekly <- deaths_weekly %>% 
+  mutate(week_ending = dmy(week_ending))
+```
+
+```{r}
+# emergency admissions plot
+emergency_admissions %>% 
+  ggplot() +
+  geom_line(aes(x = week_ending, y = count, group = 1), colour = "#74add1") +
+  geom_line(aes(x = week_ending, y = average_2018_2019, group = 1), colour = "#f46d43") +
+  labs(y = "Number of patients\n",
+       title = "Weekly emergency admissions to hospital\n") +
+  theme_light() +
+  theme(title = element_text(size = 14),
+        axis.text = element_text(size = 12),
+        axis.title.x = element_blank(),
+        axis.title.y = element_text(size = 12))
+```
+
+```{r}
+# A&E attendance plot
+a_e_attendance %>% 
+  ggplot() +
+  geom_line(aes(x = week_ending, y = count, group = 1), colour = "#74add1") +
+  geom_line(aes(x = week_ending, y = average_2018_2019, group = 1), colour = "#f46d43") +
+  labs(y = "Number of patients\n",
+       title = "Weekly A&E department attendance\n") +
+  theme_light() +
+  theme(title = element_text(size = 14),
+        axis.text = element_text(size = 12),
+        axis.title.x = element_blank(),
+        axis.title.y = element_text(size = 12))
+```
+
+```{r}
+# weekly deaths plot
+deaths_weekly %>% 
+  ggplot() +
+  geom_line(aes(x = week_ending, y = count, group = 1), colour = "#74add1") +
+  geom_line(aes(x = week_ending, y = average_2015_2019, group = 1), colour = "#f46d43") +
+  labs(y = "Number of deaths\n",
+       title = "Weekly number of deaths\n") +
+  theme_light() +
+  theme(title = element_text(size = 14),
+        axis.text = element_text(size = 12),
+        axis.title.x = element_blank(),
+        axis.title.y = element_text(size = 12))
+```
+
+```{r}
+emergency_admissions %>% 
+  summarise(percentage_change = (mean(count) - mean(average_2018_2019)) / mean(average_2018_2019) * 100)
+
+a_e_attendance %>% 
+  summarise(percentage_change = (mean(count) - mean(average_2018_2019)) / mean(average_2018_2019) * 100)
+
+deaths_weekly %>% 
+  summarise(percentage_change = (mean(count) - mean(average_2015_2019)) / mean(average_2015_2019) * 100)
+```
