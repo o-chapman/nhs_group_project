@@ -7,7 +7,7 @@ library(sfheaders)
 
 
 
-
+# -------------GEOGRAPHIC------
 # Read in data about health boards data and clean data
 
 hb <- read_csv("raw_data/hb.csv") %>%
@@ -60,3 +60,7 @@ hospitals <- st_transform(hospitals , 4326)
 hospitals <- sf_to_df(hospitals, fill = TRUE)
 
 diff_data_hospitals <- read_csv("clean_data/diff_data_hospitals.csv")
+
+
+  
+# -------DEMOGRAPHIC------
