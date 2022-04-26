@@ -106,6 +106,6 @@ beds_geom %>%
 beds_geom %>%
       distinct(hb, geometry) %>%
       right_join(diff_data_areas, by = "hb") %>% 
-      select(hb, geometry, winter_mortality_increase)
+      pivot_longer()
 ```
 

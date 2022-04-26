@@ -32,7 +32,7 @@ server <- function(input, output) {
   pal <- reactive( 
     colorNumeric(
       palette = colorRampPalette(c('green', 'red'))(nrow(beds_geom_filtered())),
-      domain = beds_geom_filtered()[input$map_data])
+      domain = beds_geom_filtered()$input$map_data))
   )
   
 
@@ -42,12 +42,12 @@ server <- function(input, output) {
       leaflet() %>% 
       addProviderTiles("CartoDB.Positron",
                        options= providerTileOptions(opacity = 0.99)) %>%
-      addPolygons(fillColor = ~ pal()(beds_geom_filtered()[input$map_data]),
+      addPolygons(fillColor = ~ pal()(beds_geom_filtered()$),
                   weight = 1,
                   opacity = 1,
-                  color =  ~ pal()(beds_geom_filtered()[input$map_data]),
+                  color =  ~ pal()(beds_geom_filtered()),
                   fillOpacity = 0.8,
-                  label= ~ paste(beds_geom_filtered()[input$map_data]),
+                  label= ~ pal()(beds_geom_filtered()),
                   )
 
   })
