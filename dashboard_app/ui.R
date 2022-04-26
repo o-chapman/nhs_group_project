@@ -9,7 +9,7 @@ ui <- dashboardPage(skin = "purple",
 
                         # lots of icons we can use here: https://fontawesome.com/icons/categories/medical-health
                         menuItem("Overview", tabName = "overview", icon = icon("book-medical"),
-                                 badgeLabel = "temp", badgeColor = "green"),
+                                 badgeLabel = " ", badgeColor = "green"),
                         menuItem("Temporal", tabName = "temporal", icon = icon("chart-line"),
                                  badgeLabel = "temp", badgeColor = "yellow"),
                         menuItem("Geographic", tabName = "geographic", icon = icon("globe"),
@@ -30,6 +30,7 @@ ui <- dashboardPage(skin = "purple",
                         tabItem(tabName = "overview",
                                 h2("Overview tab content"),
 
+
                                 fluidRow(
                                   infoBoxOutput("info_box_mean", width = 4),
                                   infoBoxOutput("info_box_max", width = 4),
@@ -41,7 +42,7 @@ ui <- dashboardPage(skin = "purple",
                                   checkboxGroupInput(
                                     "year_input", "Select Year" , c("2020", "2021"),
                                     selected = c("2020", "2021"),
-                                    inline = T, 
+                                    inline = T,
                                   )
                                 ),
 
@@ -86,25 +87,36 @@ ui <- dashboardPage(skin = "purple",
                                 )
 
 
+
                         ),
 
                         # Temporal tab content
                         tabItem(tabName = "temporal",
-                                h2("Temporal tab content"),
+                                h2("Temporal tab content")
                                 # Boxes need to be put in a row (or column)
-                                fluidRow(
-                                  box(plotOutput("plot1", height = 250)), # Placeholder stuff
 
-                                  box(
-                                    title = "Controls",
-                                    sliderInput("slider", "Number of observations:", 1, 100, 50)
-                                  )
-                                )
                         ),
 
                         # Geographic tab content
                         tabItem(tabName = "geographic",
-                                h2("Geographic tab content")
+                                h2("Geographic tab content"),
+                                fluidRow(
+                                  tabBox(title =  textOutput("title"),
+                                         id = "geotabs",
+                                         width = 12,
+                                         tabPanel(value = "area", "Region Data", leafletOutput("heatmap")),
+                                         tabPanel(value = "point", "Hospital Data", leafletOutput("hospital_plot")))),
+                                fluidRow(
+                                  box(radioButtons("map_data",
+                                                   "Investigate Winter Increase",
+                                                   choices = c(
+                                                     "Mortality" = "winter_mortality_increase",
+                                                     "Wait Time Tariff Overflow" = "winter_target_wait_time_overshoot_increase",
+                                                     "Beds Filled" = "winter_beds_increase"))
+                                      )
+
+
+                                ))
                         ),
 
                         # Demographic tab content
@@ -120,7 +132,7 @@ ui <- dashboardPage(skin = "purple",
                                     tabPanel("Sex Plot", output)
                                   ))
                                 )
-                        )
-                      ),
-                    )
 
+                        )
+                      )
+                    )
