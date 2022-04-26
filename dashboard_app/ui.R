@@ -1,3 +1,4 @@
+
 ui <- dashboardPage(skin = "purple", 
                     dashboardHeader(title = "Epic dashboard"),
                     
@@ -23,9 +24,17 @@ ui <- dashboardPage(skin = "purple",
                       
                       tabItems(
                         
-                        # Geographic tab content
+                        # Overview tab content
                         tabItem(tabName = "overview",
-                                h2("Overview tab content")
+                                h2("Overview tab content"),
+                                
+                                fluidRow(
+                                  infoBoxOutput("info_box_mean", width = 3),
+                                  infoBoxOutput("info_box_max", width = 3),
+                                  infoBoxOutput("info_box_min", width = 3),
+                                  infoBoxOutput("info_box_sd", width = 3)
+                          
+                                )
                         ),
                         
                         # Temporal tab content
