@@ -35,7 +35,16 @@ ui <- dashboardPage(skin = "purple",
                                   infoBoxOutput("info_box_max", width = 4),
                                   infoBoxOutput("info_box_min", width = 4)
 
-                                )
+                                ),
+                                
+                                fluidRow(
+                                  radioButtons(
+                                    "year", "Select Year",
+                                    choices = c("2020", "2021", "2022", "All"),
+                                    inline = T, selected = "All"
+                                  )
+                                ),
+                        
 
 
 

@@ -47,6 +47,9 @@ server <- function(input, output) {
     )
   })
 
+  output$year_input <- {(
+    renderText(input$year)
+  )}
 
 
   ## TAB 1
