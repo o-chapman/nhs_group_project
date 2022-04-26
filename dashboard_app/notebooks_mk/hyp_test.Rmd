@@ -1,0 +1,74 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+```{r}
+library(tidyverse)
+library(janitor)
+```
+
+```{r}
+treat_age_sex <- treat_age_sex %>% 
+  clean_names()
+
+head(treat_age_sex)
+```
+
+__Hypotheses__
+
+H0: There is no significant difference in the mean stay of elective inpatients
+and emergency inpatients.
+
+$$H_0: \mu_{elective\ stay} - \mu_{emergency\ stay} = 0$$
+
+Ha: There is a significant difference in the mean stay of elective inpatients
+and emergency inpatients
+
+$$H_A: \mu_{elective\ stay} - \mu_{emergency\ stay} \neq 0$$
+
+
+```{r}
+hyp_data <- treat_age_sex %>% 
+  select(admission_type, average_length_of_stay)
+
+hyp_data_no_na <- hyp_data %>% 
+  filter(!is.na(average_length_of_stay))
+
+hyp_data_no_na %>% 
+  distinct(admission_type)
+
+my_data <- hyp_data_no_na %>% 
+  filter(admission_type %in% c("Elective Inpatients", "Emergency Inpatients"))
+
+library(infer)
+observed_stat <- my_data %>% 
+  specify(average_length_of_stay~admission_type) %>% 
+  calculate(stat = "diff in means", order = c("Elective Inpatients", "Emergency Inpatients"))
+
+observed_stat
+
+# emergency inpatients stay longer on average 3.36 days
+```
+```{r}
+null_distribution <- my_data %>% 
+  specify(average_length_of_stay~admission_type) %>% 
+  hypothesise(null = "independence") %>%
+  generate(reps = 1000, type = "permute") %>%
+  calculate(stat = "diff in means", order = c("Elective Inpatients", "Emergency Inpatients"))
+
+null_distribution %>% 
+  visualise() +
+  shade_p_value(obs_stat = observed_stat, direction = "left")
+
+null_distribution %>% 
+  get_p_value(obs_stat = observed_stat, direction = "left")
+```
+
+__Interpretation__
+
+Alpha = 0.05
+
+Since our p-value of 0.000... < 0.05, we reject the null hypothesis that there
+is no statistically significant difference in the mean length of stay between
+elective and emergency inpatients. 

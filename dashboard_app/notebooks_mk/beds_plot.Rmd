@@ -1,0 +1,80 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+```{r}
+beds <- read_csv("raw_data/beds_by_nhs_board_of_treatment_and_specialty.csv") %>% 
+  clean_names()
+```
+
+```{r}
+beds <- beds %>% 
+  arrange(quarter)
+
+beds_subset <- beds[-c(1:20427),]
+
+beds_subset %>% 
+  distinct(specialty_name)
+```
+
+```{r}
+beds_season <- beds %>% 
+  mutate(
+    season = str_extract(quarter, "\\d{1}$"),
+    season = recode(season, 
+      "1" = "Winter",
+      "2" = "Spring",
+      "3" = "Summer",
+      "4" = "Autumn"
+    ),
+    year = as.numeric(str_extract(quarter, "^\\d{4}"))
+  )
+
+beds_season_subset <- beds_subset %>% 
+  mutate(
+    season = str_extract(quarter, "\\d{1}$"),
+    season = recode(season, 
+      "1" = "Winter",
+      "2" = "Spring",
+      "3" = "Summer",
+      "4" = "Autumn"
+    ),
+    year = as.numeric(str_extract(quarter, "^\\d{4}"))
+  )
+```
+
+```{r}
+beds_season %>% 
+  group_by(season) %>% 
+  summarise(avg_daily_beds_perc = mean(percentage_occupancy, na.rm = TRUE)) %>% 
+  ggplot() +
+  aes(x = season, y = avg_daily_beds_perc, label = str_c(round(avg_daily_beds_perc), "%")) +
+  geom_text(nudge_y = 1, alpha = 0.8) +
+  geom_col(fill = "turquoise", alpha = 0.8) +
+  coord_cartesian(ylim = c(60, 80)) +
+  theme_minimal()
+
+beds_season %>% 
+  group_by(season, year) %>% 
+  summarise(avg_daily_beds_perc = mean(percentage_occupancy, na.rm = TRUE)) %>% 
+  ggplot() +
+  aes(x = season, y = avg_daily_beds_perc, label = str_c(round(avg_daily_beds_perc), "%")) +
+  geom_text(nudge_y = 1.2, alpha = 0.8) +
+  geom_col(fill = "turquoise", alpha = 0.8) +
+  coord_cartesian(ylim = c(60, 80)) +
+  facet_wrap(~year) +
+  theme_minimal()
+
+beds_season_subset %>% 
+  group_by(season, year) %>% 
+  summarise(avg_daily_beds_perc = mean(percentage_occupancy, na.rm = TRUE)) %>% 
+  ggplot() +
+  aes(x = season, y = avg_daily_beds_perc, label = str_c(round(avg_daily_beds_perc), "%")) +
+  geom_text(nudge_y = 1.2, alpha = 0.8) +
+  geom_col(fill = "turquoise", alpha = 0.8) +
+  coord_cartesian(ylim = c(60, 80)) +
+  facet_wrap(~year) +
+  theme_minimal()
+```
+
