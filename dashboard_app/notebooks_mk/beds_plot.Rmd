@@ -4,14 +4,15 @@ output: html_notebook
 ---
 
 ```{r}
-beds <- read_csv("raw_data/beds_by_nhs_board_of_treatment_and_specialty.csv") %>% 
-  clean_names()
+beds <- read_csv(here::here("raw_data/beds_by_nhs_board_of_treatment_and_specialty.csv")) %>% 
+  janitor::clean_names()
 ```
 
 ```{r}
 beds <- beds %>% 
   arrange(quarter)
 
+# subset with observations from 2021Q1
 beds_subset <- beds[-c(1:20427),]
 
 beds_subset %>% 
