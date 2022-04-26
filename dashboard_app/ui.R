@@ -41,11 +41,11 @@ ui <- dashboardPage(skin = "purple",
                         tabItem(tabName = "geographic",
                                 h2("Geographic tab content"),
                                 fluidRow(
-                                  tabBox(title = "Change Per 10,000 People in Winter",
+                                  tabBox(title =  textOutput("title"),
                                          id = "geotabs",
                                          width = 12,
-                                         tabPanel("Region Data", leafletOutput("heatmap")),
-                                         tabPanel("Hospital Data", leafletOutput("hospital_plot")))),
+                                         tabPanel(value = "area", "Region Data", leafletOutput("heatmap")),
+                                         tabPanel(value = "point", "Hospital Data", leafletOutput("hospital_plot")))),
                                 fluidRow(
                                   box(radioButtons("map_data",
                                                    "Investigate Winter Increase",
@@ -60,7 +60,7 @@ ui <- dashboardPage(skin = "purple",
                         ),
                         # Demographic tab content
                         tabItem(tabName = "demographic",
-                                h2("Demographic tab content")
+                                h2("")
                         )
                       )
                     )

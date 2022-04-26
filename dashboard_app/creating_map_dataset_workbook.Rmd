@@ -153,5 +153,19 @@ beds_geom %>%
 
 inner_join(beds_winter, hospital_deaths_winter) %>%
   inner_join(waiting_times_winter) %>%
-  write_csv(here::here("clean_data/diff_data_hospitals"))
+  write_csv(here::here("clean_data/diff_data_hospitals.csv"))
 ```
+
+```{r}
+hospitals %>%
+      filter(location %in% diff_data_hospitals$hospital_code)
+
+
+
+hospitals %>%
+      filter(location %in% diff_data_hospitals$hospital_code) %>%
+      distinct(location, location_name, x, y) %>%
+      rename("hospital_code" = location) %>%
+      full_join(diff_data_hospitals, by = "hospital_code")
+```
+

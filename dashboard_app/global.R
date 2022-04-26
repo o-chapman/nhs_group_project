@@ -51,19 +51,6 @@ hospitals <- read_csv(here::here("raw_data/current-hospital_flagged20211216.csv"
 hospitals <- hospitals %>%
   drop_na(x_coordinate)
 
-# hospitals <- st_as_sf(hospitals, coords = c("x_coordinate", "y_coordinate")) %>%
-#   st_set_crs(27700) %>%   #set coordinate system used
-#   st_transform(4326)     #transform coordinates to WGS84 coordinates
-
-# hospitals %>%
-#   leaflet() %>%
-#   addProviderTiles(providers$CartoDB.Voyager) %>%
-#   addCircleMarkers(data = hospitals$geometry,
-#                    color = "#fdae61",
-#                    fillOpacity = 0.5,
-#                    radius = 2)
-
-# Convert df to sf, 27700 is the EPSG code for the UK
 hospitals <- st_as_sf(hospitals,
                       coords = c("x_coordinate", "y_coordinate"),
                       crs = 27700)
