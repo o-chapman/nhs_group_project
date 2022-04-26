@@ -5,111 +5,68 @@ output: html_notebook
 
 
 ```{r}
-beds_diff <- beds_clean %>% 
-  filter(!str_detect(quarter,"201")) %>% 
+# Create data for increase in number of beds in Winter by individual hospital
+
+beds_winter <- beds %>% 
+  filter(str_detect(quarter, "202")) %>% 
   filter(specialty_name == "All Acute") %>% 
-  select(quarter, hb, average_occupied_beds) %>% 
-  mutate(
-    winter = str_detect(quarter, "1$")
-  ) %>% 
-  group_by(hb, winter) %>% 
+  rename(hospital_code = location) %>% 
+  select(quarter, hospital_code, average_occupied_beds) %>% 
+  mutate(winter = str_detect(quarter, "1$")) %>% 
+  group_by(hospital_code, winter) %>% 
   summarise(av_occ = mean(average_occupied_beds)) %>%
-  mutate(
-    av_occ = case_when(
-      winter == TRUE ~ av_occ ,
-      winter == FALSE ~ av_occ * -1
-    ) 
-    
+  mutate(av_occ = case_when(
+    winter == TRUE ~ av_occ,
+    winter == FALSE ~ av_occ * -1) 
   ) %>% 
   summarise(winter_beds_increase = sum(av_occ))
-  
-
-
-
-  
-  
-
 ```
 
 ```{r}
-library(lubridate)
-wait_times <- read_csv("raw_data/wait_times.csv") %>% 
-  clean_names()
+# Create data for increase in deaths in Winter by individual hospital
 
-winter_target_wait_time_overshoot_increase <- wait_times %>% 
+hospital_deaths_winter <- hospital_deaths %>% 
+  filter(str_detect(time_period, "202")) %>% 
+  rename(hospital_code = location_code) %>% 
+  select(time_period, hospital_code, number_of_deaths) %>% 
+  mutate(winter = str_detect(time_period, "1$")) %>% 
+  group_by(hospital_code, winter) %>% 
+  summarise(av_deaths = mean(number_of_deaths)) %>% 
+  mutate(av_deaths = case_when(
+    winter == TRUE ~ av_deaths, 
+    winter == FALSE ~ av_deaths * -1)
+  ) %>% 
+  summarise(winter_deaths_increase = sum(av_deaths))
+```
+
+```{r}
+# Create data for increase in waiting times in Winter by individual hospital
+
+waiting_times_winter <- waiting_times %>% 
   mutate(month = ym(month)) %>% 
   mutate(quarter = quarter(month), .after = month) %>% 
-  mutate(target_diff = number_of_attendances_aggregate - number_meeting_target_aggregate, .after = quarter) %>% 
-  rename(hb = hbt) %>% 
-  filter(month > "2019-12-29") %>% 
-  select(quarter, hb, target_diff) %>% 
+  mutate(target_diff = number_of_attendances_aggregate 
+         - number_meeting_target_aggregate, .after = quarter) %>% 
+  rename(hospital_code = treatment_location) %>% 
+  filter(str_detect(month, "202")) %>% 
+  select(month, quarter, hospital_code, target_diff) %>% 
+  mutate(winter = quarter == 1) %>% 
+  group_by(hospital_code, winter) %>% 
+  summarise(av_diff = mean(target_diff)) %>% 
   mutate(
-    winter = str_detect(quarter, "1$")
-  ) %>% 
-  group_by(hb, winter) %>% 
-  summarise(av_diff = mean(target_diff)) %>%
-  mutate(
-    av_occ = case_when(
-      winter == TRUE ~ av_diff ,
+    av_diff = case_when(
+      winter == TRUE ~ av_diff,
       winter == FALSE ~ av_diff * -1
     ) 
-    
   ) %>% 
   summarise(winter_target_wait_time_overshoot_increase = sum(av_diff))
-  
 ```
 
 ```{r}
-mortality <- read_csv("raw_data/mortality_data.csv")
-```
+# Joining data to only include hospitals which have corresponding values in each dataset
 
-```{r}
-winter_mortality_increase <- mortality %>% 
-  clean_names() %>% 
-  rename(hb = hbt, quarter = time_period) %>% 
-  filter(!str_detect(quarter,"201")) %>% 
-  filter(str_detect(hb, "^S0")) %>% 
-  select(quarter, hb, number_of_deaths) %>% 
-  drop_na(number_of_deaths) %>% 
-  mutate(
-    winter = str_detect(quarter, "1$")
-  ) %>% 
-  group_by(hb, winter) %>% 
-  summarise(av_mort = mean(number_of_deaths)) %>%
-  mutate(
-    av_mort = case_when(
-      winter == TRUE ~ av_mort ,
-      winter == FALSE ~ av_mort * -1
-    ) 
-    
-  ) %>% 
-  summarise(winter_mortality_increase = sum(av_mort))
-
-```
-
-```{r}
-diff_data <- winter_mortality_increase %>% 
-  full_join(winter_target_wait_time_overshoot_increase, by = "hb") %>% 
-  full_join(beds_diff, by = "hb")
-
-write_csv(diff_data, "clean_data/diff_data.csv")
-```
-
-```{r}
-beds_geom %>%
-      distinct(hb, geometry) %>%
-  right_join(diff_data, by = "hb") %>% 
-  
-  
-```
-
-```{r}
-beds_geom %>%
-      distinct(hb, geometry) %>%
-      right_join(diff_data_areas, by = "hb") %>% 
-  summary()
-
-
-# winter mort - 132 to 
+inner_join(beds_winter, hospital_deaths_winter) %>% 
+  inner_join(waiting_times_winter) %>% 
+  write_csv(here::here("clean_data/diff_data_hospitals"))
 ```
 

@@ -4,6 +4,7 @@ library(janitor)
 library(leaflet)
 library(sf)
 library(sfheaders)
+library(lubridate)
 
 
 
@@ -72,3 +73,12 @@ hospitals <- st_as_sf(hospitals,
 hospitals <- st_transform(hospitals , 4326)
 hospitals <- sf_to_df(hospitals, fill = TRUE)
 
+
+
+waiting_times <- read_csv(here::here("raw_data/monthly_ae_waitingtimes_202201.csv")) %>% 
+  clean_names()
+
+hospital_deaths <- read_csv(here::here("raw_data/mortality_rates_by_hospital.csv")) %>% 
+  clean_names()
+
+diff_data_hospitals <- read_csv(here::here("clean_data/diff_data_hospitals"))
