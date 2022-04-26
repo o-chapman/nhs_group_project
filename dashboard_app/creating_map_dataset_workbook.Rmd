@@ -126,3 +126,14 @@ beds_geom %>%
 # winter mort - 132 to 
 ```
 
+```{r}
+beds_geom %>%
+      distinct(hb, geometry, name.x) %>%
+      right_join(diff_data_areas, by = "hb") %>% 
+      select(hb, geometry, name.x)
+
+
+beds_geom %>% distinct(hb)
+
+```
+

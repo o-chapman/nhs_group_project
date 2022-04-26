@@ -22,9 +22,9 @@ server <- function(input, output) {
   # Make filters from input
   beds_geom_filtered <-reactive(
     beds_geom %>%
-      distinct(hb, geometry) %>%
+      distinct(hb, geometry, name.x) %>%
       right_join(diff_data_areas, by = "hb") %>% 
-      select(hb, geometry, input$map_data) %>% 
+      select(hb, geometry, input$map_data, name.x) %>% 
       rename("value" = input$map_data)
   )
 
@@ -50,9 +50,8 @@ server <- function(input, output) {
                   opacity = 1,
                   color =  ~ value,
                   fillOpacity = 0.8,
-                  label= ~ value) %>% 
+                  label= ~ paste(name.x, ":", value)) %>% 
       addLegend(position = "bottomright", pal = pal(), values = beds_geom_filtered()$value,
-                title = "Change per 10,000 people in winter",
                 opacity = 1)
 
 
@@ -77,4 +76,9 @@ server <- function(input, output) {
 
 
 
+  
+  #---------------------------MAP DETAIL PLOT COMPONENtS
+  
+  
 }
+

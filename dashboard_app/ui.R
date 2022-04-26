@@ -41,7 +41,7 @@ ui <- dashboardPage(skin = "purple",
                         tabItem(tabName = "geographic",
                                 h2("Geographic tab content"),
                                 fluidRow(
-                                  tabBox(title = "Geo Data",
+                                  tabBox(title = "Change Per 10,000 People in Winter",
                                          id = "geotabs",
                                          width = 12,
                                          tabPanel("Region Data", leafletOutput("heatmap")),
@@ -52,9 +52,13 @@ ui <- dashboardPage(skin = "purple",
                                                    choices = c(
                                                      "Mortality" = "winter_mortality_increase",
                                                      "Wait Time Tariff Overflow" = "winter_target_wait_time_overshoot_increase",
-                                                     "Beds Filled" = "winter_beds_increase")))
+                                                     "Beds Filled" = "winter_beds_increase"))
+                                      ),
+                                  box(selectInput("map_detail",
+                                                  "Pick an area to detail",
+                                                  choices = distinct(beds_geom, name.x))
 
-                                )
+                                ))
                         ),
                         # Demographic tab content
                         tabItem(tabName = "demographic",

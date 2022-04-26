@@ -41,6 +41,13 @@ boundary_esri <- st_read(
 
 beds_geom <- beds_clean %>% left_join(boundary_esri, by = "hb")
 
+hb_names <- hb %>% 
+  select(code, name) %>% 
+  rename("hb" = code)
+
+beds_geom <- beds_geom %>% 
+  left_join(hb_names, by = "hb")
+
 diff_data_areas <- read_csv("clean_data/diff_data.csv")
 
 admissions <- read_csv(here::here("raw_data/hospital_admissions_hb_simd_20220302.csv")) %>%
