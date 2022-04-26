@@ -48,7 +48,7 @@ server <- function(input, output) {
   })
 
   output$year_input <- {(
-    renderText(input$year)
+    renderPlot(input$year)
   )}
 
 

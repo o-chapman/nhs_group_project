@@ -46,9 +46,6 @@ ui <- dashboardPage(skin = "purple",
                                 ),
                         
 
-
-
-
                                 #Main visual (tabset with plots showing diff in
                                 #KPI's in Winter)
                                 fluidRow(
