@@ -42,15 +42,5 @@ server <- function(input, output) {
       fill = TRUE
     )
   })
-  
-  output$info_box_sd <- renderInfoBox({
-    infoBox(
-      title = "SD",
-      value = sd(test_data),
-      subtitle = "sd of test data",
-      icon = icon("users"),
-      color = "purple",
-      fill = TRUE
-    )
-  })
+
 }

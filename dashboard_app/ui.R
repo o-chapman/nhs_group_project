@@ -29,10 +29,9 @@ ui <- dashboardPage(skin = "purple",
                                 h2("Overview tab content"),
                                 
                                 fluidRow(
-                                  infoBoxOutput("info_box_mean", width = 3),
-                                  infoBoxOutput("info_box_max", width = 3),
-                                  infoBoxOutput("info_box_min", width = 3),
-                                  infoBoxOutput("info_box_sd", width = 3)
+                                  infoBoxOutput("info_box_mean", width = 4),
+                                  infoBoxOutput("info_box_max", width = 4),
+                                  infoBoxOutput("info_box_min", width = 4)
                           
                                 )
                         ),
