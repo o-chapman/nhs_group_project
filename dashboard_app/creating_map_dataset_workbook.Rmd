@@ -3,6 +3,19 @@ title: "R Notebook"
 output: html_notebook
 ---
 
+```{r}
+hb_pop <- read_csv("raw_data/hb_pop.csv") %>% 
+  clean_names()
+
+
+hb_pop <- hb_pop %>% 
+  select(year, hb, all_ages) %>% 
+  group_by(hb) %>% 
+  summarise(mean_pop = mean(all_ages))
+
+```
+
+
 
 ```{r}
 beds_diff <- beds_clean %>% 
@@ -49,11 +62,10 @@ winter_target_wait_time_overshoot_increase <- wait_times %>%
   group_by(hb, winter) %>% 
   summarise(av_diff = mean(target_diff)) %>%
   mutate(
-    av_occ = case_when(
+    av_diff = case_when(
       winter == TRUE ~ av_diff ,
       winter == FALSE ~ av_diff * -1
     ) 
-    
   ) %>% 
   summarise(winter_target_wait_time_overshoot_increase = sum(av_diff))
   
@@ -90,24 +102,25 @@ winter_mortality_increase <- mortality %>%
 ```{r}
 diff_data <- winter_mortality_increase %>% 
   full_join(winter_target_wait_time_overshoot_increase, by = "hb") %>% 
-  full_join(beds_diff, by = "hb")
+  full_join(beds_diff, by = "hb") %>% right_join(hb_pop, by = "hb") %>% 
+  mutate(across(.cols = winter_mortality_increase:winter_beds_increase,
+                ~ (.x/mean_pop)*10000)) %>% 
+  drop_na(winter_mortality_increase)
 
 write_csv(diff_data, "clean_data/diff_data.csv")
+
+
 ```
 
 ```{r}
 beds_geom %>%
-      distinct(hb, geometry) %>%
   right_join(diff_data, by = "hb") %>% 
   
   
 ```
 
 ```{r}
-beds_geom %>%
-      distinct(hb, geometry) %>%
-      right_join(diff_data_areas, by = "hb") %>% 
-  summary()
+
 
 
 # winter mort - 132 to 

@@ -30,7 +30,14 @@ server <- function(input, output) {
 
   # Generate colour palate based on filter domain.
 
-  pal <- reactive(colorBin("YlOrRd", domain = beds_geom_filtered()$value, bins = nrow(beds_geom_filtered())))
+  rc1 <- reactive(colorRampPalette(colors = c("blue3", "yellow"))(sum(beds_geom_filtered()$value < 0)))
+  
+  
+  rc2 <- reactive(colorRampPalette(colors = c("yellow", "red3"))(sum(beds_geom_filtered()$value >= 0)))
+  
+  rampcols <- reactive(c(rc1(), rc2()))
+  
+  pal <- reactive(colorBin(rampcols(), domain = beds_geom_filtered()$value, bins = nrow(beds_geom_filtered())))
  
   output$heatmap <- renderLeaflet({
     beds_geom_filtered() %>%
@@ -43,7 +50,10 @@ server <- function(input, output) {
                   opacity = 1,
                   color =  ~ value,
                   fillOpacity = 0.8,
-                  label= ~ value)
+                  label= ~ value) %>% 
+      addLegend(position = "bottomright", pal = pal(), values = beds_geom_filtered()$value,
+                title = "Change per 10,000 people in winter",
+                opacity = 1)
 
 
   })
