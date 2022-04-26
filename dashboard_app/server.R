@@ -24,31 +24,27 @@ server <- function(input, output) {
     beds_geom %>%
       distinct(hb, geometry) %>%
       right_join(diff_data_areas, by = "hb") %>% 
-      select(hb, geometry, input$map_data)
+      select(hb, geometry, input$map_data) %>% 
+      rename("value" = input$map_data)
   )
 
   # Generate colour palate based on filter domain.
 
-  pal <- reactive( 
-    colorNumeric(
-      palette = colorRampPalette(c('green', 'red'))(nrow(beds_geom_filtered())),
-      domain = beds_geom_filtered()$input$map_data))
-  )
-  
-
+  pal <- reactive(colorBin("YlOrRd", domain = beds_geom_filtered()$value, bins = nrow(beds_geom_filtered())))
+ 
   output$heatmap <- renderLeaflet({
     beds_geom_filtered() %>%
       st_as_sf() %>%
       leaflet() %>% 
       addProviderTiles("CartoDB.Positron",
                        options= providerTileOptions(opacity = 0.99)) %>%
-      addPolygons(fillColor = ~ pal()(beds_geom_filtered()$),
+      addPolygons(fillColor = ~ pal()(value),
                   weight = 1,
                   opacity = 1,
-                  color =  ~ pal()(beds_geom_filtered()),
+                  color =  ~ value,
                   fillOpacity = 0.8,
-                  label= ~ pal()(beds_geom_filtered()),
-                  )
+                  label= ~ value)
+
 
   })
 
