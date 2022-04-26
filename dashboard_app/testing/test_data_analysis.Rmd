@@ -94,7 +94,7 @@ library(tsibble)
 
 duplicates(admissions_date)
 
-# making datetime tsibble
+# MAKING DATETIME TSIBBLE
 
 admissions_dt <- admissions_date %>% 
   group_by(date) %>% 
@@ -109,9 +109,38 @@ admissions_plotly <- admissions_dt %>%
   geom_line(color = "steelblue") +
   scale_x_date(name = "", limits = c(as.Date("2020-01-01", "%Y-%m-%d"), as.Date("2022-02-20", "%Y-%m-%d")), date_breaks = "3 months", 
                date_minor_breaks = "1 month") +
+  labs(y = "Average Admissions(weekly)") +
   theme_minimal()
 
 ggplotly(admissions_plotly)
+
+## ADDING WINTER SHADING
+
+winter_shading <- c(annotate(geom = "rect",
+                             xmin = as_date("2020-01-01"),
+                             xmax = as_date("2020-04-01"),
+                             ymin = -Inf,
+                             ymax = Inf,
+                             alpha = 0.3,
+                             fill = "turquoise"),
+                    annotate(geom = "rect",
+                             xmin = as_date("2021-01-01"),
+                             xmax = as_date("2021-04-01"),
+                             ymin = -Inf,
+                             ymax = Inf,
+                             alpha = 0.3,
+                             fill = "turquoise"))
+
+admissions_dt %>%
+  ggplot() +
+  geom_line(aes(x = date, y = avg_admissions_by_week), color = "steelblue") +
+  winter_shading[1] +
+  winter_shading[2] +
+  scale_x_date(name = "", limits = c(as.Date("2020-01-01", "%Y-%m-%d"), as.Date("2022-02-20", "%Y-%m-%d")), date_breaks = "3 months", 
+               date_minor_breaks = "1 month", date_labels = "%b %y") +
+  labs(y = "Average Admissions(weekly)") +
+  theme_minimal()
+
 ```
 
 ```{r}

@@ -20,12 +20,64 @@ ui <- dashboardPage(skin = "purple",
 
                     # Body content
                     dashboardBody(
-
+                      
+                      # First overview tab
                       tabItems(
 
-                        # Geographic tab content
                         tabItem(tabName = "overview",
-                                h2("Overview tab content")
+                                h2("Overview tab content"),
+                                
+                                # Row with slider for tabset plots
+                                fluidRow(
+                                  
+                                  sliderInput("date_range_slider",
+                                              "Date range:",
+                                              min = date_limits[1],
+                                              max = date_limits[2],
+                                              value = date_limits)     
+                                  
+                                  
+                                ),
+                                
+                                #Main visual (tabset with plots showing diff in
+                                #KPI's in Winter)
+                                fluidRow(
+                                  
+                                  tabsetPanel(
+                                    
+                                    #Bed capacity
+                                    tabPanel("Bed Capacity",
+                                      
+                                      plotlyOutput("overview_beds_plotly")
+                                      
+                                    ),
+                                    
+                                    #Admissions
+                                    tabPanel("Admissions",
+                                      
+                                      plotlyOutput("overview_admissions_plotly")
+                                      
+                                    ),
+                                    
+                                    #Length of stay
+                                    tabPanel("Length of stay",
+                                      
+                                      plotlyOutput("overview_los_plotly")
+                                      
+                                    ),
+                                    
+                                    #
+                                    tabPanel("Deaths (from?)",
+                                      
+                                      plotlyOutput("overview_deaths_plotly")
+
+                                    )  
+                                  
+                                  )
+                                  
+
+                                )
+                                
                         ),
 
                         # Temporal tab content
