@@ -1,44 +1,30 @@
 server <- function(input, output) {
   
-  set.seed(122)
-  histdata <- rnorm(500)
-  
-  output$plot1 <- renderPlot({
-    
-    data <- histdata[seq_len(input$slider)]
-    hist(data)
-    
-  })
-  
-  ## TAB 1
-  
-  admissions_dt_react <- reactive({
-    
-    
-    
-  })
+ ## TAB 1
   
   output$overview_beds_plot <- renderPlot({
     
-    ggplotly(beds_season_subset %>% 
-               ggplot() +
-               aes(x = date, y = avg_daily_beds_perc, label = str_c(round(avg_daily_beds_perc), "%")) +
-               geom_text(nudge_y = 1.2, alpha = 0.8) +
-               geom_col(fill = "turquoise", alpha = 0.8) +
-               coord_cartesian(ylim = c(60, 80)) +
-               theme_minimal()
-    )
-    
+    beds_season_subset %>% 
+      filter(year %in% input$year_input) %>%
+      ggplot() +
+      aes(x = date, y = avg_daily_beds_perc, label = str_c(round(avg_daily_beds_perc), "%")) +
+      geom_text(nudge_y = 1.2, alpha = 0.8) +
+      geom_col(fill = "turquoise", alpha = 0.8) +
+      coord_cartesian(ylim = c(60, 80)) +
+      labs(x = "") +
+      theme_minimal()
   })
   
   output$overview_admissions_plot <- renderPlot({
     
     admissions_dt %>%
+      filter(year %in% input$year_input) %>% 
       ggplot() +
       aes(x = date, y = avg_admissions_by_week) +
       geom_line(color = "steelblue") +
       winter_shading[1] +
       winter_shading[2] +
+      winter_shading[3] +
       scale_x_date(name = "",
                    limits = c(as.Date("2020-01-01", "%Y-%m-%d"), as.Date("2022-02-20", "%Y-%m-%d")),
                    date_breaks = "3 months", 

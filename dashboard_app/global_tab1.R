@@ -15,7 +15,7 @@ admissions_date <- admissions %>%
   select(-monthday)
 
 admissions_dt <- admissions_date %>% 
-  group_by(date) %>% 
+  group_by(date, year) %>% 
   summarise(avg_admissions_by_week = mean(number_admissions)) %>% 
   as_tsibble()
 
@@ -47,6 +47,18 @@ winter_shading <- c(
     ,
     alpha = 0.3,
     fill = "turquoise"
+  ),
+  annotate(
+    x = NULL,
+    y = NULL,
+    geom = "rect",
+    xmin = as_date("2022-01-01"),
+    xmax = as_date("2022-02-01"),
+    ymin = -Inf,
+    ymax = Inf
+    ,
+    alpha = 0.3,
+    fill = "turquoise"
   ))
 
 
@@ -72,4 +84,5 @@ beds_season_subset <- beds_season %>%
   group_by(season, year, quarter_num) %>% 
   summarise(avg_daily_beds_perc = mean(percentage_occupancy, na.rm = TRUE)) %>% 
   ungroup() %>% 
-  mutate(date = yearquarter(str_c(year, "Q", quarter_num)))
+  mutate(date = yearquarter(str_c(year, "Q", quarter_num)),
+         seasonyear = str_c(season, " ", year))
