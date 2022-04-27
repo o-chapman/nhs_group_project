@@ -202,7 +202,18 @@ server <- function(input, output) {
 
     })
 
+overview_title <- reactive( if (input$tabbox_id == "admissions") {
+    paste("Acute Admissions by Month")
+    
+  }
+  else if (input$tabbox_id == "beds") {
+    paste("Quarterly Bed Capacity")
+  } else {
+    paste("Quarterly Mean Length of Stay")
+  }
+  )
 
+output$title_overview <- renderText(overview_title())
 
   # ----------------------GEOGRAPHIC TAB---------------------------
 

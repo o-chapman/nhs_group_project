@@ -42,6 +42,7 @@ ui <- dashboardPage(skin = "purple",
 
                                 fluidRow(
                                   tabBox(width = 12,
+                                         title = textOutput("title_overview"),
                                          id = "tabbox_id",
                                          #Main visual (tabset with plots showing diff in
                                          #KPI's in Winter)
