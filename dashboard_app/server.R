@@ -317,12 +317,6 @@ server <- function(input, output) {
 
 
 
-
-
-
-
-
-
   #---------------------------MAP DETAIL PLOT COMPONENTS
 
 
