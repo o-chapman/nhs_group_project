@@ -10,7 +10,7 @@ library(lubridate)
 ```
 
 ```{r}
-deprivation <- read_csv("raw_data/admissions_by_hb_and_deprivation.csv") %>% 
+deprivation <- read_csv(here::here("raw_data/admissions_by_hb_and_deprivation.csv")) %>% 
   clean_names()
 ```
 
@@ -30,21 +30,16 @@ dep_date$simd_quintile <- as_factor(dep_date$simd_quintile)
 
 library(plotly)
 
-deprivation_ploty <- dep_date %>%
+ggplotly(dep_date %>%
   group_by(date, simd_quintile) %>% 
   summarise(avg_admissions = mean(number_admissions)) %>% 
   ggplot() +
   aes(x = date, y = avg_admissions, colour = simd_quintile) +
-  geom_line()
-
-ggplotly(deprivation_ploty)
+  geom_line() +
+    labs(title = "Average Admissions by SIMD",
+         x = "Date",
+         y = "Average Admissions",
+         colour = "SIMD Quintile"))
 ```
 
-```{r}
-
-input = list(
-  
-  
-)
-```
 
