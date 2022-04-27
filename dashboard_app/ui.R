@@ -10,7 +10,7 @@ ui <- dashboardPage(skin = "purple",
                         # lots of icons we can use here: https://fontawesome.com/icons/categories/medical-health
                         menuItem("Overview", tabName = "overview", icon = icon("book-medical"),
                                  badgeLabel = "temp", badgeColor = "green"),
-                        menuItem("Temporal", tabName = "temporal", icon = icon("chart-line"),
+                        menuItem("Effects of COVID", tabName = "temporal", icon = icon("chart-line"),
                                  badgeLabel = "temp", badgeColor = "yellow"),
                         menuItem("Geographic", tabName = "geographic", icon = icon("globe"),
                                  badgeLabel = "temp", badgeColor = "orange"),

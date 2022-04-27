@@ -77,7 +77,7 @@ server <- function(input, output) {
       ggplot() +
       geom_line(aes(x = week_ending, y = average_2018_2019, group = 1, colour = "2018 - 2019"), lwd = 1.5) + 
       geom_line(aes(x = week_ending, y = count, group = 1, colour = "2020 - 2021"), lwd = 1.5) +
-      scale_color_manual(name = "Time period", values = c("2018 - 2019" = "#605CA8", "2020 - 2021" = "tomato2")) +
+      scale_color_manual(name = "Time period", values = c("2018 - 2019" = "#605CA8", "2020 - 2021" = "skyblue")) +
       labs(y = "Number of patients\n",
            title = "Weekly Emergency Admissions to Hospital Over a Two Year Period\n") +
       scale_x_date(name = "",
@@ -103,7 +103,7 @@ server <- function(input, output) {
       ggplot() +
       geom_line(aes(x = week_ending, y = average_2018_2019, group = 1, colour = "2018 - 2019"), lwd = 1.5) + 
       geom_line(aes(x = week_ending, y = count, group = 1, colour = "2020 - 2021"), lwd = 1.5) +
-      scale_color_manual(name = "Time period", values = c("2018 - 2019" = "#605CA8", "2020 - 2021" = "#f46d43")) +
+      scale_color_manual(name = "Time period", values = c("2018 - 2019" = "#605CA8", "2020 - 2021" = "skyblue")) +
       labs(y = "Number of patients\n",
            title = "Weekly A&E Department Attendance Over a Two Year Period\n") +
       scale_x_date(name = "",
@@ -129,7 +129,7 @@ server <- function(input, output) {
       ggplot() +
       geom_line(aes(x = week_ending, y = average_2015_2019, group = 1, colour = "2015 - 2019"), lwd = 1.5) + 
       geom_line(aes(x = week_ending, y = count, group = 1, colour = "2020 - 2021"), lwd = 1.5) +
-      scale_color_manual(name = "Time period", values = c("2015 - 2019" = "#605CA8", "2020 - 2021" = "#f46d43")) +
+      scale_color_manual(name = "Time period", values = c("2015 - 2019" = "#605CA8", "2020 - 2021" = "skyblue")) +
       labs(y = "Number of deaths\n",
            title = "Weekly Number of Deaths Over a Two Year Period\n") +
       scale_x_date(name = "",
