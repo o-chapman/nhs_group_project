@@ -9,13 +9,13 @@ ui <- dashboardPage(skin = "purple",
 
                         # lots of icons we can use here: https://fontawesome.com/icons/categories/medical-health
                         menuItem("Overview", tabName = "overview", icon = icon("book-medical"),
-                                 badgeLabel = "temp", badgeColor = "green"),
+                                 badgeLabel = " ", badgeColor = "teal"),
                         menuItem("Effects of COVID", tabName = "temporal", icon = icon("chart-line"),
-                                 badgeLabel = "temp", badgeColor = "yellow"),
-                        menuItem("Geographic", tabName = "geographic", icon = icon("globe"),
-                                 badgeLabel = "temp", badgeColor = "orange"),
-                        menuItem("Demographic", tabName = "demographic", icon = icon("hospital-user"),
-                                 badgeLabel = "temp", badgeColor = "red")
+                                 badgeLabel = " ", badgeColor = "teal"),
+                        menuItem("Geographic Analysis", tabName = "geographic", icon = icon("globe"),
+                                 badgeLabel = " ", badgeColor = "teal"),
+                        menuItem("Demographic Analysis", tabName = "demographic", icon = icon("hospital-user"),
+                                 badgeLabel = " ", badgeColor = "teal")
                       )
                     ),
 
@@ -43,7 +43,7 @@ ui <- dashboardPage(skin = "purple",
                                   ),
                                   box(
                                     background = "purple",
-                                    tags$h4(HTML("This dashboard uses data published by Public Health Scotland relating to the last few years of hospital and health board activity to investigate the winter health crisis. On this tab, graphs show a comparison between non-winter and winter key statistics for bed capacity, admissions, length of stay, and deaths.", "<br>")), width = 10
+                                    tags$h4(HTML("This dashboard uses data published by Public Health Scotland relating to the last few years of hospital and health board activity to investigate the winter health crisis. On this tab, graphs show a comparison between non-winter and winter key statistics for bed capacity, admissions, length of stay, and deaths. Shading denotes winter months.", "<br>")), width = 10
                                   ),
                                 ),
 
@@ -120,7 +120,7 @@ ui <- dashboardPage(skin = "purple",
 
                                 fluidRow(
                                   box(background = "purple",
-                                      tags$h4(HTML("Graphs comparing emergency admissions, A&E admissions and weekly deaths, with a coloured line showing the running average of each value for times <i>pre</i> and <i>post</i>-COVID. Information boxes display the overall change <i>pre</i> and <i>post</i>-COVID.")), width = 12)
+                                      tags$h4(HTML("Graphs comparing emergency admissions, A&E admissions and weekly deaths, with a coloured line showing the running average of each value for times <i>pre</i> and <i>post</i>-COVID. Information boxes display the overall change <i>pre</i> and <i>post</i>-COVID. Shading denotes winter months.")), width = 12)
                                 ),
 
                         ),
