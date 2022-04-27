@@ -335,7 +335,7 @@ server <- function(input, output) {
                summarise(avg_admissions = mean(number_admissions)) %>%
                ggplot() +
                aes(x = date, y = avg_admissions, colour = simd_quintile) +
-               geom_line() +
+               geom_line(lwd = 0.8) +
                labs(x = "",
                     y = "Number of Admissions\n",
                     colour = "SIMD Quintile") +
@@ -350,7 +350,7 @@ server <- function(input, output) {
                summarise(avg_admissions = mean(number_admissions)) %>%
                ggplot() +
                aes(x = date, y = avg_admissions, colour = age_group) +
-               geom_line() +
+               geom_line(lwd = 0.8) +
                labs(x = "",
                     y = "Number of Admissions\n",
                     colour = "") +
@@ -365,7 +365,7 @@ server <- function(input, output) {
                summarise(avg_admissions = mean(number_admissions)) %>%
                ggplot() +
                aes(x = date, y = avg_admissions, colour = sex) +
-               geom_line() +
+               geom_line(lwd = 0.8) +
                labs(x = "",
                     y = "Number of Admissions\n",
                     colour = "") +
