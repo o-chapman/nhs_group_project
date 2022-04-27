@@ -1,8 +1,7 @@
 server <- function(input, output) {
 
-  #--------- OVERVIEW TAB ------------
+  #----------OVERVIEW TAB ------------
 
-  ## TAB 1
 
   admissions_dt_react <- reactive({
 
@@ -11,12 +10,18 @@ server <- function(input, output) {
 
   })
 
-  ## INFO BOXES
+  overview_title <- reactive( if (input$tabbox_id == "admissions") {
+    paste("Acute Admissions by Month")
 
-  output$info_box_max <- renderInfoBox({
+  }
+  else if (input$tabbox_id == "beds") {
+    paste("Quarterly Bed Capacity")
+  } else {
+    paste("Quarterly Mean Length of Stay")
+  }
+  )
 
-
-  })
+  output$title_overview <- renderText(overview_title())
 
   ## PLOTS
 
@@ -28,7 +33,7 @@ server <- function(input, output) {
     admissions_dt_react() %>%
       ggplot() +
       aes(x = date, y = avg_admissions_by_week) +
-      geom_line(color = "steelblue", size = 1.5) +
+      geom_line(color = "#605CA8", size = 1.5) +
       winter_shading[1] +
       winter_shading[2] +
       scale_x_date(name = "",
@@ -52,7 +57,7 @@ server <- function(input, output) {
       ggplot() +
       aes(x = date, y = avg_daily_beds_perc, label = str_c(round(avg_daily_beds_perc), "%")) +
       geom_text(nudge_y = 1.2, alpha = 0.8) +
-      geom_col(fill = "turquoise", alpha = 0.8) +
+      geom_col(fill = "#605CA8", alpha = 0.8) +
       coord_cartesian(ylim = c(60, 80)) +
       labs(x = "",
            y = "Daily available beds (%)\n") +
@@ -70,7 +75,7 @@ server <- function(input, output) {
       ggplot() +
       aes(x = date, y = avg_los_days, label = str_c(avg_los_days, " days")) +
       geom_text(nudge_y = 1.2, alpha = 0.8) +
-      geom_col(fill = "turquoise", alpha = 0.8) +
+      geom_col(fill = "#605CA8", alpha = 0.8) +
       coord_cartesian(ylim = c(30, 70)) +
       labs(x = "",
            y = "Length of stay\n") +
@@ -80,7 +85,7 @@ server <- function(input, output) {
 
   ## WINTER INFO BOX
 
-  infobox_predata_winter <- reactive(
+  infobox_predata_winter <- reactive({
 
     if (input$tabbox_id == "admissions"){
       validate(
@@ -107,36 +112,38 @@ server <- function(input, output) {
       winter_max <- max((los_season_subset %>% filter(year %in% input$year_input, season == "Winter"))$avg_los_days) %>% round(1)
       return(c(winter_mean, winter_min, winter_max))
     }
-  )
+  })
 
-  output$infobox_winter_mean <- renderInfoBox(
-    infoBox("Mean Value (Winter)",
-            paste(infobox_predata_winter()[1]),
-            icon = icon("list"),
-            color = "red"
+  output$valuebox_winter_mean <- renderValueBox({
+    valueBox(paste(infobox_predata_winter()[1]),
+            "Mean Value (Winter)",
+            icon = icon("snowflake"),
+            color = "purple"
     )
 
-  )
+  })
 
-  output$infobox_winter_min <- renderInfoBox(
-    infoBox("Min Value (Winter)",
-            paste(infobox_predata_winter()[2]),
-            icon = icon("list"),
-            color = "red"
+  output$valuebox_winter_min <- renderValueBox({
+    valueBox(paste(infobox_predata_winter()[2]),
+             "Mean Value (Winter)",
+             icon = icon("snowflake"),
+             color = "purple"
     )
-  )
 
-  output$infobox_winter_max <- renderInfoBox(
-    infoBox("Max Value (Winter)",
-            paste(infobox_predata_winter()[3]),
-            icon = icon("list"),
-            color = "red"
+  })
+
+  output$valuebox_winter_max <- renderValueBox({
+    valueBox(paste(infobox_predata_winter()[3]),
+             "Mean Value (Winter)",
+             icon = icon("snowflake"),
+             color = "purple"
     )
-  )
+
+  })
 
   ## !WINTER INFO BOX
 
-  infobox_predata_other <- reactive(
+  infobox_predata_other <- reactive({
 
     if (input$tabbox_id == "admissions"){
       validate(
@@ -163,30 +170,33 @@ server <- function(input, output) {
       other_max <- max((los_season_subset %>% filter(year %in% input$year_input, season != "Winter"))$avg_los_days) %>% round(1)
       return(c(other_mean, other_min, other_max))
     }
-  )
-
-  output$infobox_other_mean <- renderInfoBox({
-    infoBox("Mean Value (other seasons)",
-            paste(infobox_predata_other()[1]),
-            icon = icon("list"),
-            color = "blue"
-    )
   })
 
-  output$infobox_other_min <- renderInfoBox({
-    infoBox("Min Value (other seasons)",
-            paste(infobox_predata_other()[2]),
-            icon = icon("list"),
-            color = "blue"
+  output$valuebox_other_mean <- renderValueBox({
+    valueBox(paste(infobox_predata_other()[1]),
+             "Mean Value (Other Seasons)",
+             icon = icon("sun"),
+             color = "teal"
     )
+
   })
 
-  output$infobox_other_max <- renderInfoBox({
-    infoBox("Max Value (other seasons)",
-            paste(infobox_predata_other()[3]),
-            icon = icon("list"),
-            color = "blue"
+  output$valuebox_other_min <- renderValueBox({
+    valueBox(paste(infobox_predata_other()[2]),
+             "Mean Value (other Seasons)",
+             icon = icon("sun"),
+             color = "teal"
     )
+
+  })
+
+  output$valuebox_other_max <- renderValueBox({
+    valueBox(paste(infobox_predata_other()[3]),
+             "Mean Value (Other Seasons)",
+             icon = icon("sun"),
+             color = "teal"
+    )
+
   })
 
   output$overview_deaths_plot <- renderPlot({
@@ -215,7 +225,7 @@ overview_title <- reactive( if (input$tabbox_id == "admissions") {
 
 output$title_overview <- renderText(overview_title())
 
-  # ----------------------GEOGRAPHIC TAB---------------------------
+  # ---------GEOGRAPHIC TAB---------------------------
 
   source("helpers.R")
 
@@ -243,18 +253,18 @@ output$title_overview <- renderText(overview_title())
 
   # Generate colour palate based on filter domain.
 
-  rc1 <- reactive(colorRampPalette(colors = c("green2", "yellow"))(sum(beds_geom_filtered()$value < 0)))
+  rc1 <- reactive(colorRampPalette(colors = c("seagreen3", "yellow2"))(sum(beds_geom_filtered()$value < 0)))
 
 
-  rc2 <- reactive(colorRampPalette(colors = c("yellow", "red3"))(sum(beds_geom_filtered()$value >= 0)))
+  rc2 <- reactive(colorRampPalette(colors = c("yellow2", "red3"))(sum(beds_geom_filtered()$value >= 0)))
 
 
   rampcols <- reactive(c(rc1(), rc2()))
 
-  rc3 <- reactive(colorRampPalette(colors = c("green2", "yellow"))(sum(hospitals_filtered()$value < 0)))
+  rc3 <- reactive(colorRampPalette(colors = c("seagreen3", "yellow2"))(sum(hospitals_filtered()$value < 0)))
 
 
-  rc4 <- reactive(colorRampPalette(colors = c("yellow", "red3"))(sum(hospitals_filtered()$value >= 0)))
+  rc4 <- reactive(colorRampPalette(colors = c("yellow2", "red3"))(sum(hospitals_filtered()$value >= 0)))
 
 
   rampcols2 <- reactive(c(rc3(), rc4()))
@@ -303,13 +313,6 @@ output$title_overview <- renderText(overview_title())
 
 })
 
-
-
-
-
-
-
-
   output$hospital_plot <- renderLeaflet({
     hospitals_filtered() %>%
       leaflet() %>%
@@ -327,73 +330,150 @@ output$title_overview <- renderText(overview_title())
   })
 
 
-
   #---------------------------MAP DETAIL PLOT COMPONENTS
 
 
 
+  # ---------DEMOGRAPHIC TAB -----
 
+  output$simd_plot <- renderPlotly({
 
+    ggplotly(dep_date %>%
+               group_by(date, simd_quintile) %>%
+               summarise(avg_admissions = mean(number_admissions)) %>%
+               ggplot() +
+               aes(x = date, y = avg_admissions, colour = simd_quintile) +
+               geom_line() +
+               labs(x = "",
+                    y = "Number of Admissions",
+                    colour = "SIMD Quintile") +
+              theme_minimal())
 
-  # --------------------------DEMOGRAPHIC TAB -----
+  })
 
-output$simd_plot <- renderPlotly({
+  output$age_plot <- renderPlotly({
 
-  ggplotly(dep_date %>%
-             group_by(date, simd_quintile) %>%
-             summarise(avg_admissions = mean(number_admissions)) %>%
-             ggplot() +
-             aes(x = date, y = avg_admissions, colour = simd_quintile) +
-             geom_line() +
-             labs(x = "",
-                  y = "Number of Admissions",
-                  colour = "SIMD Quintile") +
-            theme_minimal())
+    ggplotly(age_date_clean %>%
+               group_by(date, age_group) %>%
+               summarise(avg_admissions = mean(number_admissions)) %>%
+               ggplot() +
+               aes(x = date, y = avg_admissions, colour = age_group) +
+               geom_line() +
+               labs(x = "",
+                    y = "Number of Admissions",
+                    colour = "") +
+               theme_minimal())
 
-})
+  })
 
-output$age_plot <- renderPlotly({
+  output$sex_plot <- renderPlotly({
 
-  ggplotly(age_date_clean %>%
-             group_by(date, age_group) %>%
-             summarise(avg_admissions = mean(number_admissions)) %>%
-             ggplot() +
-             aes(x = date, y = avg_admissions, colour = age_group) +
-             geom_line() +
-             labs(x = "",
-                  y = "Number of Admissions",
-                  colour = "") +
-             theme_minimal())
+    ggplotly(sex_data_clean %>%
+               group_by(date, sex) %>%
+               summarise(avg_admissions = mean(number_admissions)) %>%
+               ggplot() +
+               aes(x = date, y = avg_admissions, colour = sex) +
+               geom_line() +
+               labs(x = "",
+                    y = "Number of Admissions",
+                    colour = "") +
+               theme_minimal())
 
-})
+  })
 
-output$sex_plot <- renderPlotly({
+  demo_title <- reactive( if (input$demotab_1 == "simd") {
+    paste("Mean Weekly Admissions by SIMD")
 
-  ggplotly(sex_data_clean %>%
-             group_by(date, sex) %>%
-             summarise(avg_admissions = mean(number_admissions)) %>%
-             ggplot() +
-             aes(x = date, y = avg_admissions, colour = sex) +
-             geom_line() +
-             labs(x = "",
-                  y = "Number of Admissions",
-                  colour = "") +
-             theme_minimal())
+  }
+    else if (input$demotab_1 == "age") {
+    paste("Mean Weekly Admissions by Age Group")
+  } else {
+    paste("Mean Weekly Admissions by Sex")
+  }
+  )
 
-})
+  output$title_demo <- renderText(demo_title())
 
-demo_title <- reactive( if (input$demotab_1 == "simd") {
-  paste("Mean Weekly Admissions by SIMD")
+  #----------COVID TAB----------
 
-}
-  else if (input$demotab_1 == "age") {
-  paste("Mean Weekly Admissions by Age Group")
-} else {
-  paste("Mean Weekly Admissions by Sex")
-}
-)
+  output$emergency_admissions_plot <- renderPlot({
 
-output$title_demo <- renderText(demo_title())
+    emergency_admissions %>%
+      ggplot() +
+      geom_line(aes(x = week_ending, y = average_2018_2019, group = 1, colour = "2018 - 2019"), lwd = 1.5) +
+      geom_line(aes(x = week_ending, y = count, group = 1, colour = "2020 - 2021"), lwd = 1.5) +
+      scale_color_manual(name = "Time period", values = c("2018 - 2019" = "#605CA8", "2020 - 2021" = "skyblue")) +
+      labs(y = "Number of patients\n",
+           title = "Weekly Emergency Admissions to Hospital Over a Two Year Period\n") +
+      scale_x_date(name = "",
+                   breaks = seq(as.Date("2020-01-01"), as.Date("2022-04-01"), by = "2 months"),
+                   date_labels = "%b") +
+      winter_shading[1] +
+      winter_shading[2] +
+      winter_shading[3] +
+      theme_light() +
+      theme(title = element_blank(),
+            axis.text.x = element_text(size = 14),
+            axis.text.y = element_text(size = 14),
+            axis.title.x = element_blank(),
+            axis.title.y = element_text(size = 16),
+            legend.title = element_text(size = 16),
+            legend.text = element_text(size = 14))
+
+  })
+
+  output$a_e_attendance_plot <- renderPlot({
+
+    a_e_attendance %>%
+      ggplot() +
+      geom_line(aes(x = week_ending, y = average_2018_2019, group = 1, colour = "2018 - 2019"), lwd = 1.5) +
+      geom_line(aes(x = week_ending, y = count, group = 1, colour = "2020 - 2021"), lwd = 1.5) +
+      scale_color_manual(name = "Time period", values = c("2018 - 2019" = "#605CA8", "2020 - 2021" = "skyblue")) +
+      labs(y = "Number of patients\n",
+           title = "Weekly A&E Department Attendance Over a Two Year Period\n") +
+      scale_x_date(name = "",
+                   breaks = seq(as.Date("2020-01-01"), as.Date("2022-04-01"), by = "2 months"),
+                   date_labels = "%b") +
+      winter_shading[1] +
+      winter_shading[2] +
+      winter_shading[3] +
+      theme_light() +
+      theme(title = element_blank(),
+            axis.text.x = element_text(size = 14),
+            axis.text.y = element_text(size = 14),
+            axis.title.x = element_blank(),
+            axis.title.y = element_text(size = 16),
+            legend.title = element_text(size = 16),
+            legend.text = element_text(size = 14))
+
+  })
+
+  output$deaths_weekly_plot <- renderPlot({
+
+    deaths_weekly %>%
+      ggplot() +
+      geom_line(aes(x = week_ending, y = average_2015_2019, group = 1, colour = "2015 - 2019"), lwd = 1.5) +
+      geom_line(aes(x = week_ending, y = count, group = 1, colour = "2020 - 2021"), lwd = 1.5) +
+      scale_color_manual(name = "Time period", values = c("2015 - 2019" = "#605CA8", "2020 - 2021" = "skyblue")) +
+      labs(y = "Number of deaths\n",
+           title = "Weekly Number of Deaths Over a Two Year Period\n") +
+      scale_x_date(name = "",
+                   breaks = seq(as.Date("2020-01-01"), as.Date("2022-04-01"), by = "2 months"),
+                   date_labels = "%b") +
+      winter_shading[1] +
+      winter_shading[2] +
+      winter_shading[3] +
+      theme_light() +
+      theme(title = element_blank(),
+            axis.text.x = element_text(size = 14),
+            axis.text.y = element_text(size = 14),
+            axis.title.x = element_blank(),
+            axis.title.y = element_text(size = 16),
+            legend.title = element_text(size = 16),
+            legend.text = element_text(size = 14))
+
+  })
+
 
 
 demographic_info_box <- reactive(
@@ -463,5 +543,20 @@ micro_graph <- reactive({
   })
 
 output$micro_graph <- renderPlot(micro_graph())
+
+
+  pre_post_title <- reactive( if (input$pre_post_id == "emergencies") {
+    paste("Weekly Emergency Admissions to Hospital Over a Two Year Period")
+
+  }
+  else if (input$pre_post_id == "aeattendances") {
+    paste("Weekly A&E Department Attendance Over a Two Year Period")
+  } else {
+    paste("Weekly Number of Deaths Over a Two Year Period")
+  }
+  )
+
+  output$title_pre_post <- renderText(pre_post_title())
+
 
 }
