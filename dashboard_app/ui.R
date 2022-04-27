@@ -92,11 +92,17 @@ ui <- dashboardPage(skin = "purple",
                         tabItem(tabName = "temporal",
                                 
                                 fluidRow(
-                                  valueBox("-11%", "Emergency admissions", icon = icon("hospital"), color = "purple"),
+                                  valueBox("-11%", "Emergency admissions", 
+                                           icon = icon("hospital"), 
+                                           color = "purple"),
                                   
-                                  valueBox("-17%", "A&E attendance", icon = icon("user-injured"), color = "purple"),
+                                  valueBox("-17%", "A&E attendance", 
+                                           icon = icon("user-injured"), 
+                                           color = "purple"),
                                   
-                                  valueBox("+9%", "Deaths", icon = icon("skull"), color = "purple")
+                                  valueBox("+9%", "Deaths", 
+                                           icon = icon("skull"), 
+                                           color = "purple")
                                 ),
                                 
                                 fluidRow(
