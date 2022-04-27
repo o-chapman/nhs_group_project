@@ -106,16 +106,16 @@ ui <- dashboardPage(skin = "purple",
                                 ),
                                 
                                 fluidRow(
-                                  tabBox(title = "Pre and Post Covid Plots",
-                                         id = "preposttabs",
+                                  tabBox(title = textOutput("title_pre_post"),
+                                         id = "pre_post_id",
                                          width = 12,
-                                         tabPanel("Emergency admissions", plotOutput("emergency_admissions_plot")),
-                                         tabPanel("A&E attendance", plotOutput("a_e_attendance_plot")), 
-                                         tabPanel("Weekly deaths", plotOutput("deaths_weekly_plot")))), 
+                                         tabPanel("Emergency admissions", value = "emergencies", plotOutput("emergency_admissions_plot")),
+                                         tabPanel("A&E attendance", value = "aeattendances", plotOutput("a_e_attendance_plot")), 
+                                         tabPanel("Weekly deaths", value = "weeklydeaths", plotOutput("deaths_weekly_plot")))), 
                                 
                                 fluidRow(
-                                  box(status = "primary",
-                                      tags$h4(HTML("Graphs comparing emergency admissions, A&E admissions and weekly deaths, with a coloured line showing the running average of each value for times <i> pre </i>and <i>post</i>-COVID.")), width = 12)
+                                  box(background = "purple",
+                                      tags$h4(HTML("Graphs comparing emergency admissions, A&E admissions and weekly deaths, with a coloured line showing the running average of each value for times <i>pre</i> and <i>post</i>-COVID. Information boxes display the overall change <i>pre</i> and <i>post</i>-COVID.")), width = 12)
                                 ),
                                 
                         ),

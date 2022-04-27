@@ -53,7 +53,7 @@ winter_shading <- c(
     y = NULL,
     geom = "rect",
     xmin = as_date("2022-01-01"),
-    xmax = as_date("2022-02-01"),
+    xmax = as_date("2022-04-01"),
     ymin = -Inf,
     ymax = Inf
     ,

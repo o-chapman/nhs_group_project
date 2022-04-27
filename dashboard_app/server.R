@@ -75,16 +75,25 @@ server <- function(input, output) {
     
     emergency_admissions %>% 
       ggplot() +
-      geom_line(aes(x = week_ending, y = average_2018_2019, group = 1, colour = "2018 - 2019")) + 
-      geom_line(aes(x = week_ending, y = count, group = 1, colour = "2020 - 2021")) +
-      scale_color_manual(name = "Time period", values = c("2018 - 2019" = "#74add1", "2020 - 2021" = "#f46d43")) +
+      geom_line(aes(x = week_ending, y = average_2018_2019, group = 1, colour = "2018 - 2019"), lwd = 1.5) + 
+      geom_line(aes(x = week_ending, y = count, group = 1, colour = "2020 - 2021"), lwd = 1.5) +
+      scale_color_manual(name = "Time period", values = c("2018 - 2019" = "#605CA8", "2020 - 2021" = "tomato2")) +
       labs(y = "Number of patients\n",
-           title = "Weekly emergency admissions to hospital\n") +
+           title = "Weekly Emergency Admissions to Hospital Over a Two Year Period\n") +
+      scale_x_date(name = "",
+                   breaks = seq(as.Date("2020-01-01"), as.Date("2022-04-01"), by = "2 months"), 
+                   date_labels = "%b") +
+      winter_shading[1] +
+      winter_shading[2] +
+      winter_shading[3] +
       theme_light() +
-      theme(title = element_text(size = 14),
-            axis.text = element_text(size = 12),
+      theme(title = element_blank(),
+            axis.text.x = element_text(size = 14),
+            axis.text.y = element_text(size = 14),
             axis.title.x = element_blank(),
-            axis.title.y = element_text(size = 12))
+            axis.title.y = element_text(size = 16),
+            legend.title = element_text(size = 16), 
+            legend.text = element_text(size = 14))
     
   })
   
@@ -92,16 +101,25 @@ server <- function(input, output) {
     
     a_e_attendance %>% 
       ggplot() +
-      geom_line(aes(x = week_ending, y = average_2018_2019, group = 1, colour = "2018 - 2019")) + 
-      geom_line(aes(x = week_ending, y = count, group = 1, colour = "2020 - 2021")) +
-      scale_color_manual(name = "Time period", values = c("2018 - 2019" = "#74add1", "2020 - 2021" = "#f46d43")) +
+      geom_line(aes(x = week_ending, y = average_2018_2019, group = 1, colour = "2018 - 2019"), lwd = 1.5) + 
+      geom_line(aes(x = week_ending, y = count, group = 1, colour = "2020 - 2021"), lwd = 1.5) +
+      scale_color_manual(name = "Time period", values = c("2018 - 2019" = "#605CA8", "2020 - 2021" = "#f46d43")) +
       labs(y = "Number of patients\n",
-           title = "Weekly A&E department attendance\n") +
+           title = "Weekly A&E Department Attendance Over a Two Year Period\n") +
+      scale_x_date(name = "",
+                   breaks = seq(as.Date("2020-01-01"), as.Date("2022-04-01"), by = "2 months"), 
+                   date_labels = "%b") +
+      winter_shading[1] +
+      winter_shading[2] +
+      winter_shading[3] +
       theme_light() +
-      theme(title = element_text(size = 14),
-            axis.text = element_text(size = 12),
+      theme(title = element_blank(),
+            axis.text.x = element_text(size = 14),
+            axis.text.y = element_text(size = 14),
             axis.title.x = element_blank(),
-            axis.title.y = element_text(size = 12))
+            axis.title.y = element_text(size = 16),
+            legend.title = element_text(size = 16), 
+            legend.text = element_text(size = 14))
     
   })
 
@@ -109,17 +127,39 @@ server <- function(input, output) {
     
     deaths_weekly %>% 
       ggplot() +
-      geom_line(aes(x = week_ending, y = average_2015_2019, group = 1, colour = "2015 - 2019")) + 
-      geom_line(aes(x = week_ending, y = count, group = 1, colour = "2020 - 2021")) +
-      scale_color_manual(name = "Time period", values = c("2015 - 2019" = "#74add1", "2020 - 2021" = "#f46d43")) +
+      geom_line(aes(x = week_ending, y = average_2015_2019, group = 1, colour = "2015 - 2019"), lwd = 1.5) + 
+      geom_line(aes(x = week_ending, y = count, group = 1, colour = "2020 - 2021"), lwd = 1.5) +
+      scale_color_manual(name = "Time period", values = c("2015 - 2019" = "#605CA8", "2020 - 2021" = "#f46d43")) +
       labs(y = "Number of deaths\n",
-           title = "Weekly number of deaths\n") +
+           title = "Weekly Number of Deaths Over a Two Year Period\n") +
+      scale_x_date(name = "",
+                   breaks = seq(as.Date("2020-01-01"), as.Date("2022-04-01"), by = "2 months"), 
+                   date_labels = "%b") +
+      winter_shading[1] +
+      winter_shading[2] +
+      winter_shading[3] +
       theme_light() +
-      theme(title = element_text(size = 14),
-            axis.text = element_text(size = 12),
+      theme(title = element_blank(),
+            axis.text.x = element_text(size = 14),
+            axis.text.y = element_text(size = 14),
             axis.title.x = element_blank(),
-            axis.title.y = element_text(size = 12))
+            axis.title.y = element_text(size = 16),
+            legend.title = element_text(size = 16), 
+            legend.text = element_text(size = 14))
     
   })
 
+  pre_post_title <- reactive( if (input$pre_post_id == "emergencies") {
+    paste("Weekly Emergency Admissions to Hospital Over a Two Year Period")
+    
+  }
+  else if (input$pre_post_id == "aeattendances") {
+    paste("Weekly A&E Department Attendance Over a Two Year Period")
+  } else {
+    paste("Weekly Number of Deaths Over a Two Year Period")
+  }
+  )
+  
+  output$title_pre_post <- renderText(pre_post_title())
+  
 }
