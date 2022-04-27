@@ -71,11 +71,11 @@ diff_data_hospitals <- read_csv("clean_data/diff_data_hospitals.csv")
 #-----------DEMOGRAPHIC----------
 
 # read in admissions & deprivation data, clean names
-deprivation <- read_csv(here::here("raw_data/admissions_by_hb_and_deprivation.csv")) %>% 
+deprivation <- read_csv(here::here("raw_data/admissions_by_hb_and_deprivation.csv")) %>%
   clean_names()
 
 # create date column from weekly data
-dep_date <- deprivation %>% 
+dep_date <- deprivation %>%
   mutate(
     year = str_extract(week_ending, "^\\d{4}"),
     monthday = str_extract(week_ending, "\\d{4}$"),
@@ -88,11 +88,11 @@ dep_date <- deprivation %>%
 dep_date$simd_quintile <- as_factor(dep_date$simd_quintile)
 
 # read in age & sex data, clean names
-age <- read_csv(here::here("raw_data/age_data.csv")) %>% 
+age <- read_csv(here::here("raw_data/age_data.csv")) %>%
   clean_names()
 
 # create columns with day, month, year and date columns
-age_by_date <- age %>% 
+age_by_date <- age %>%
   mutate(
     year = str_extract(week_ending, "^\\d{4}"),
     monthday = str_extract(week_ending, "\\d{4}$"),
@@ -102,9 +102,24 @@ age_by_date <- age %>%
   )
 
 # remove all ages from age_group
-age_date_clean <- age_by_date %>% 
+age_date_clean <- age_by_date %>%
   filter(!age_group == "All ages")
 
 # remove All from sex
-sex_data_clean <- age_by_date %>% 
+sex_data_clean <- age_by_date %>%
   filter(!sex == "All")
+
+#----------Pre & Post Covid Tab----------
+
+emergency_admissions <- read_csv(here::here("raw_data/emergency_admissions.csv"))
+a_e_attendance <- read_csv(here::here("raw_data/a_e_attendance.csv"))
+deaths_weekly <- read_csv(here::here("raw_data/deaths_weekly.csv"))
+
+emergency_admissions <- emergency_admissions %>%
+  mutate(week_ending = dmy(week_ending))
+
+a_e_attendance <- a_e_attendance %>%
+  mutate(week_ending = dmy(week_ending))
+
+deaths_weekly <- deaths_weekly %>%
+  mutate(week_ending = dmy(week_ending))
