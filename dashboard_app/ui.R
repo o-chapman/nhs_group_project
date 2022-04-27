@@ -167,9 +167,27 @@ ui <- dashboardPage(skin = "purple",
                                     tabPanel(value = "sex",
                                              "Sex Plot",
                                              plotlyOutput("sex_plot"))
-                                  ))
+                                  )),
+
+                                fluidRow(column(6,
+                                  box(width = 12,
+
+                                      valueBoxOutput("max_diff_demo", width = 6),
+                                      infoBoxOutput("min_diff_demo", width = 6)
+                                  ),
+                                  fluidRow(
+                                    box(tags$h5(HTML("Understanding the intersectionality of demographics with winter hospital activity statistics is key to making sure the NHS can deliver services to people that need it the most. These graphs show activity by <i>SIMD 5 quintiles</i>, a scale which measures the 5 quintiles of the Scottish Index of Multiple Deprivation, Age, and Gender.<br><br><b>Click on the legend to select/deselect desired lines on plot</b>")), width = 12),
+                                  )),
+
+
+
+                                  box(plotOutput("micro_graph"), width = 6)
+                                ),
+                                )
+
+
                         )
 
                       )
                     )
-)
+
