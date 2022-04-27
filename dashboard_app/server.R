@@ -11,13 +11,6 @@ server <- function(input, output) {
 
   })
 
-  ## INFO BOXES
-
-  output$info_box_max <- renderInfoBox({
-
-
-  })
-
   ## PLOTS
 
   output$overview_admissions_plot <- renderPlot({
@@ -80,7 +73,7 @@ server <- function(input, output) {
 
   ## WINTER INFO BOX
 
-  infobox_predata_winter <- reactive(
+  infobox_predata_winter <- reactive({
 
     if (input$tabbox_id == "admissions"){
       validate(
@@ -107,36 +100,36 @@ server <- function(input, output) {
       winter_max <- max((los_season_subset %>% filter(year %in% input$year_input, season == "Winter"))$avg_los_days) %>% round(1)
       return(c(winter_mean, winter_min, winter_max))
     }
-  )
+  })
 
-  output$infobox_winter_mean <- renderInfoBox(
+  output$infobox_winter_mean <- renderInfoBox({
     infoBox("Mean Value (Winter)",
             paste(infobox_predata_winter()[1]),
             icon = icon("list"),
             color = "red"
     )
 
-  )
+  })
 
-  output$infobox_winter_min <- renderInfoBox(
+  output$infobox_winter_min <- renderInfoBox({
     infoBox("Min Value (Winter)",
             paste(infobox_predata_winter()[2]),
             icon = icon("list"),
             color = "red"
     )
-  )
+  })
 
-  output$infobox_winter_max <- renderInfoBox(
+  output$infobox_winter_max <- renderInfoBox({
     infoBox("Max Value (Winter)",
             paste(infobox_predata_winter()[3]),
             icon = icon("list"),
             color = "red"
     )
-  )
+  })
 
   ## !WINTER INFO BOX
 
-  infobox_predata_other <- reactive(
+  infobox_predata_other <- reactive({
 
     if (input$tabbox_id == "admissions"){
       validate(
@@ -163,7 +156,7 @@ server <- function(input, output) {
       other_max <- max((los_season_subset %>% filter(year %in% input$year_input, season != "Winter"))$avg_los_days) %>% round(1)
       return(c(other_mean, other_min, other_max))
     }
-  )
+  })
 
   output$infobox_other_mean <- renderInfoBox({
     infoBox("Mean Value (other seasons)",
