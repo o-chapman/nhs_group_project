@@ -124,7 +124,7 @@ ui <- dashboardPage(skin = "purple",
                                 h2("Demographic tab content"),
                                 fluidRow(
                                   tabBox(
-                                    title = "Test Title",
+                                    title = textOutput("title_demo"),
                                     id = "demotab_1",
                                     width = 12,
                                     tabPanel(value = "simd",

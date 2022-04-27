@@ -197,7 +197,7 @@ server <- function(input, output) {
 
 
 
-  #---------------------------MAP DETAIL PLOT COMPONENtS
+  #---------------------------MAP DETAIL PLOT COMPONENTS
 
 
 
@@ -214,10 +214,10 @@ output$simd_plot <- renderPlotly({
              ggplot() +
              aes(x = date, y = avg_admissions, colour = simd_quintile) +
              geom_line() +
-             labs(title = "Average Admissions by SIMD",
-                  x = "Date",
-                  y = "Average Admissions",
-                  colour = "SIMD Quintile"))
+             labs(x = "",
+                  y = "Number of Admissions",
+                  colour = "SIMD Quintile") +
+            theme_minimal())
   
 })
 
@@ -229,11 +229,10 @@ output$age_plot <- renderPlotly({
              ggplot() +
              aes(x = date, y = avg_admissions, colour = age_group) +
              geom_line() +
-             labs(title = "Mean Weekly Admissions by Age Group",
-                  x = "Date",
-                  y = "Mean Admissions",
+             labs(x = "",
+                  y = "Number of Admissions",
                   colour = "") +
-             theme_bw())
+             theme_minimal())
   
 })
 
@@ -245,11 +244,23 @@ output$sex_plot <- renderPlotly({
              ggplot() +
              aes(x = date, y = avg_admissions, colour = sex) +
              geom_line() +
-             labs(title = "Mean Weekly Admissions by Gender",
-                  x = "Date",
-                  y = "Mean Admissions",
+             labs(x = "",
+                  y = "Number of Admissions",
                   colour = "") +
-             theme_bw())
+             theme_minimal())
   
 })
+
+demo_title <- reactive( if (input$demotab_1 == "simd") {
+  paste("Mean Weekly Admissions by SIMD")
+}
+  else if (input$demotab_1 == "age") {
+  paste("Mean Weekly Admissions by Age Group")
+} else {
+  paste("Mean Weekly Admissions by Sex")
+}
+)
+
+output$title_demo <- renderText(demo_title())
+
 }
