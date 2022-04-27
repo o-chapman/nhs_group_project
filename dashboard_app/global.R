@@ -169,4 +169,4 @@ dep_bar <- dep_date %>%
   ylab("Percentage Increase in attendance into Winter")+
   xlab("SIMD Quintile") +
   scale_y_continuous(labels = scales::percent) +
-  theme(legend.position = "none")
+  theme(legend.position = "none")  
