@@ -84,26 +84,26 @@ server <- function(input, output) {
       validate(
         need(input$year_input, "")
       )
-      d_mean <- mean((admissions_dt %>% filter(year %in% input$year_input, season == "Winter"))$avg_admissions_by_week) %>% round()
-      d_min <- min((admissions_dt %>% filter(year %in% input$year_input, season == "Winter"))$avg_admissions_by_week) %>% round()
-      d_max <- max((admissions_dt %>% filter(year %in% input$year_input, season == "Winter"))$avg_admissions_by_week) %>% round()
-      return(c(d_mean, d_min, d_max))
+      winter_mean <- mean((admissions_dt %>% filter(year %in% input$year_input, season == "Winter"))$avg_admissions_by_week) %>% round()
+      winter_min <- min((admissions_dt %>% filter(year %in% input$year_input, season == "Winter"))$avg_admissions_by_week) %>% round()
+      winter_max <- max((admissions_dt %>% filter(year %in% input$year_input, season == "Winter"))$avg_admissions_by_week) %>% round()
+      return(c(winter_mean, winter_min, winter_max))
     } else if (input$tabbox_id == "beds") {
       validate(
         need(input$year_input, "")
       )
-      d_mean <- mean((beds_season_subset %>% filter(year %in% input$year_input, season == "Winter"))$avg_daily_beds_perc) %>% round()
-      d_min <- min((beds_season_subset %>% filter(year %in% input$year_input, season == "Winter"))$avg_daily_beds_perc) %>% round()
-      d_max <- max((beds_season_subset %>% filter(year %in% input$year_input, season == "Winter"))$avg_daily_beds_perc) %>% round()
-      return(c(d_mean, d_min, d_max))
+      winter_mean <- mean((beds_season_subset %>% filter(year %in% input$year_input, season == "Winter"))$avg_daily_beds_perc) %>% round()
+      winter_min <- min((beds_season_subset %>% filter(year %in% input$year_input, season == "Winter"))$avg_daily_beds_perc) %>% round()
+      winter_max <- max((beds_season_subset %>% filter(year %in% input$year_input, season == "Winter"))$avg_daily_beds_perc) %>% round()
+      return(c(winter_mean, winter_min, winter_max))
     } else if (input$tabbox_id == "los") {
       validate(
         need(input$year_input, "")
       )
-      d_mean <- mean((los_season_subset %in% filter(year %in% input$year_input))$avg_los_day)
-      d_min <- min((los_season_subset %>% filter(year %in% input$year_input))$avg_los_days)
-      d_max <- max((los_season_subset %>% filter(year %in% input$year_input, season == "Winter"))$avg_los_days)
-      return(c(d_mean, d_min, d_max))
+      winter_mean <- mean((los_season_subset %>% filter(year %in% input$year_input, season == "Winter"))$avg_los_days) %>% round(1)
+      winter_min <- min((los_season_subset %>% filter(year %in% input$year_input, season == "Winter"))$avg_los_days) %>% round(1)
+      winter_max <- max((los_season_subset %>% filter(year %in% input$year_input, season == "Winter"))$avg_los_days) %>% round(1)
+      return(c(winter_mean, winter_min, winter_max))
     }
   )
   
@@ -116,7 +116,7 @@ server <- function(input, output) {
   )
   
   output$infobox_winter_min <- renderInfoBox(
-    infoBox("Mean Value (Winter)",
+    infoBox("Min Value (Winter)",
             paste(infobox_predata_winter()[2]),
             icon = icon("list"),
             color = "red"
@@ -124,7 +124,7 @@ server <- function(input, output) {
   )
   
   output$infobox_winter_max <- renderInfoBox(
-    infoBox("Mean Value (Winter)",
+    infoBox("Max Value (Winter)",
             paste(infobox_predata_winter()[3]),
             icon = icon("list"),
             color = "red"
@@ -133,54 +133,54 @@ server <- function(input, output) {
   
   ## !WINTER INFO BOX
   
-  infobox_predata_winter <- reactive(
+  infobox_predata_other <- reactive(
     
     if (input$tabbox_id == "admissions"){
       validate(
         need(input$year_input, "")
       )
-      d_mean <- mean((admissions_dt %>% filter(year %in% input$year_input, season != "Winter"))$avg_admissions_by_week) %>% round()
-      d_min <- min((admissions_dt %>% filter(year %in% input$year_input, season != "Winter"))$avg_admissions_by_week) %>% round()
-      d_max <- max((admissions_dt %>% filter(year %in% input$year_input, season != "Winter"))$avg_admissions_by_week) %>% round()
-      return(c(d_mean, d_min, d_max))
+      other_mean <- mean((admissions_dt %>% filter(year %in% input$year_input, season != "Winter"))$avg_admissions_by_week) %>% round()
+      other_min <- min((admissions_dt %>% filter(year %in% input$year_input, season != "Winter"))$avg_admissions_by_week) %>% round()
+      other_max <- max((admissions_dt %>% filter(year %in% input$year_input, season != "Winter"))$avg_admissions_by_week) %>% round()
+      return(c(other_mean, other_min, other_max))
     } else if (input$tabbox_id == "beds") {
       validate(
         need(input$year_input, "")
       )
-      d_mean <- mean((beds_season_subset %>% filter(year %in% input$year_input, season != "Winter"))$avg_daily_beds_perc) %>% round()
-      d_min <- min((beds_season_subset %>% filter(year %in% input$year_input, season != "Winter"))$avg_daily_beds_perc) %>% round()
-      d_max <- max((beds_season_subset %>% filter(year %in% input$year_input, season != "Winter"))$avg_daily_beds_perc) %>% round()
-      return(c(d_mean, d_min, d_max))
+      other_mean <- mean((beds_season_subset %>% filter(year %in% input$year_input, season != "Winter"))$avg_daily_beds_perc) %>% round()
+      other_min <- min((beds_season_subset %>% filter(year %in% input$year_input, season != "Winter"))$avg_daily_beds_perc) %>% round()
+      other_max <- max((beds_season_subset %>% filter(year %in% input$year_input, season != "Winter"))$avg_daily_beds_perc) %>% round()
+      return(c(other_mean, other_min, other_max))
     } else if (input$tabbox_id == "los") {
       validate(
         need(input$year_input, "")
       )
-      d_mean <- mean((los_season_subset %in% filter(year %in% input$year_input))$avg_los_day)
-      d_min <- min((los_season_subset %>% filter(year %in% input$year_input))$avg_los_days)
-      d_max <- max((los_season_subset %>% filter(year %in% input$year_input, season!= "Winter"))$avg_los_days)
-      return(c(d_mean, d_min, d_max))
+      other_mean <- mean((los_season_subset %>%  filter(year %in% input$year_input, season != "Winter"))$avg_los_days) %>% round(1)
+      other_min <- min((los_season_subset %>% filter(year %in% input$year_input, season != "Winter"))$avg_los_days) %>% round(1)
+      other_max <- max((los_season_subset %>% filter(year %in% input$year_input, season != "Winter"))$avg_los_days) %>% round(1)
+      return(c(other_mean, other_min, other_max))
     }
   )
   
-  output$infobox_not_winter_mean <- renderInfoBox(
+  output$infobox_other_mean <- renderInfoBox(
     infoBox("Mean Value (other seasons)",
-            paste(infobox_predata_winter()[1]),
+            paste(infobox_predata_other()[1]),
             icon = icon("list"),
             color = "blue"
     )
   )
   
-  output$infobox_not_winter_min <- renderInfoBox(
-    infoBox("Mean Value (other seasons)",
-            paste(infobox_predata_winter()[2]),
+  output$infobox_other_min <- renderInfoBox(
+    infoBox("Min Value (other seasons)",
+            paste(infobox_predata_other()[2]),
             icon = icon("list"),
             color = "blue"
     )
   )
   
-  output$infobox_not_winter_max <- renderInfoBox(
-    infoBox("Mean Value (other seasons)",
-            paste(infobox_predata_winter()[3]),
+  output$infobox_other_max <- renderInfoBox(
+    infoBox("Max Value (other seasons)",
+            paste(infobox_predata_other()[3]),
             icon = icon("list"),
             color = "blue"
     )
