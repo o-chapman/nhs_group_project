@@ -109,3 +109,95 @@ age_date_clean <- age_by_date %>%
 # remove All from sex
 sex_data_clean <- age_by_date %>% 
   filter(!sex == "All")
+
+# find greatest % diff from winter to not winter for age
+max_age <- age_date_clean %>% 
+  mutate(quarter = quarter(date), .after = date) %>% 
+  mutate(winter = case_when(
+    quarter == 1 ~ TRUE,
+    quarter > 1 ~ FALSE,
+  ), .after = quarter) %>% 
+  group_by(winter, age_group) %>% 
+  summarise(admissions = sum(number_admissions)) %>% 
+  pivot_wider( values_from = admissions, names_from = winter) %>% 
+  rename("winter" = "TRUE", not_winter = "FALSE") %>% 
+  mutate(not_winter = not_winter/3,
+         percent_difference = (100*(winter/not_winter))-100) %>% 
+  slice_max(percent_difference)
+
+# find least % diff from winter to not winter for age
+min_age <- age_date_clean %>% 
+  mutate(quarter = quarter(date), .after = date) %>% 
+  mutate(winter = case_when(
+    quarter == 1 ~ TRUE,
+    quarter > 1 ~ FALSE,
+  ), .after = quarter) %>% 
+  group_by(winter, age_group) %>% 
+  summarise(admissions = sum(number_admissions)) %>% 
+  pivot_wider( values_from = admissions, names_from = winter) %>% 
+  rename("winter" = "TRUE", not_winter = "FALSE") %>% 
+  mutate(not_winter = not_winter/3,
+         percent_difference = (100*(winter/not_winter))-100) %>% 
+  slice_min(percent_difference)
+
+# find greatest % diff from winter to not winter for simd
+max_simd <- dep_date %>% 
+  mutate(quarter = quarter(date), .after = date) %>% 
+  mutate(winter = case_when(
+    quarter == 1 ~ TRUE,
+    quarter > 1 ~ FALSE,
+  ), .after = quarter) %>% 
+  group_by(winter, simd_quintile) %>% 
+  summarise(admissions = sum(number_admissions)) %>% 
+  pivot_wider( values_from = admissions, names_from = winter) %>% 
+  rename("winter" = "TRUE", not_winter = "FALSE") %>% 
+  mutate(not_winter = not_winter/3,
+         percent_difference = (100*(winter/not_winter))-100) %>% 
+  slice_max(percent_difference)
+
+# find least % diff from winter to not winter for simd
+min_simd <- dep_date %>% 
+  mutate(quarter = quarter(date), .after = date) %>% 
+  mutate(winter = case_when(
+    quarter == 1 ~ TRUE,
+    quarter > 1 ~ FALSE,
+  ), .after = quarter) %>% 
+  group_by(winter, simd_quintile) %>% 
+  summarise(admissions = sum(number_admissions)) %>% 
+  pivot_wider( values_from = admissions, names_from = winter) %>% 
+  rename("winter" = "TRUE", not_winter = "FALSE") %>% 
+  mutate(not_winter = not_winter/3,
+         percent_difference = (100*(winter/not_winter))-100) %>% 
+  slice_min(percent_difference)
+
+# find greatest % diff from winter to not winter for sex
+max_sex <- age_by_date %>%
+  filter(sex != "All") %>% 
+  mutate(quarter = quarter(date), .after = date) %>% 
+  mutate(winter = case_when(
+    quarter == 1 ~ TRUE,
+    quarter > 1 ~ FALSE,
+  ), .after = quarter) %>% 
+  group_by(winter, sex) %>% 
+  summarise(admissions = sum(number_admissions)) %>% 
+  pivot_wider( values_from = admissions, names_from = winter) %>% 
+  rename("winter" = "TRUE", not_winter = "FALSE") %>% 
+  mutate(not_winter = not_winter/3,
+         percent_difference = (100*(winter/not_winter))-100) %>% 
+  slice_max(percent_difference)
+
+# find least % diff from winter to not winter for sex
+min_sex <- age_by_date %>%
+  filter(sex != "All") %>% 
+  mutate(quarter = quarter(date), .after = date) %>% 
+  mutate(winter = case_when(
+    quarter == 1 ~ TRUE,
+    quarter > 1 ~ FALSE,
+  ), .after = quarter) %>% 
+  group_by(winter, sex) %>% 
+  summarise(admissions = sum(number_admissions)) %>% 
+  pivot_wider( values_from = admissions, names_from = winter) %>% 
+  rename("winter" = "TRUE", not_winter = "FALSE") %>% 
+  mutate(not_winter = not_winter/3,
+         percent_difference = (100*(winter/not_winter))-100) %>% 
+  slice_min(percent_difference)

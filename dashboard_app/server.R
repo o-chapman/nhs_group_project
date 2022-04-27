@@ -395,4 +395,50 @@ demo_title <- reactive( if (input$demotab_1 == "simd") {
 
 output$title_demo <- renderText(demo_title())
 
+demographic_info_box <- reactive(
+  if(input$demotab_1 == "simd"){
+    validate(
+    need(input$demotab_1, "")
+)
+  max_demo <- max_simd 
+  min_demo <- min_simd
+  return(c(max_demo, min_demo))
+
+  } else if (input$demotab_1 == "age") {
+    validate(
+      need(input$demotab_1, "")
+    )
+  
+  max_demo <- max_age 
+  min_demo <- min_age 
+  return(c(max_demo, min_demo))
+  
+  } else if (input$demotab_1 == "sex") {
+    validate(
+      need(input$demotab_1, "")
+    )
+  
+  max_demo <- max_sex 
+  min_demo <- min_sex
+  return(c(max_demo, min_demo))
+    
+  }
+)
+
+output$max_diff_demo <- renderInfoBox(
+  infoBox("Category",
+          paste(demographic_info_box()[1]),
+          icon = icon("list"),
+          color = "purple"
+  )
+)
+
+output$min_diff_demo <- renderInfoBox(
+  infoBox("Perccent Difference from Winter",
+          paste(demographic_info_box()[4]),
+          icon = icon("list"),
+          color = "purple"
+  )
+)
+
 }
