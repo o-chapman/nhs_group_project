@@ -15,8 +15,6 @@ library(plotly)
 source("global_tab1.R")
 
 
-
-
 # Read in data about health boards data and clean data
 
 hb <- read_csv("raw_data/hb.csv") %>%

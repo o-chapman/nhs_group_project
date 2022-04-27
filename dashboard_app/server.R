@@ -34,7 +34,7 @@ server <- function(input, output) {
     admissions_dt_react() %>%
       ggplot() +
       aes(x = date, y = avg_admissions_by_week) +
-      geom_line(color = "steelblue", size = 1.5) +
+      geom_line(color = "#605CA8", size = 1.5) +
       winter_shading[1] +
       winter_shading[2] +
       scale_x_date(name = "",
@@ -58,7 +58,7 @@ server <- function(input, output) {
       ggplot() +
       aes(x = date, y = avg_daily_beds_perc, label = str_c(round(avg_daily_beds_perc), "%")) +
       geom_text(nudge_y = 1.2, alpha = 0.8) +
-      geom_col(fill = "turquoise", alpha = 0.8) +
+      geom_col(fill = "#605CA8", alpha = 0.8) +
       coord_cartesian(ylim = c(60, 80)) +
       labs(x = "",
            y = "Daily available beds (%)\n") +
@@ -76,7 +76,7 @@ server <- function(input, output) {
       ggplot() +
       aes(x = date, y = avg_los_days, label = str_c(avg_los_days, " days")) +
       geom_text(nudge_y = 1.2, alpha = 0.8) +
-      geom_col(fill = "turquoise", alpha = 0.8) +
+      geom_col(fill = "#605CA8", alpha = 0.8) +
       coord_cartesian(ylim = c(30, 70)) +
       labs(x = "",
            y = "Length of stay\n") +
@@ -115,29 +115,31 @@ server <- function(input, output) {
     }
   })
 
-  output$infobox_winter_mean <- renderInfoBox({
-    infoBox("Mean Value (Winter)",
-            paste(infobox_predata_winter()[1]),
-            icon = icon("list"),
-            color = "red"
+  output$valuebox_winter_mean <- renderValueBox({
+    valueBox(paste(infobox_predata_winter()[1]),
+            "Mean Value (Winter)",
+            icon = icon("snowflake"),
+            color = "purple"
     )
 
   })
 
-  output$infobox_winter_min <- renderInfoBox({
-    infoBox("Min Value (Winter)",
-            paste(infobox_predata_winter()[2]),
-            icon = icon("list"),
-            color = "red"
+  output$valuebox_winter_min <- renderValueBox({
+    valueBox(paste(infobox_predata_winter()[2]),
+             "Mean Value (Winter)",
+             icon = icon("snowflake"),
+             color = "purple"
     )
+    
   })
 
-  output$infobox_winter_max <- renderInfoBox({
-    infoBox("Max Value (Winter)",
-            paste(infobox_predata_winter()[3]),
-            icon = icon("list"),
-            color = "red"
+  output$valuebox_winter_max <- renderValueBox({
+    valueBox(paste(infobox_predata_winter()[3]),
+             "Mean Value (Winter)",
+             icon = icon("snowflake"),
+             color = "purple"
     )
+    
   })
 
   ## !WINTER INFO BOX
@@ -171,28 +173,31 @@ server <- function(input, output) {
     }
   })
 
-  output$infobox_other_mean <- renderInfoBox({
-    infoBox("Mean Value (other seasons)",
-            paste(infobox_predata_other()[1]),
-            icon = icon("list"),
-            color = "blue"
+  output$valuebox_other_mean <- renderValueBox({
+    valueBox(paste(infobox_predata_other()[1]),
+             "Mean Value (Other Seasons)",
+             icon = icon("sun"),
+             color = "teal"
     )
+    
   })
-
-  output$infobox_other_min <- renderInfoBox({
-    infoBox("Min Value (other seasons)",
-            paste(infobox_predata_other()[2]),
-            icon = icon("list"),
-            color = "blue"
+  
+  output$valuebox_other_min <- renderValueBox({
+    valueBox(paste(infobox_predata_other()[2]),
+             "Mean Value (other Seasons)",
+             icon = icon("sun"),
+             color = "teal"
     )
+    
   })
-
-  output$infobox_other_max <- renderInfoBox({
-    infoBox("Max Value (other seasons)",
-            paste(infobox_predata_other()[3]),
-            icon = icon("list"),
-            color = "blue"
+  
+  output$valuebox_other_max <- renderValueBox({
+    valueBox(paste(infobox_predata_other()[3]),
+             "Mean Value (Other Seasons)",
+             icon = icon("sun"),
+             color = "teal"
     )
+    
   })
 
   output$overview_deaths_plot <- renderPlot({
@@ -298,13 +303,6 @@ server <- function(input, output) {
 
 })
 
-
-
-
-
-
-
-
   output$hospital_plot <- renderLeaflet({
     hospitals_filtered() %>%
       leaflet() %>%
@@ -321,18 +319,7 @@ server <- function(input, output) {
 
   })
 
-
-
-
-
-
-
-
-
   #---------------------------MAP DETAIL PLOT COMPONENTS
-
-
-
 
 
 

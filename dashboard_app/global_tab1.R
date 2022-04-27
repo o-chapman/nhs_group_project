@@ -96,7 +96,7 @@ winter_shading <- c(
     ymax = Inf
     ,
     alpha = 0.3,
-    fill = "turquoise"
+    fill = "#39CCCC"
   ),
   annotate(
     x = NULL,
@@ -108,5 +108,17 @@ winter_shading <- c(
     ymax = Inf
     ,
     alpha = 0.3,
-    fill = "turquoise"
+    fill = "#39CCCC"
+  ),
+  annotate(
+    x = NULL,
+    y = NULL,
+    geom = "rect",
+    xmin = as_date("2022-01-01"),
+    xmax = as_date("2022-04-01"),
+    ymin = -Inf,
+    ymax = Inf
+    ,
+    alpha = 0.3,
+    fill = "#39CCCC"
   ))

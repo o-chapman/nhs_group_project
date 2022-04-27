@@ -32,7 +32,7 @@ ui <- dashboardPage(skin = "purple",
                                 
                                 fluidRow(
                                   box(width = 2,
-                                      background = "purple",
+                                      background = "teal",
                                       checkboxGroupButtons(
                                         inputId = "year_input",
                                         label = "Select Year",
@@ -45,7 +45,7 @@ ui <- dashboardPage(skin = "purple",
                                   box(
                                     background = "purple",
                                     tags$h4(HTML("This dashboard uses data published by Public Health Scotland relating to the last few years of hospital and health board activity to investigate the winter health crisis. On this tab, graphs show a comparison between non-winter and winter key statistics for bed capacity, admissions, length of stay, and deaths.", "<br>")), width = 10
-                                    ),
+                                  ),
                                 ),
                                 
                                 fluidRow(
@@ -81,20 +81,15 @@ ui <- dashboardPage(skin = "purple",
                                 ),
                                 
                                 fluidRow(
-                                  box(width = 12,
-                                      infoBoxOutput("infobox_winter_mean", width = 4),
-                                      infoBoxOutput("infobox_winter_max", width = 4),
-                                      infoBoxOutput("infobox_winter_min", width = 4)
-                                  )
+                                  valueBoxOutput("valuebox_winter_mean", width = 4),
+                                  valueBoxOutput("valuebox_winter_max", width = 4),
+                                  valueBoxOutput("valuebox_winter_min", width = 4)
                                 ),
                                 
                                 fluidRow(
-                                  box(width = 12,
-                                      infoBoxOutput("infobox_other_mean", width = 4),
-                                      infoBoxOutput("infobox_other_max", width = 4),
-                                      infoBoxOutput("infobox_other_min", width = 4)
-                                      
-                                  )
+                                  valueBoxOutput("valuebox_other_mean", width = 4),
+                                  valueBoxOutput("valuebox_other_max", width = 4),
+                                  valueBoxOutput("valuebox_other_min", width = 4)
                                 )
                                 
                         ),
