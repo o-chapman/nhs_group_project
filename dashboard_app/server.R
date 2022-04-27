@@ -128,7 +128,7 @@ server <- function(input, output) {
 
   output$valuebox_winter_min <- renderValueBox({
     valueBox(paste(infobox_predata_winter()[2]),
-             "Mean Value (Winter)",
+             "Min Value (Winter)",
              icon = icon("snowflake"),
              color = "purple"
     )
@@ -137,7 +137,7 @@ server <- function(input, output) {
 
   output$valuebox_winter_max <- renderValueBox({
     valueBox(paste(infobox_predata_winter()[3]),
-             "Mean Value (Winter)",
+             "Max Value (Winter)",
              icon = icon("snowflake"),
              color = "purple"
     )
@@ -186,7 +186,7 @@ server <- function(input, output) {
 
   output$valuebox_other_min <- renderValueBox({
     valueBox(paste(infobox_predata_other()[2]),
-             "Mean Value (other Seasons)",
+             "Min Value (other Seasons)",
              icon = icon("sun"),
              color = "teal"
     )
@@ -195,7 +195,7 @@ server <- function(input, output) {
 
   output$valuebox_other_max <- renderValueBox({
     valueBox(paste(infobox_predata_other()[3]),
-             "Mean Value (Other Seasons)",
+             "Max Value (Other Seasons)",
              icon = icon("sun"),
              color = "teal"
     )
