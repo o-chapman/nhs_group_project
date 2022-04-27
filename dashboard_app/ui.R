@@ -83,9 +83,9 @@ ui <- dashboardPage(skin = "purple",
                                 fluidRow(
                                   box(width = 12,
 
-                                         infoBoxOutput("infobox_not_winter_mean", width = 4),
-                                         infoBoxOutput("infobox_not_winter_max", width = 4),
-                                         infoBoxOutput("infobox_not_winter_min", width = 4)
+                                         infoBoxOutput("infobox_other_mean", width = 4),
+                                         infoBoxOutput("infobox_other_max", width = 4),
+                                         infoBoxOutput("infobox_other_min", width = 4)
                                   )
                                 )
 
