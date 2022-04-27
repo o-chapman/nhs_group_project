@@ -395,4 +395,21 @@ demo_title <- reactive( if (input$demotab_1 == "simd") {
 
 output$title_demo <- renderText(demo_title())
 
+
+
+
+
+# info for micrographs
+
+micro_graph <- reactive({
+  if (input$demotab_1 == "simd") {
+    return(dep_bar)
+  } else if (input$demotab_1 == "age") {
+    return(age_bar)
+  } else {
+    return(sex_bar)
+  } 
+  })
+
+output$micro_graph <- renderPlot(micro_graph())
 }

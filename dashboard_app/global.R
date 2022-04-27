@@ -109,3 +109,64 @@ age_date_clean <- age_by_date %>%
 # remove All from sex
 sex_data_clean <- age_by_date %>% 
   filter(!sex == "All")
+##------micrographs
+
+#micrographs for demographic tab
+
+age_bar <- age_by_date %>% 
+  filter(age_group != "All ages") %>% 
+  mutate(quarter = quarter(date), .after = date) %>% 
+  mutate(winter = case_when(
+    quarter == 1 ~ TRUE,
+    quarter != 1 ~ FALSE
+  ), .after = quarter) %>% 
+  group_by(age_group, winter) %>% 
+  summarise(admissions = sum(number_admissions)) %>% 
+  pivot_wider(names_from = winter, values_from = admissions) %>% 
+  rename("winter" = "TRUE", "not_winter" = "FALSE") %>% 
+  mutate(percent_inc = (((winter*3)/not_winter)-1)*100) %>% 
+  ggplot() +
+  aes(x = age_group, y = percent_inc, fill = age_group) +
+  geom_col()+
+  ylab("Percentage Increase in attendance into Winter")+
+  xlab("Age demographic") +
+  scale_y_continuous(labels = scales::percent) +
+  theme(legend.position = "none")
+
+sex_bar <- sex_data_clean %>% 
+  mutate(quarter = quarter(date), .after = date) %>% 
+  mutate(winter = case_when(
+    quarter == 1 ~ TRUE,
+    quarter != 1 ~ FALSE
+  ), .after = quarter) %>% 
+  group_by(sex, winter) %>% 
+  summarise(admissions = sum(number_admissions)) %>% 
+  pivot_wider(names_from = winter, values_from = admissions) %>% 
+  rename("winter" = "TRUE", "not_winter" = "FALSE") %>% 
+  mutate(percent_inc = (((winter*3)/not_winter)-1)*100) %>% 
+  ggplot() +
+  aes(x = sex, y = percent_inc, fill = sex) +
+  geom_col()+
+  ylab("Percentage Increase in attendance into Winter")+
+  xlab("Sex") +
+  scale_y_continuous(labels = scales::percent) +
+  theme(legend.position = "none")
+
+dep_bar <- dep_date %>% 
+  mutate(quarter = quarter(date), .after = date) %>% 
+  mutate(winter = case_when(
+    quarter == 1 ~ TRUE,
+    quarter != 1 ~ FALSE
+  ), .after = quarter) %>% 
+  group_by(simd_quintile, winter) %>% 
+  summarise(admissions = sum(number_admissions)) %>% 
+  pivot_wider(names_from = winter, values_from = admissions) %>% 
+  rename("winter" = "TRUE", "not_winter" = "FALSE") %>% 
+  mutate(percent_inc = (((winter*3)/not_winter)-1)*100) %>% 
+  ggplot() +
+  aes(x = simd_quintile, y = percent_inc, fill = simd_quintile) +
+  geom_col()+
+  ylab("Percentage Increase in attendance into Winter")+
+  xlab("SIMD Quintile") +
+  scale_y_continuous(labels = scales::percent) +
+  theme(legend.position = "none")
