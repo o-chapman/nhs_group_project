@@ -140,12 +140,12 @@ ui <- dashboardPage(skin = "purple",
                                              plotlyOutput("sex_plot"))
                                   )),
                                 
-                                fluidRow(
+                                fluidRow(column(6,
                                   box(width = 12,
                                       
                                       valueBoxOutput("max_diff_demo", width = 6),
                                       infoBoxOutput("min_diff_demo", width = 6)
-                                  )
+                                  ))
                                 ),
                                 
                                 
