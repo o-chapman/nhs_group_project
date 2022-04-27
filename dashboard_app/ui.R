@@ -134,15 +134,20 @@ ui <- dashboardPage(skin = "purple",
                                          tabPanel(value = "area", "Region Data", leafletOutput("heatmap")),
                                          tabPanel(value = "point", "Hospital Data", leafletOutput("hospital_plot")))),
                                 fluidRow(
-                                  box(radioButtons("map_data",
+                                  box(background = "purple", 
+                                      width = 3, 
+                                      radioButtons("map_data",
                                                    "Investigate Winter Increase",
                                                    choices = c(
                                                      "Mortality" = "winter_mortality_increase",
                                                      "Wait Time Tariff Overflow" = "winter_target_wait_time_overshoot_increase",
                                                      "Beds Filled" = "winter_beds_increase"))
-                                  )
-
-
+                                  ),
+                                  
+                                  box(background = "purple", 
+                                      tags$h4(HTML(" These maps depict the change in beds taken, length of stay and mortality between summer and winter by Scottish health board area between winter and non-winter months.")), 
+                                      width = 9)
+                                  
                                 )),
 
 
