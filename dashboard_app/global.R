@@ -1,21 +1,13 @@
 library(shinydashboard)
 library(tidyverse)
-
 library(janitor)
 library(leaflet)
 library(sf)
 library(sfheaders)
 
-library(lubridate)
-library(tsibble)
-library(ggplot2)
-library(plotly)
-
-source("global_tab1.R")
 
 
 
-# -------------GEOGRAPHIC------
 # Read in data about health boards data and clean data
 
 hb <- read_csv("raw_data/hb.csv") %>%
@@ -59,6 +51,19 @@ hospitals <- read_csv(here::here("raw_data/current-hospital_flagged20211216.csv"
 hospitals <- hospitals %>%
   drop_na(x_coordinate)
 
+# hospitals <- st_as_sf(hospitals, coords = c("x_coordinate", "y_coordinate")) %>%
+#   st_set_crs(27700) %>%   #set coordinate system used
+#   st_transform(4326)     #transform coordinates to WGS84 coordinates
+
+# hospitals %>%
+#   leaflet() %>%
+#   addProviderTiles(providers$CartoDB.Voyager) %>%
+#   addCircleMarkers(data = hospitals$geometry,
+#                    color = "#fdae61",
+#                    fillOpacity = 0.5,
+#                    radius = 2)
+
+# Convert df to sf, 27700 is the EPSG code for the UK
 hospitals <- st_as_sf(hospitals,
                       coords = c("x_coordinate", "y_coordinate"),
                       crs = 27700)
@@ -66,9 +71,3 @@ hospitals <- st_as_sf(hospitals,
 # Reproject to WGS84
 hospitals <- st_transform(hospitals , 4326)
 hospitals <- sf_to_df(hospitals, fill = TRUE)
-
-diff_data_hospitals <- read_csv("clean_data/diff_data_hospitals.csv")
-
-
-  
-# -------DEMOGRAPHIC------
