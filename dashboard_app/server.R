@@ -43,7 +43,8 @@ server <- function(input, output) {
                    date_labels = "%b %y") +
       coord_cartesian(clip = "off") +
       labs(y = "Average Admissions(weekly)\n") +
-      theme_minimal()
+      theme_minimal() +
+      theme_fonts()
 
   })
 
@@ -56,12 +57,13 @@ server <- function(input, output) {
       filter(year %in% input$year_input) %>%
       ggplot() +
       aes(x = date, y = avg_daily_beds_perc, label = str_c(round(avg_daily_beds_perc), "%")) +
-      geom_text(nudge_y = 1.2, alpha = 0.8) +
+      geom_text(nudge_y = 1, colour = "#605CA8", size = 6) +
       geom_col(fill = "#605CA8", alpha = 0.8) +
       coord_cartesian(ylim = c(60, 80)) +
       labs(x = "",
            y = "Daily available beds (%)\n") +
-      theme_minimal()
+      theme_minimal() +
+      theme_fonts()
 
   })
 
@@ -74,12 +76,13 @@ server <- function(input, output) {
       filter(year %in% input$year_input) %>%
       ggplot() +
       aes(x = date, y = avg_los_days, label = str_c(avg_los_days, " days")) +
-      geom_text(nudge_y = 1.2, alpha = 0.8) +
+      geom_text(nudge_y = 1.8, colour = "#605CA8", size = 5) +
       geom_col(fill = "#605CA8", alpha = 0.8) +
       coord_cartesian(ylim = c(30, 70)) +
       labs(x = "",
            y = "Length of stay\n") +
-      theme_minimal()
+      theme_minimal() +
+      theme_fonts()
 
   })
 
@@ -208,7 +211,8 @@ server <- function(input, output) {
                scale_x_date(name = "", limits = c(as.Date("2020-01-01", "%Y-%m-%d"), as.Date("2022-02-20", "%Y-%m-%d")), date_breaks = "3 months",
                             date_minor_breaks = "1 month", date_labels = "%b %y") +
                labs(y = "Average Admissions(weekly)") +
-               theme_minimal())
+               theme_minimal()) +
+      theme_fonts()
 
     })
 
@@ -333,7 +337,7 @@ server <- function(input, output) {
                aes(x = date, y = avg_admissions, colour = simd_quintile) +
                geom_line() +
                labs(x = "",
-                    y = "Number of Admissions",
+                    y = "Number of Admissions\n",
                     colour = "SIMD Quintile") +
               theme_minimal())
   
@@ -348,7 +352,7 @@ server <- function(input, output) {
                aes(x = date, y = avg_admissions, colour = age_group) +
                geom_line() +
                labs(x = "",
-                    y = "Number of Admissions",
+                    y = "Number of Admissions\n",
                     colour = "") +
                theme_minimal())
   
@@ -363,9 +367,9 @@ server <- function(input, output) {
                aes(x = date, y = avg_admissions, colour = sex) +
                geom_line() +
                labs(x = "",
-                    y = "Number of Admissions",
+                    y = "Number of Admissions\n",
                     colour = "") +
-               theme_minimal())
+               theme_minimal()) 
   
   })
   
@@ -400,13 +404,7 @@ server <- function(input, output) {
       winter_shading[2] +
       winter_shading[3] +
       theme_light() +
-      theme(title = element_blank(),
-            axis.text.x = element_text(size = 14),
-            axis.text.y = element_text(size = 14),
-            axis.title.x = element_blank(),
-            axis.title.y = element_text(size = 16),
-            legend.title = element_text(size = 16), 
-            legend.text = element_text(size = 14))
+      theme_fonts()
     
   })
   
@@ -426,13 +424,7 @@ server <- function(input, output) {
       winter_shading[2] +
       winter_shading[3] +
       theme_light() +
-      theme(title = element_blank(),
-            axis.text.x = element_text(size = 14),
-            axis.text.y = element_text(size = 14),
-            axis.title.x = element_blank(),
-            axis.title.y = element_text(size = 16),
-            legend.title = element_text(size = 16), 
-            legend.text = element_text(size = 14))
+      theme_fonts()
     
   })
 
@@ -452,13 +444,7 @@ server <- function(input, output) {
       winter_shading[2] +
       winter_shading[3] +
       theme_light() +
-      theme(title = element_blank(),
-            axis.text.x = element_text(size = 14),
-            axis.text.y = element_text(size = 14),
-            axis.title.x = element_blank(),
-            axis.title.y = element_text(size = 16),
-            legend.title = element_text(size = 16), 
-            legend.text = element_text(size = 14))
+      theme_fonts()
     
   })
 

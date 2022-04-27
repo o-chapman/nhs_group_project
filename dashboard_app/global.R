@@ -125,3 +125,16 @@ a_e_attendance <- a_e_attendance %>%
 
 deaths_weekly <- deaths_weekly %>%
   mutate(week_ending = dmy(week_ending))
+
+# Font sizes
+theme_fonts <- function(){
+  theme(
+    title = element_blank(),
+    axis.text.x = element_text(size = 14),
+    axis.text.y = element_text(size = 14),
+    axis.title.x = element_blank(),
+    axis.title.y = element_text(size = 16),
+    legend.title = element_text(size = 16), 
+    legend.text = element_text(size = 14)
+  )
+}
