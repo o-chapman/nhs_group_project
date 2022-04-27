@@ -143,7 +143,7 @@ ui <- dashboardPage(skin = "purple",
                                 fluidRow(
                                   box(width = 12,
                                       
-                                      infoBoxOutput("max_diff_demo", width = 6),
+                                      valueBoxOutput("max_diff_demo", width = 6),
                                       infoBoxOutput("min_diff_demo", width = 6)
                                   )
                                 ),

@@ -396,13 +396,16 @@ demo_title <- reactive( if (input$demotab_1 == "simd") {
 output$title_demo <- renderText(demo_title())
 
 demographic_info_box <- reactive(
+  
   if(input$demotab_1 == "simd"){
     validate(
     need(input$demotab_1, "")
 )
   max_demo <- max_simd 
   min_demo <- min_simd
-  return(c(max_demo, min_demo))
+
+  return(bind_rows(max_demo, min_demo))
+  
 
   } else if (input$demotab_1 == "age") {
     validate(
@@ -411,33 +414,32 @@ demographic_info_box <- reactive(
   
   max_demo <- max_age 
   min_demo <- min_age 
-  return(c(max_demo, min_demo))
+  return(bind_rows(max_demo, min_demo))
   
-  } else if (input$demotab_1 == "sex") {
+  } else  {
     validate(
       need(input$demotab_1, "")
     )
   
   max_demo <- max_sex 
   min_demo <- min_sex
-  return(c(max_demo, min_demo))
-    
+  return(bind_rows(max_demo, min_demo))
+  
   }
 )
 
-output$max_diff_demo <- renderInfoBox(
-  infoBox("Category",
-          paste(demographic_info_box()[1]),
-          icon = icon("list"),
+output$max_diff_demo <- renderValueBox(
+  valueBox(value = paste(demographic_info_box()[1, 1]),
+           subtitle = paste("is the most affected. Winter increase =", round(demographic_info_box()$percent_difference[1]), "%"),
+          icon = icon("user-circle"),
           color = "purple"
   )
 )
 
 output$min_diff_demo <- renderInfoBox(
-  infoBox("Perccent Difference from Winter",
-          paste(demographic_info_box()[4]),
-          icon = icon("list"),
-          color = "purple"
+  valueBox(value = paste(demographic_info_box()[2, 1]),
+           subtitle = paste("is the least affected. Decrease =", round(demographic_info_box()$percent_difference[2]), "%"),
+                            icon = icon("user-circle"), color = "purple"
   )
 )
 

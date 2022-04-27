@@ -153,7 +153,7 @@ max_simd <- dep_date %>%
   rename("winter" = "TRUE", not_winter = "FALSE") %>% 
   mutate(not_winter = not_winter/3,
          percent_difference = (100*(winter/not_winter))-100) %>% 
-  slice_max(percent_difference)
+  slice_max(percent_difference) 
 
 # find least % diff from winter to not winter for simd
 min_simd <- dep_date %>% 
