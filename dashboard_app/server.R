@@ -204,7 +204,7 @@ server <- function(input, output) {
 
 overview_title <- reactive( if (input$tabbox_id == "admissions") {
     paste("Acute Admissions by Month")
-    
+
   }
   else if (input$tabbox_id == "beds") {
     paste("Quarterly Bed Capacity")
@@ -395,36 +395,37 @@ demo_title <- reactive( if (input$demotab_1 == "simd") {
 
 output$title_demo <- renderText(demo_title())
 
+
 demographic_info_box <- reactive(
-  
+
   if(input$demotab_1 == "simd"){
     validate(
     need(input$demotab_1, "")
 )
-  max_demo <- max_simd 
+  max_demo <- max_simd
   min_demo <- min_simd
 
   return(bind_rows(max_demo, min_demo))
-  
+
 
   } else if (input$demotab_1 == "age") {
     validate(
       need(input$demotab_1, "")
     )
-  
-  max_demo <- max_age 
-  min_demo <- min_age 
+
+  max_demo <- max_age
+  min_demo <- min_age
   return(bind_rows(max_demo, min_demo))
-  
+
   } else  {
     validate(
       need(input$demotab_1, "")
     )
-  
-  max_demo <- max_sex 
+
+  max_demo <- max_sex
   min_demo <- min_sex
   return(bind_rows(max_demo, min_demo))
-  
+
   }
 )
 
@@ -443,4 +444,23 @@ output$min_diff_demo <- renderInfoBox(
   )
 )
 
+}
+
+
+
+
+
+# info for micrographs
+
+micro_graph <- reactive({
+  if (input$demotab_1 == "simd") {
+    return(dep_bar)
+  } else if (input$demotab_1 == "age") {
+    return(age_bar)
+  } else {
+    return(sex_bar)
+  }
+  })
+
+output$micro_graph <- renderPlot(micro_graph())
 }
