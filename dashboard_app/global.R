@@ -224,10 +224,14 @@ age_bar <- age_by_date %>%
   ggplot() +
   aes(x = age_group, y = percent_inc, fill = age_group) +
   geom_col()+
-  ylab("Percentage Increase in attendance into Winter")+
-  xlab("Age demographic") +
+  ylab("Percentage Increase in attendance into Winter\n")+
+  xlab("\nAge demographic") +
   scale_y_continuous(labels = scales::percent) +
-  theme(legend.position = "none")
+  theme_minimal() +
+  theme_fonts() +
+  theme(legend.position = "none", 
+        axis.text.x = element_text(size = 12), 
+        axis.title.x = element_text(size = 16))
 
 sex_bar <- sex_data_clean %>%
   mutate(quarter = quarter(date), .after = date) %>%
@@ -243,10 +247,13 @@ sex_bar <- sex_data_clean %>%
   ggplot() +
   aes(x = sex, y = percent_inc, fill = sex) +
   geom_col()+
-  ylab("Percentage Increase in attendance into Winter")+
-  xlab("Sex") +
+  ylab("Percentage Increase in attendance into Winter\n")+
+  xlab("\nSex") +
   scale_y_continuous(labels = scales::percent) +
-  theme(legend.position = "none")
+  theme_minimal() +
+  theme_fonts() +
+  theme(legend.position = "none", 
+        axis.title.x = element_text(size = 16))
 
 dep_bar <- dep_date %>%
   mutate(quarter = quarter(date), .after = date) %>%
@@ -262,10 +269,13 @@ dep_bar <- dep_date %>%
   ggplot() +
   aes(x = simd_quintile, y = percent_inc, fill = simd_quintile) +
   geom_col()+
-  ylab("Percentage Increase in attendance into Winter")+
-  xlab("SIMD Quintile") +
+  ylab("Percentage Increase in attendance into Winter\n")+
+  xlab("\nSIMD Quintile") +
   scale_y_continuous(labels = scales::percent) +
-  theme(legend.position = "none")
+  theme_minimal() +
+  theme_fonts() +
+  theme(legend.position = "none", 
+        axis.title.x = element_text(size = 16))
 
 #----------COVID TAB----------
 

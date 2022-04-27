@@ -415,7 +415,7 @@ output$title_overview <- renderText(overview_title())
       winter_shading[1] +
       winter_shading[2] +
       winter_shading[3] +
-      theme_light() +
+      theme_minimal() +
       theme_fonts()
 
   })
@@ -435,7 +435,7 @@ output$title_overview <- renderText(overview_title())
       winter_shading[1] +
       winter_shading[2] +
       winter_shading[3] +
-      theme_light() +
+      theme_minimal() +
       theme_fonts()
 
   })
@@ -455,7 +455,7 @@ output$title_overview <- renderText(overview_title())
       winter_shading[1] +
       winter_shading[2] +
       winter_shading[3] +
-      theme_light() +
+      theme_minimal() +
       theme_fonts()
 
   })

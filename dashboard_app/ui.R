@@ -131,8 +131,10 @@ ui <- dashboardPage(skin = "purple",
                                   tabBox(title =  textOutput("title"),
                                          id = "geotabs",
                                          width = 12,
-                                         tabPanel(value = "area", "Region Data", leafletOutput("heatmap")),
-                                         tabPanel(value = "point", "Hospital Data", leafletOutput("hospital_plot")))),
+                                         tabPanel(value = "area", "Region Data", 
+                                                  leafletOutput("heatmap")),
+                                         tabPanel(value = "point", "Hospital Data", 
+                                                  leafletOutput("hospital_plot")))),
                                 fluidRow(
                                   box(background = "purple", 
                                       width = 3, 
@@ -149,7 +151,6 @@ ui <- dashboardPage(skin = "purple",
                                       width = 9)
                                   
                                 )),
-
 
                         # Demographic tab content
                         tabItem(tabName = "demographic",
@@ -176,18 +177,14 @@ ui <- dashboardPage(skin = "purple",
                                       infoBoxOutput("min_diff_demo", width = 6)
                                   ),
                                   fluidRow(
-                                    box(tags$h5(HTML("Understanding the intersectionality of demographics with winter hospital activity statistics is key to making sure the NHS can deliver services to people that need it the most. These graphs show activity by <i>SIMD 5 quintiles</i>, a scale which measures the 5 quintiles of the Scottish Index of Multiple Deprivation, Age, and Gender.<br><br><b>Click on the legend to select/deselect desired lines on plot</b>")), width = 12),
+                                    box(background = "purple", 
+                                        tags$h4(HTML("Understanding the intersectionality of demographics with winter hospital activity statistics is key to making sure the NHS can deliver services to people that need it the most. These graphs show activity by <i>SIMD 5 quintiles</i>, a scale which measures the 5 quintiles of the Scottish Index of Multiple Deprivation, Age, and Gender.<br><br><b>Click on the legend to select/deselect desired lines on plot</b>")), width = 12),
                                   )),
-
-
 
                                   box(plotOutput("micro_graph"), width = 6)
                                 ),
                                 )
-
-
                         )
-
                       )
                     )
 
