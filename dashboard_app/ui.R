@@ -28,7 +28,6 @@ ui <- dashboardPage(skin = "purple",
 
                         # Overview tab content
                         tabItem(tabName = "overview",
-                                h2("Overview tab content"),
 
                                 fluidRow(
                                   box(width = 2,
@@ -128,7 +127,6 @@ ui <- dashboardPage(skin = "purple",
 
                         # Geographic tab content
                         tabItem(tabName = "geographic",
-                                h2("Geographic tab content"),
                                 fluidRow(
                                   tabBox(title =  textOutput("title"),
                                          id = "geotabs",
@@ -150,7 +148,6 @@ ui <- dashboardPage(skin = "purple",
 
                         # Demographic tab content
                         tabItem(tabName = "demographic",
-                                h2("Demographic tab content"),
                                 fluidRow(
                                   tabBox(
                                     title = textOutput("title_demo"),

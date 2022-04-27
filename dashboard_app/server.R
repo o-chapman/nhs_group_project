@@ -2,7 +2,6 @@ server <- function(input, output) {
 
   #--------- OVERVIEW TAB ------------
 
-  ## TAB 1
 
   admissions_dt_react <- reactive({
 
@@ -215,7 +214,7 @@ server <- function(input, output) {
 
 
 
-  # ----------------------GEOGRAPHIC TAB---------------------------
+  # ---------GEOGRAPHIC TAB---------------------------
 
   source("helpers.R")
 
@@ -323,67 +322,67 @@ server <- function(input, output) {
 
 
 
-  # --------------------------DEMOGRAPHIC TAB -----
+  # ---------DEMOGRAPHIC TAB -----
 
-output$simd_plot <- renderPlotly({
+  output$simd_plot <- renderPlotly({
+  
+    ggplotly(dep_date %>%
+               group_by(date, simd_quintile) %>%
+               summarise(avg_admissions = mean(number_admissions)) %>%
+               ggplot() +
+               aes(x = date, y = avg_admissions, colour = simd_quintile) +
+               geom_line() +
+               labs(x = "",
+                    y = "Number of Admissions",
+                    colour = "SIMD Quintile") +
+              theme_minimal())
+  
+  })
+  
+  output$age_plot <- renderPlotly({
+  
+    ggplotly(age_date_clean %>%
+               group_by(date, age_group) %>%
+               summarise(avg_admissions = mean(number_admissions)) %>%
+               ggplot() +
+               aes(x = date, y = avg_admissions, colour = age_group) +
+               geom_line() +
+               labs(x = "",
+                    y = "Number of Admissions",
+                    colour = "") +
+               theme_minimal())
+  
+  })
+  
+  output$sex_plot <- renderPlotly({
+  
+    ggplotly(sex_data_clean %>%
+               group_by(date, sex) %>%
+               summarise(avg_admissions = mean(number_admissions)) %>%
+               ggplot() +
+               aes(x = date, y = avg_admissions, colour = sex) +
+               geom_line() +
+               labs(x = "",
+                    y = "Number of Admissions",
+                    colour = "") +
+               theme_minimal())
+  
+  })
+  
+  demo_title <- reactive( if (input$demotab_1 == "simd") {
+    paste("Mean Weekly Admissions by SIMD")
+  
+  }
+    else if (input$demotab_1 == "age") {
+    paste("Mean Weekly Admissions by Age Group")
+  } else {
+    paste("Mean Weekly Admissions by Sex")
+  }
+  )
+  
+  output$title_demo <- renderText(demo_title())
 
-  ggplotly(dep_date %>%
-             group_by(date, simd_quintile) %>%
-             summarise(avg_admissions = mean(number_admissions)) %>%
-             ggplot() +
-             aes(x = date, y = avg_admissions, colour = simd_quintile) +
-             geom_line() +
-             labs(x = "",
-                  y = "Number of Admissions",
-                  colour = "SIMD Quintile") +
-            theme_minimal())
-
-})
-
-output$age_plot <- renderPlotly({
-
-  ggplotly(age_date_clean %>%
-             group_by(date, age_group) %>%
-             summarise(avg_admissions = mean(number_admissions)) %>%
-             ggplot() +
-             aes(x = date, y = avg_admissions, colour = age_group) +
-             geom_line() +
-             labs(x = "",
-                  y = "Number of Admissions",
-                  colour = "") +
-             theme_minimal())
-
-})
-
-output$sex_plot <- renderPlotly({
-
-  ggplotly(sex_data_clean %>%
-             group_by(date, sex) %>%
-             summarise(avg_admissions = mean(number_admissions)) %>%
-             ggplot() +
-             aes(x = date, y = avg_admissions, colour = sex) +
-             geom_line() +
-             labs(x = "",
-                  y = "Number of Admissions",
-                  colour = "") +
-             theme_minimal())
-
-})
-
-demo_title <- reactive( if (input$demotab_1 == "simd") {
-  paste("Mean Weekly Admissions by SIMD")
-
-}
-  else if (input$demotab_1 == "age") {
-  paste("Mean Weekly Admissions by Age Group")
-} else {
-  paste("Mean Weekly Admissions by Sex")
-}
-)
-
-output$title_demo <- renderText(demo_title())
-
-#----------Plots for Pre & Post Covid Tab----------
+  #----------COVID TAB----------
 
   output$emergency_admissions_plot <- renderPlot({
     
