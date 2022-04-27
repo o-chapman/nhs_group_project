@@ -444,7 +444,7 @@ output$min_diff_demo <- renderInfoBox(
   )
 )
 
-}
+
 
 
 
@@ -463,4 +463,5 @@ micro_graph <- reactive({
   })
 
 output$micro_graph <- renderPlot(micro_graph())
+
 }
