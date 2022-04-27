@@ -165,32 +165,28 @@ server <- function(input, output) {
     }
   )
 
-  output$infobox_other_mean <- renderInfoBox(
+  output$infobox_other_mean <- renderInfoBox({
     infoBox("Mean Value (other seasons)",
             paste(infobox_predata_other()[1]),
             icon = icon("list"),
             color = "blue"
     )
-  )
+  })
 
-  output$infobox_other_min <- renderInfoBox(
+  output$infobox_other_min <- renderInfoBox({
     infoBox("Min Value (other seasons)",
             paste(infobox_predata_other()[2]),
             icon = icon("list"),
             color = "blue"
     )
-  )
+  })
 
-  output$infobox_other_max <- renderInfoBox(
+  output$infobox_other_max <- renderInfoBox({
     infoBox("Max Value (other seasons)",
             paste(infobox_predata_other()[3]),
             icon = icon("list"),
             color = "blue"
     )
-  )
-
-
-
   })
 
   output$overview_deaths_plot <- renderPlot({
