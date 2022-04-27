@@ -12,8 +12,10 @@ library(tsibble)
 library(ggplot2)
 library(plotly)
 
+#----------OVERVIEW-----------
 source("global_tab1.R")
 
+#----------GEOGRAPHIC---------
 
 # Read in data about health boards data and clean data
 
@@ -35,7 +37,7 @@ beds_clean <- beds %>%
   left_join(code_names, by = "location") %>%
   mutate(staffed_occupied_diff = all_staffed_beds - total_occupied_beds, .after = total_occupied_beds)
 
-# Read in ans simplify boundary data, cleaning names too.
+# Read in and simplify boundary data, cleaning names too.
 
 boundary_esri <- st_read(
   "raw_data/spatial_data/SG_NHS_HealthBoards_2019.shp") %>%
@@ -68,7 +70,7 @@ hospitals <- sf_to_df(hospitals, fill = TRUE)
 
 diff_data_hospitals <- read_csv("clean_data/diff_data_hospitals.csv")
 
-#-----------DEMOGRAPHIC----------
+#----------DEMOGRAPHIC----------
 
 # read in admissions & deprivation data, clean names
 deprivation <- read_csv(here::here("raw_data/admissions_by_hb_and_deprivation.csv")) %>%
@@ -109,7 +111,7 @@ age_date_clean <- age_by_date %>%
 sex_data_clean <- age_by_date %>%
   filter(!sex == "All")
 
-#----------Pre & Post Covid Tab----------
+#----------COVID TAB----------
 
 emergency_admissions <- read_csv(here::here("raw_data/emergency_admissions.csv"))
 a_e_attendance <- read_csv(here::here("raw_data/a_e_attendance.csv"))
