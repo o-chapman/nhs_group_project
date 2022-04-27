@@ -1,6 +1,6 @@
 server <- function(input, output) {
 
-  #--------- OVERVIEW TAB ------------
+  #----------OVERVIEW TAB ------------
 
 
   admissions_dt_react <- reactive({
