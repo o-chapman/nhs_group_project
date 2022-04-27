@@ -30,63 +30,64 @@ ui <- dashboardPage(skin = "purple",
                         tabItem(tabName = "overview",
                                 h2("Overview tab content"),
 
-
                                 fluidRow(
-                                  infoBoxOutput("info_box_mean", width = 4),
-                                  infoBoxOutput("info_box_max", width = 4),
-                                  infoBoxOutput("info_box_min", width = 4)
-
-                                ),
-
-                                fluidRow(
-                                  checkboxGroupInput(
-                                    "year_input", "Select Year" , c("2020", "2021"),
-                                    selected = c("2020", "2021"),
-                                    inline = T
+                                  box(width = 4,
+                                      checkboxGroupInput(
+                                        "year_input", "Select Year" , c("2020", "2021"),
+                                        selected = c("2020", "2021"),
+                                        inline = T,
+                                      )
                                   )
                                 ),
 
-
-                                #Main visual (tabset with plots showing diff in
-                                #KPI's in Winter)
                                 fluidRow(
+                                  tabBox(width = 12,
+                                         id = "tabbox_id",
+                                         #Main visual (tabset with plots showing diff in
+                                         #KPI's in Winter)
 
-                                  tabsetPanel(
+                                         #Admissions
+                                         tabPanel("Admissions",
+                                                  value = "admissions",
 
-                                    #Bed capacity
-                                    tabPanel("Bed Capacity",
+                                                  plotOutput("overview_admissions_plot")
+                                         ),
 
-                                      plotOutput("overview_beds_plot")
+                                         #Bed capacity
+                                         tabPanel("Bed Capacity",
+                                                  value = "beds",
 
-                                    ),
+                                                  plotOutput("overview_beds_plot")
 
-                                    #Admissions
-                                    tabPanel("Admissions",
+                                         ),
 
-                                      plotOutput("overview_admissions_plot")
+                                         #Length of stay
+                                         tabPanel("Length of stay",
+                                                  value = "los",
 
-                                    ),
+                                                  plotOutput("overview_los_plot")
 
-                                    #Length of stay
-                                    tabPanel("Length of stay",
-
-                                      plotOutput("overview_los_plot")
-
-                                    ),
-
-                                    #
-                                    tabPanel("Deaths (from?)",
-
-                                      plotOutput("overview_deaths_plot")
-
-                                    )
-
+                                         )
                                   )
+                                ),
 
+                                fluidRow(
+                                  box(width = 12,
 
+                                         infoBoxOutput("infobox_winter_mean", width = 4),
+                                         infoBoxOutput("infobox_winter_max", width = 4),
+                                         infoBoxOutput("infobox_winter_min", width = 4)
+                                  )
+                                ),
+
+                                fluidRow(
+                                  box(width = 12,
+
+                                         infoBoxOutput("infobox_not_winter_mean", width = 4),
+                                         infoBoxOutput("infobox_not_winter_max", width = 4),
+                                         infoBoxOutput("infobox_not_winter_min", width = 4)
+                                  )
                                 )
-
-
 
                         ),
 
@@ -117,7 +118,7 @@ ui <- dashboardPage(skin = "purple",
 
 
                                 )),
-    
+
 
                         # Demographic tab content
                         tabItem(tabName = "demographic",
@@ -128,7 +129,7 @@ ui <- dashboardPage(skin = "purple",
                                     id = "demotab_1",
                                     width = 12,
                                     tabPanel(value = "simd",
-                                      "SIMD Plot", 
+                                      "SIMD Plot",
                                              plotlyOutput("simd_plot")),
                                     tabPanel(value = "age",
                                       "Age Plot",
@@ -141,4 +142,4 @@ ui <- dashboardPage(skin = "purple",
 
                         )
                       )
-)    
+)
