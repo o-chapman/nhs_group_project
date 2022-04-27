@@ -185,4 +185,4 @@ ui <- dashboardPage(skin = "purple",
 
                       )
                     )
-)
+
