@@ -1,12 +1,12 @@
 
 ui <- dashboardPage(skin = "purple",
                     dashboardHeader(title = "Epic dashboard"),
-
+                    
                     # Sidebar content
                     dashboardSidebar(
-
+                      
                       sidebarMenu(
-
+                        
                         # lots of icons we can use here: https://fontawesome.com/icons/categories/medical-health
                         menuItem("Overview", tabName = "overview", icon = icon("book-medical"),
                                  badgeLabel = " ", badgeColor = "green"),
@@ -18,86 +18,94 @@ ui <- dashboardPage(skin = "purple",
                                  badgeLabel = "temp", badgeColor = "red")
                       )
                     ),
-
+                    
                     # Body content
                     dashboardBody(
-
+                      
                       # First overview tab
                       tabItems(
-
-
+                        
+                        
                         # Overview tab content
                         tabItem(tabName = "overview",
                                 h2("Overview tab content"),
-
+                                
                                 fluidRow(
-                                  box(width = 4,
-                                      checkboxGroupInput(
-                                        "year_input", "Select Year" , c("2020", "2021"),
+                                  box(width = 2,
+                                      background = "purple",
+                                      checkboxGroupButtons(
+                                        inputId = "year_input",
+                                        label = "Select Year",
+                                        choices = c("2020", "2021"),
                                         selected = c("2020", "2021"),
-                                        inline = T,
+                                        justified = TRUE,
+                                        checkIcon = list(yes = icon("ok", lib = "glyphicon"))
                                       )
-                                  )
+                                  ),
+                                  box(
+                                    background = "purple",
+                                    tags$h4(HTML("This dashboard uses data published by Public Health Scotland relating to the last few years of hospital and health board activity to investigate the winter health crisis. On this tab, graphs show a comparison between non-winter and winter key statistics for bed capacity, admissions, length of stay, and deaths.", "<br>")), width = 10
+                                    ),
                                 ),
-
+                                
                                 fluidRow(
                                   tabBox(width = 12,
+                                         title = textOutput("title_overview"),
                                          id = "tabbox_id",
                                          #Main visual (tabset with plots showing diff in
                                          #KPI's in Winter)
-
+                                         
                                          #Admissions
                                          tabPanel("Admissions",
                                                   value = "admissions",
-
+                                                  
                                                   plotOutput("overview_admissions_plot")
                                          ),
-
+                                         
                                          #Bed capacity
                                          tabPanel("Bed Capacity",
                                                   value = "beds",
-
+                                                  
                                                   plotOutput("overview_beds_plot")
-
+                                                  
                                          ),
-
+                                         
                                          #Length of stay
                                          tabPanel("Length of stay",
                                                   value = "los",
-
+                                                  
                                                   plotOutput("overview_los_plot")
-
+                                                  
                                          )
                                   )
                                 ),
-
+                                
                                 fluidRow(
                                   box(width = 12,
-
-                                         infoBoxOutput("infobox_winter_mean", width = 4),
-                                         infoBoxOutput("infobox_winter_max", width = 4),
-                                         infoBoxOutput("infobox_winter_min", width = 4)
+                                      infoBoxOutput("infobox_winter_mean", width = 4),
+                                      infoBoxOutput("infobox_winter_max", width = 4),
+                                      infoBoxOutput("infobox_winter_min", width = 4)
                                   )
                                 ),
-
+                                
                                 fluidRow(
                                   box(width = 12,
-
-                                         infoBoxOutput("infobox_other_mean", width = 4),
-                                         infoBoxOutput("infobox_other_max", width = 4),
-                                         infoBoxOutput("infobox_other_min", width = 4)
+                                      infoBoxOutput("infobox_other_mean", width = 4),
+                                      infoBoxOutput("infobox_other_max", width = 4),
+                                      infoBoxOutput("infobox_other_min", width = 4)
+                                      
                                   )
                                 )
-
+                                
                         ),
-
+                        
                         # Temporal tab content
                         tabItem(tabName = "temporal",
                                 h2("Temporal tab content")
                                 # Boxes need to be put in a row (or column)
-
+                                
                         ),
-
+                        
                         # Geographic tab content
                         tabItem(tabName = "geographic",
                                 h2("Geographic tab content"),
@@ -114,12 +122,12 @@ ui <- dashboardPage(skin = "purple",
                                                      "Mortality" = "winter_mortality_increase",
                                                      "Wait Time Tariff Overflow" = "winter_target_wait_time_overshoot_increase",
                                                      "Beds Filled" = "winter_beds_increase"))
-                                      )
-
-
+                                  )
+                                  
+                                  
                                 )),
-
-
+                        
+                        
                         # Demographic tab content
                         tabItem(tabName = "demographic",
                                 h2("Demographic tab content"),
@@ -129,17 +137,17 @@ ui <- dashboardPage(skin = "purple",
                                     id = "demotab_1",
                                     width = 12,
                                     tabPanel(value = "simd",
-                                      "SIMD Plot",
+                                             "SIMD Plot",
                                              plotlyOutput("simd_plot")),
                                     tabPanel(value = "age",
-                                      "Age Plot",
+                                             "Age Plot",
                                              plotlyOutput("age_plot")),
                                     tabPanel(value = "sex",
-                                      "Sex Plot",
+                                             "Sex Plot",
                                              plotlyOutput("sex_plot"))
                                   ))
-                                )
-
                         )
+                        
                       )
+                    )
 )

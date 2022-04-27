@@ -10,7 +10,20 @@ server <- function(input, output) {
       filter(year %in% input$year_input)
 
   })
-
+  
+  overview_title <- reactive( if (input$tabbox_id == "admissions") {
+    paste("Acute Admissions by Month")
+    
+  }
+  else if (input$tabbox_id == "beds") {
+    paste("Quarterly Bed Capacity")
+  } else {
+    paste("Quarterly Mean Length of Stay")
+  }
+  )
+  
+  output$title_overview <- renderText(overview_title())
+  
   ## PLOTS
 
   output$overview_admissions_plot <- renderPlot({

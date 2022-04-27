@@ -1,5 +1,6 @@
 library(shinydashboard)
 library(tidyverse)
+library(shinyWidgets)
 
 library(janitor)
 library(leaflet)
