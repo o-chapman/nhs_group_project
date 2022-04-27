@@ -242,18 +242,18 @@ server <- function(input, output) {
 
   # Generate colour palate based on filter domain.
 
-  rc1 <- reactive(colorRampPalette(colors = c("green2", "yellow"))(sum(beds_geom_filtered()$value < 0)))
+  rc1 <- reactive(colorRampPalette(colors = c("seagreen3", "yellow2"))(sum(beds_geom_filtered()$value < 0)))
 
 
-  rc2 <- reactive(colorRampPalette(colors = c("yellow", "red3"))(sum(beds_geom_filtered()$value >= 0)))
+  rc2 <- reactive(colorRampPalette(colors = c("yellow2", "red3"))(sum(beds_geom_filtered()$value >= 0)))
 
 
   rampcols <- reactive(c(rc1(), rc2()))
 
-  rc3 <- reactive(colorRampPalette(colors = c("green2", "yellow"))(sum(hospitals_filtered()$value < 0)))
+  rc3 <- reactive(colorRampPalette(colors = c("seagreen3", "yellow2"))(sum(hospitals_filtered()$value < 0)))
 
 
-  rc4 <- reactive(colorRampPalette(colors = c("yellow", "red3"))(sum(hospitals_filtered()$value >= 0)))
+  rc4 <- reactive(colorRampPalette(colors = c("yellow2", "red3"))(sum(hospitals_filtered()$value >= 0)))
 
 
   rampcols2 <- reactive(c(rc3(), rc4()))
