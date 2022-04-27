@@ -27,8 +27,9 @@ deaths_weekly <- deaths_weekly %>%
 # emergency admissions plot
 emergency_admissions %>% 
   ggplot() +
-  geom_line(aes(x = week_ending, y = count, group = 1), colour = "#74add1") +
-  geom_line(aes(x = week_ending, y = average_2018_2019, group = 1), colour = "#f46d43") +
+  geom_line(aes(x = week_ending, y = average_2018_2019, group = 1, colour = "2018 - 2019")) + 
+  geom_line(aes(x = week_ending, y = count, group = 1, colour = "2020 - 2021")) +
+  scale_color_manual(name = "Time period", values = c("2018 - 2019" = "#74add1", "2020 - 2021" = "#f46d43")) +
   labs(y = "Number of patients\n",
        title = "Weekly emergency admissions to hospital\n") +
   theme_light() +
@@ -42,8 +43,9 @@ emergency_admissions %>%
 # A&E attendance plot
 a_e_attendance %>% 
   ggplot() +
-  geom_line(aes(x = week_ending, y = count, group = 1), colour = "#74add1") +
-  geom_line(aes(x = week_ending, y = average_2018_2019, group = 1), colour = "#f46d43") +
+  geom_line(aes(x = week_ending, y = average_2018_2019, group = 1, colour = "2018 - 2019")) + 
+  geom_line(aes(x = week_ending, y = count, group = 1, colour = "2020 - 2021")) +
+  scale_color_manual(name = "Time period", values = c("2018 - 2019" = "#74add1", "2020 - 2021" = "#f46d43")) +
   labs(y = "Number of patients\n",
        title = "Weekly A&E department attendance\n") +
   theme_light() +
@@ -57,8 +59,9 @@ a_e_attendance %>%
 # weekly deaths plot
 deaths_weekly %>% 
   ggplot() +
-  geom_line(aes(x = week_ending, y = count, group = 1), colour = "#74add1") +
-  geom_line(aes(x = week_ending, y = average_2015_2019, group = 1), colour = "#f46d43") +
+  geom_line(aes(x = week_ending, y = average_2015_2019, group = 1, colour = "2015 - 2019")) + 
+  geom_line(aes(x = week_ending, y = count, group = 1, colour = "2020 - 2021")) +
+  scale_color_manual(name = "Time period", values = c("2015 - 2019" = "#74add1", "2020 - 2021" = "#f46d43")) +
   labs(y = "Number of deaths\n",
        title = "Weekly number of deaths\n") +
   theme_light() +

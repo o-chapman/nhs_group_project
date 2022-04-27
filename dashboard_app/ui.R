@@ -90,8 +90,6 @@ ui <- dashboardPage(skin = "purple",
 
                         # Temporal tab content
                         tabItem(tabName = "temporal",
-                                h2("Temporal tab content"),
-                                # Boxes need to be put in a row (or column)
                                 
                                 fluidRow(
                                   valueBox("-11%", "Emergency admissions", icon = icon("hospital"), color = "purple"),
@@ -107,7 +105,13 @@ ui <- dashboardPage(skin = "purple",
                                          width = 12,
                                          tabPanel("Emergency admissions", plotOutput("emergency_admissions_plot")),
                                          tabPanel("A&E attendance", plotOutput("a_e_attendance_plot")), 
-                                         tabPanel("Weekly deaths", plotOutput("deaths_weekly_plot"))))
+                                         tabPanel("Weekly deaths", plotOutput("deaths_weekly_plot")))), 
+                                
+                                fluidRow(
+                                  box(status = "primary",
+                                      tags$h4(HTML("Graphs comparing emergency admissions, A&E admissions and weekly deaths, with a coloured line showing the running average of each value for times <i> pre </i>and <i>post</i>-COVID.")), width = 12)
+                                ),
+                                
                         ),
 
                         # Geographic tab content
