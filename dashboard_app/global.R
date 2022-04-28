@@ -220,7 +220,7 @@ age_bar <- age_by_date %>%
   summarise(admissions = sum(number_admissions)) %>%
   pivot_wider(names_from = winter, values_from = admissions) %>%
   rename("winter" = "TRUE", "not_winter" = "FALSE") %>%
-  mutate(percent_inc = (((winter*3)/not_winter)-1)*100) %>%
+  mutate(percent_inc = (((winter*3)/not_winter)-1)) %>%
   ggplot() +
   aes(x = age_group, y = percent_inc, fill = age_group) +
   geom_col()+
@@ -243,7 +243,7 @@ sex_bar <- sex_data_clean %>%
   summarise(admissions = sum(number_admissions)) %>%
   pivot_wider(names_from = winter, values_from = admissions) %>%
   rename("winter" = "TRUE", "not_winter" = "FALSE") %>%
-  mutate(percent_inc = (((winter*3)/not_winter)-1)*100) %>%
+  mutate(percent_inc = (((winter*3)/not_winter)-1)) %>%
   ggplot() +
   aes(x = sex, y = percent_inc, fill = sex) +
   geom_col()+
@@ -265,7 +265,7 @@ dep_bar <- dep_date %>%
   summarise(admissions = sum(number_admissions)) %>%
   pivot_wider(names_from = winter, values_from = admissions) %>%
   rename("winter" = "TRUE", "not_winter" = "FALSE") %>%
-  mutate(percent_inc = (((winter*3)/not_winter)-1)*100) %>%
+  mutate(percent_inc = (((winter*3)/not_winter)-1)) %>%
   ggplot() +
   aes(x = simd_quintile, y = percent_inc, fill = simd_quintile) +
   geom_col()+
