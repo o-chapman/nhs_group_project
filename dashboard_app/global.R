@@ -125,3 +125,6 @@ a_e_attendance <- a_e_attendance %>%
 
 deaths_weekly <- deaths_weekly %>%
   mutate(week_ending = dmy(week_ending))
+
+#----------STATS TAB----------
+

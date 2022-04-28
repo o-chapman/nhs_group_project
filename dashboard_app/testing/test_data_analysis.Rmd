@@ -144,6 +144,35 @@ admissions_dt %>%
 ```
 
 ```{r}
+library(infer)
 
+# Null hypo is that the difference between Jan mean and other mean is 0
+# Alternative is that the difference is > 0
+
+admissions_test_data <- admissions_date %>% 
+  select(month, number_admissions) %>% 
+  mutate(january = case_when(month == "01" ~ TRUE,
+                             TRUE ~ FALSE))
+
+# obs_stat <- admissions_test_data %>% 
+#   mutate(month = as.numeric(month)) %>% 
+#   filter(month < 4) %>% 
+#   summarise(winter_admissions = mean(number_admissions)) %>% 
+#   pull()
+
+null_distribution <- admissions_test_data %>%
+  specify(number_admissions ~ january) %>%
+  hypothesize(null = "independence") %>%
+  generate(reps = 1000, type = "permute") %>%
+  calculate(stat = "diff in means", order = c(TRUE, FALSE))
+
+observed_stat <- admissions_test_data %>% 
+  specify(number_admissions ~ january) %>%
+  calculate(stat = "diff in means", order = c(TRUE, FALSE))
+
+
+null_distribution %>%
+  visualise() +
+  shade_p_value(obs_stat = observed_stat, direction = "right")
 ```
 
