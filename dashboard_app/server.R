@@ -310,7 +310,7 @@ output$title_overview <- renderText(overview_title())
                   opacity = 1,
                   color =  ~ pal()(value),
                   fillOpacity = 0.8,
-                  label= ~ paste(name, ":", value)) %>%
+                  label= ~ paste(name, ":", round(value, 2))) %>%
       addLegend(position = "bottomright", pal = pal(), values = beds_geom_filtered()$value,
                 opacity = 1)
 
