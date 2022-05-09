@@ -273,6 +273,7 @@ output$title_overview <- renderText(overview_title())
 
   rampcols2 <- reactive(c(rc3(), rc4()))
 
+  
   pal <- reactive(
     if (input$geotabs == "area") {
 
